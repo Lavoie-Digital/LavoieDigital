@@ -9,19 +9,19 @@ const STEPS = [
     n: "01",
     title: "Découverte",
     desc: "On comprend votre PME, vos clients, vos objectifs et vos contraintes. Audit, atelier et cadrage du projet.",
-    duration: "1 semaine",
+    duration: "2-3 jours",
   },
   {
     n: "02",
     title: "Design",
     desc: "Wireframes, design système, prototypes haute-fidélité. Itérations jusqu'à ce que ce soit parfait.",
-    duration: "1 semaine",
+    duration: "3-5 jours",
   },
   {
     n: "03",
     title: "Développement",
     desc: "Code production, performances optimales, animations soignées. Vous suivez chaque étape en temps réel.",
-    duration: "1-2 semaines",
+    duration: "1 à 3 semaines",
   },
   {
     n: "04",
@@ -43,9 +43,10 @@ export default function Process() {
     <section id="process" className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
+          titleAs="h1"
           eyebrow="Approche"
-          title="Un processus clair, des résultats prévisibles."
-          sub="Chaque projet suit la même rigueur. Pas de surprises, pas de zones grises — juste du livrable de qualité."
+          title="Notre processus de création web : clair et prévisible."
+          sub="Chaque projet suit la même rigueur : un site web premium en environ 2 semaines, une application en environ 4 semaines. Pas de surprises, pas de zones grises — juste du livrable de qualité."
         />
 
         <div ref={ref} className="relative mt-12">

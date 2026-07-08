@@ -3,12 +3,45 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 
+const SOCIALS = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/lavoie_digital/",
+    icon: (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.6" />
+        <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/lavoie-digital/",
+    icon: (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5c0-1.2-.02-2.74-1.9-2.74-1.9 0-2.2 1.32-2.2 2.66V21h-3.9z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61590179200262",
+    icon: (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H17V3.6c-.29-.04-1.27-.12-2.4-.12-2.38 0-4.01 1.45-4.01 4.12v2.29H7.9V13h2.69v8z" />
+      </svg>
+    ),
+  },
+];
+
 export default function Footer() {
   return (
     <footer className="relative z-10 mt-20 border-t border-white/8 bg-black/40 backdrop-blur-md">
       {/* Giant wordmark */}
       <div className="relative overflow-hidden">
-        <motion.h2
+        <motion.p
+          aria-hidden
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
@@ -23,7 +56,7 @@ export default function Footer() {
           }}
         >
           LAVOIE DIGITAL
-        </motion.h2>
+        </motion.p>
       </div>
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 pb-12 sm:grid-cols-4 sm:px-10">
@@ -56,6 +89,7 @@ export default function Footer() {
             <li><a href="/travaux" className="link-underline text-white/70 hover:text-white">Travaux</a></li>
             <li><a href="/approche" className="link-underline text-white/70 hover:text-white">Approche</a></li>
             <li><a href="/difference" className="link-underline text-white/70 hover:text-white">Différence</a></li>
+            <li><a href="/a-propos" className="link-underline text-white/70 hover:text-white">À propos</a></li>
             <li><a href="/booking" className="link-underline text-white/70 hover:text-white">Réserver</a></li>
           </ul>
         </div>
@@ -67,10 +101,23 @@ export default function Footer() {
           <ul className="mt-4 space-y-2.5 text-[14px]">
             <li><a href="mailto:info@lavoiedigital.ca" className="link-underline text-white/70 hover:text-white">info@lavoiedigital.ca</a></li>
             <li><a href="tel:+15142901648" className="link-underline text-white/70 hover:text-white">+1 (514) 290-1648</a></li>
-            <li><a href="https://www.instagram.com/lavoie_digital/" target="_blank" rel="noopener noreferrer" className="link-underline text-white/70 hover:text-white">Instagram</a></li>
-            <li><a href="https://www.linkedin.com/company/lavoie-digital/" target="_blank" rel="noopener noreferrer" className="link-underline text-white/70 hover:text-white">LinkedIn</a></li>
-            <li><a href="https://www.facebook.com/profile.php?id=61590179200262" target="_blank" rel="noopener noreferrer" className="link-underline text-white/70 hover:text-white">Facebook</a></li>
           </ul>
+
+          <div className="mt-5 flex items-center gap-2.5">
+            {SOCIALS.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                title={s.label}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-white/70 transition-colors duration-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white"
+              >
+                {s.icon}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 

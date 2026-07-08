@@ -84,9 +84,10 @@ export default function Services() {
     <section id="services" className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
+          titleAs="h1"
           eyebrow="Services"
-          title="Tout ce qu'il faut pour grandir en ligne."
-          sub="Du concept à la mise en marché, on construit des produits que vos clients ont envie d'utiliser."
+          title="Création de sites web et d'applications sur mesure au Québec."
+          sub="Du concept à la mise en marché, on construit des sites web premium, des applications full-stack et des plateformes SaaS que vos clients ont envie d'utiliser."
         />
 
         <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -169,11 +170,15 @@ export function SectionHeader({
   eyebrow,
   title,
   sub,
+  titleAs = "h2",
 }: {
   eyebrow: string;
   title: string;
   sub?: string;
+  /** Heading level for the title. Pages pass "h1" so each route has a single top-level heading. */
+  titleAs?: "h1" | "h2";
 }) {
+  const Heading = titleAs === "h1" ? motion.h1 : motion.h2;
   return (
     <div className="flex flex-col gap-6">
       <motion.div
@@ -186,7 +191,7 @@ export function SectionHeader({
         <span className="h-1 w-1 rounded-full bg-white/70" />
         {eyebrow}
       </motion.div>
-      <motion.h2
+      <Heading
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
@@ -194,7 +199,7 @@ export function SectionHeader({
         className="display max-w-3xl text-[clamp(2rem,5vw,3.6rem)] text-white"
       >
         {title}
-      </motion.h2>
+      </Heading>
       {sub && (
         <motion.p
           initial={{ opacity: 0, y: 16 }}

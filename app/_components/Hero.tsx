@@ -236,7 +236,7 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="text-pretty mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60 sm:text-xl"
         >
-          Applications full-stack et expériences web haut de gamme pour les
+          Création de sites web et d&apos;applications sur mesure pour les
           PME du Québec. Code production, esthétique hors du commun, suivi
           client&nbsp;illimité.
         </motion.p>

@@ -19,7 +19,7 @@ const PROJECTS = [
   {
     tag: "Mobile · iOS / Android",
     title: "Applications natives",
-    body: "Expériences mobiles fluides en React Native ou natif. Sync hors-ligne, notifications, paiements.",
+    body: "Expériences mobiles fluides, sur iOS comme sur Android. Sync hors-ligne, notifications, paiements.",
     mock: <MobileMock />,
   },
 ];
@@ -29,9 +29,10 @@ export default function Work() {
     <section id="work" className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
+          titleAs="h1"
           eyebrow="Travaux"
-          title="Des projets pensés pour durer."
-          sub="On choisit nos clients avec soin — pour livrer un travail dont on est fiers et qui performe sur le long terme."
+          title="Sites web, plateformes et applications pensés pour durer."
+          sub="Des réalisations web pour PME du Québec — plateformes B2B, sites haut de gamme et applications mobiles — dont on est fiers et qui performent sur le long terme."
         />
 
         <div className="mt-16 space-y-6">
@@ -67,9 +68,9 @@ export default function Work() {
                 </p>
                 <div className="mt-7 flex items-center gap-3 text-[13px] text-white/60">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
-                    Stack typique
+                    Notre approche
                   </span>
-                  <span>Next.js · TypeScript · PostgreSQL</span>
+                  <span>Sur mesure · Performant · Sécurisé</span>
                 </div>
               </div>
               <div className="order-1 lg:order-2">{p.mock}</div>

@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  AnimatePresence,
   motion,
   useMotionTemplate,
   useMotionValue,
@@ -66,6 +65,15 @@ const SECTIONS: Section[] = [
     Visual: SparkVisual,
     Icon: DifferenceIcon,
   },
+  {
+    num: "05",
+    href: "/a-propos",
+    title: "À propos",
+    tagline: "Le fondateur derrière chaque projet.",
+    bullets: ["Fondateur aux commandes", "Ancré au Québec", "Suivi illimité"],
+    Visual: SparkVisual,
+    Icon: AproposIcon,
+  },
 ];
 
 export default function ExplorePanels() {
@@ -94,7 +102,7 @@ export default function ExplorePanels() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               className="display mt-6 max-w-3xl text-[clamp(2rem,5vw,3.6rem)] text-white"
             >
-              Quatre portes,
+              Cinq portes,
               <br />
               <span className="text-white/40">un même studio.</span>
             </motion.h2>
@@ -106,8 +114,8 @@ export default function ExplorePanels() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="hidden max-w-xs text-[14px] leading-relaxed text-white/55 sm:block"
           >
-            Survolez pour un aperçu —{" "}
-            <span className="text-white">cliquez</span> pour ouvrir la page.
+            <span className="text-white">Cliquez</span> sur une icône pour
+            ouvrir la page.
           </motion.p>
         </div>
 
@@ -130,7 +138,7 @@ export default function ExplorePanels() {
             }}
           />
 
-          <div className="grid grid-cols-4 items-end gap-8 px-4">
+          <div className="grid grid-cols-5 items-end gap-6 px-2">
             {SECTIONS.map((s, i) => (
               <IconCard
                 key={s.num}
@@ -142,9 +150,6 @@ export default function ExplorePanels() {
               />
             ))}
           </div>
-
-          {/* Single morphing content area below the icons */}
-          <ActiveContent section={active !== null ? SECTIONS[active] : null} />
         </motion.div>
 
         {/* Mobile stack */}
@@ -349,86 +354,6 @@ function IconCard({
         </motion.h3>
       </Link>
     </motion.div>
-  );
-}
-
-function ActiveContent({ section }: { section: Section | null }) {
-  return (
-    <div className="relative mt-14 flex min-h-[160px] items-start justify-center">
-      <AnimatePresence mode="wait">
-        {section ? (
-          <motion.div
-            key={section.num}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="flex w-full max-w-3xl flex-col items-center gap-7 text-center"
-          >
-            <p className="max-w-xl text-[17px] leading-relaxed text-white/65">
-              {section.tagline}
-            </p>
-            <ul className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2">
-              {section.bullets.map((b, k) => (
-                <motion.li
-                  key={b}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.08 + k * 0.06,
-                  }}
-                  className="flex items-center gap-2.5 text-[13px] text-white/55"
-                >
-                  <span className="h-1 w-1 rounded-full bg-white/45" />
-                  {b}
-                </motion.li>
-              ))}
-            </ul>
-            <Link
-              href={section.href}
-              className="group mt-2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[13px] font-medium text-black shadow-[0_20px_50px_-15px_rgba(255,255,255,0.35)] transition-all duration-300 hover:gap-3 hover:bg-white/90"
-            >
-              Ouvrir la page {section.title}
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M1 7h12m0 0L7 1m6 6l-6 6"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Link>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
-              Aperçu — cliquez pour la page complète
-            </p>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="hint"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="flex flex-col items-center gap-3 text-white/40"
-          >
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
-              Survolez · Cliquez pour ouvrir
-            </span>
-            <motion.div
-              animate={{ y: [-3, 3, -3] }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="h-5 w-px bg-gradient-to-b from-transparent to-white/40"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
   );
 }
 
@@ -878,6 +803,44 @@ function DifferenceIcon() {
       <path
         d="M50 42 L51 44.5 L53.5 45.5 L51 46.5 L50 49 L49 46.5 L46.5 45.5 L49 44.5 Z"
         fill="rgba(255,255,255,0.55)"
+      />
+    </svg>
+  );
+}
+
+function AproposIcon() {
+  return (
+    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden>
+      <defs>
+        <linearGradient id="ap2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255,255,255,1)" />
+          <stop offset="100%" stopColor="rgba(255,255,255,0.4)" />
+        </linearGradient>
+      </defs>
+      <circle
+        cx="32"
+        cy="32"
+        r="26"
+        fill="none"
+        stroke="rgba(255,255,255,0.16)"
+        strokeWidth="1"
+      />
+      {/* Head */}
+      <circle
+        cx="32"
+        cy="26"
+        r="9"
+        fill="url(#ap2)"
+        stroke="rgba(255,255,255,0.7)"
+        strokeWidth="1"
+      />
+      {/* Shoulders */}
+      <path
+        d="M16 50c0-9 7.2-15 16-15s16 6 16 15"
+        fill="url(#ap2)"
+        stroke="rgba(255,255,255,0.7)"
+        strokeWidth="1"
+        strokeLinecap="round"
       />
     </svg>
   );

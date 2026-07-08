@@ -15,7 +15,7 @@ const FEATURES = [
   },
   {
     title: "Code production",
-    body: "TypeScript strict, tests, CI/CD, performances mesurées. Pas de dette technique.",
+    body: "Code rigoureux, testé et livré en continu, avec des performances mesurées. Pas de dette technique.",
   },
   {
     title: "Local et accessible",
@@ -36,9 +36,10 @@ export default function Edge() {
     <section id="edge" className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
+          titleAs="h1"
           eyebrow="La différence"
-          title="Ce qu'on apporte que les autres n'apportent pas."
-          sub="Notre obsession : faire en sorte que votre produit fini surpasse ce que vous aviez en tête. Pas l'inverse."
+          title="L'agence web au Québec qui apporte ce que les autres n'apportent pas."
+          sub="Notre obsession : faire en sorte que votre site web ou application finie surpasse ce que vous aviez en tête. Pas l'inverse."
         />
 
         {/* Bento grid */}

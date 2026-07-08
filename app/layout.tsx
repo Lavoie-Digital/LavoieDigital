@@ -25,7 +25,7 @@ const SITE_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Studio code & web · Québec`,
+    default: `${SITE_NAME} — Création de sites web et d'applications · Québec`,
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -35,6 +35,10 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   category: "Web Development Studio",
   keywords: [
+    "site web Québec",
+    "application Québec",
+    "création site web Québec",
+    "développement application Québec",
     "agence web Québec",
     "studio développement web",
     "développement application full-stack",
@@ -45,8 +49,8 @@ export const metadata: Metadata = {
     "application sur mesure Québec",
     "site web premium",
     "branding digital Québec",
-    "Next.js Québec",
-    "React Québec",
+    "création application web Québec",
+    "refonte site web Québec",
     "SaaS Québec",
     "design web haut de gamme",
     "Lavoie Digital",
@@ -64,7 +68,7 @@ export const metadata: Metadata = {
     locale: "fr_CA",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Studio code & web · Québec`,
+    title: `${SITE_NAME} — Création de sites web et d'applications · Québec`,
     description: SITE_DESCRIPTION,
     images: [
       {
@@ -77,7 +81,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Studio code & web · Québec`,
+    title: `${SITE_NAME} — Création de sites web et d'applications · Québec`,
     description: SITE_DESCRIPTION,
     images: ["/opengraph-image"],
   },
@@ -129,8 +133,11 @@ const jsonLd = {
       foundingDate: "2026",
       founder: {
         "@type": "Person",
+        "@id": `${SITE_URL}#xavier-lavoie`,
         name: "Xavier Lavoie",
-        url: SITE_URL,
+        jobTitle: "Fondateur & développeur",
+        image: `${SITE_URL}/Fondateur.jpg`,
+        url: `${SITE_URL}/a-propos`,
       },
       areaServed: [
         {

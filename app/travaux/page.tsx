@@ -3,7 +3,7 @@ import PageNav from "../_components/PageNav";
 import Work from "../_components/Work";
 
 const DESCRIPTION =
-  "Plateformes B2B, sites web haut de gamme, applications mobiles : aperçu de nos domaines d'expertise. Projets full-stack en Next.js, React, TypeScript et PostgreSQL pour PME du Québec.";
+  "Plateformes B2B, sites web haut de gamme, applications mobiles : aperçu de nos domaines d'expertise. Des projets sur mesure, performants et sécurisés pour les PME du Québec.";
 
 export const metadata: Metadata = {
   title: "Travaux — Domaines d'expertise et types de projets",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   keywords: [
     "portfolio agence web Québec",
     "réalisations développement web",
-    "projets Next.js Québec",
+    "réalisations web sur mesure Québec",
     "plateforme B2B Québec",
     "site e-commerce Québec",
     "application mobile Québec",

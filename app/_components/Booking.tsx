@@ -92,8 +92,9 @@ export default function Booking() {
     <section id="booking" className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-5xl">
         <SectionHeader
+          titleAs="h1"
           eyebrow="Réserver"
-          title="Parlons de votre projet."
+          title="Parlons de votre projet web ou d'application."
           sub="Quelques questions pour cadrer le projet. On revient vers vous sous 24 heures avec un appel et une première piste."
         />
 

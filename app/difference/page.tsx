@@ -42,9 +42,9 @@ export default function DifferencePage() {
           eyebrow: "Précédent — 03",
         }}
         next={{
-          href: "/booking",
-          label: "Réserver un appel",
-          eyebrow: "Prêt à démarrer ?",
+          href: "/a-propos",
+          label: "À propos",
+          eyebrow: "Suivant — 05",
         }}
       />
     </>
