@@ -10,7 +10,7 @@
 export const FAQ_ITEMS = [
   {
     q: "Combien coûte un site web ou une application au Québec ?",
-    a: "Chaque projet est unique, donc on établit un devis clair et sans surprise dès l'appel découverte gratuit. Nos sites web premium démarrent autour de 3 000 $. Mais l'essentiel, c'est ce que vous obtenez : un site rapide, sur mesure et conçu pour être retrouvé sur Google et les moteurs de réponse par IA — pas un simple template.",
+    a: "Chaque projet est unique, donc on établit un devis clair et sans surprise dès l'appel découverte gratuit. L'essentiel, c'est ce que vous obtenez : un site rapide, sur mesure et conçu pour être retrouvé sur Google et les moteurs de réponse par IA — pas un simple template.",
   },
   {
     q: "Combien de temps faut-il pour créer un site web ou une application ?",
