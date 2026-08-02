@@ -120,7 +120,11 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "ProfessionalService",
+      // LocalBusiness is what powers the local knowledge panel; ProfessionalService
+      // alone is too generic. Every field below mirrors the Google Business Profile
+      // exactly — name, phone, hours, service areas and services — because
+      // inconsistency between the two is what breaks entity matching.
+      "@type": ["ProfessionalService", "LocalBusiness"],
       "@id": `${SITE_URL}#studio`,
       name: SITE_NAME,
       legalName: "Lavoie Digital",
@@ -139,22 +143,58 @@ const jsonLd = {
         image: `${SITE_URL}/Fondateur.jpg`,
         url: `${SITE_URL}/a-propos`,
       },
+      // Mirrors the service areas declared on the Google Business Profile.
       areaServed: [
-        {
-          "@type": "AdministrativeArea",
-          name: "Québec",
-        },
-        {
-          "@type": "Country",
-          name: "Canada",
-        },
+        { "@type": "City", name: "Québec" },
+        { "@type": "City", name: "Lévis" },
+        { "@type": "City", name: "Montréal" },
+        { "@type": "City", name: "Trois-Rivières" },
+        { "@type": "City", name: "Sherbrooke" },
+        { "@type": "City", name: "Saguenay" },
+        { "@type": "City", name: "Gatineau" },
+        { "@type": "AdministrativeArea", name: "Québec" },
+        { "@type": "Country", name: "Canada" },
       ],
       knowsLanguage: ["fr-CA", "en-CA"],
+      telephone: "+1-514-290-1648",
+      email: "info@lavoiedigital.ca",
+      // Service-area business: no public street address, so only locality/region
+      // are declared. Inventing a street here would contradict the Google
+      // Business Profile, which is set to "no location".
       address: {
         "@type": "PostalAddress",
         addressLocality: "Québec",
         addressRegion: "QC",
         addressCountry: "CA",
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "08:00",
+          closes: "18:00",
+        },
+      ],
+      potentialAction: {
+        "@type": "ReserveAction",
+        name: "Réserver un appel découverte gratuit",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/booking`,
+          inLanguage: "fr-CA",
+          actionPlatform: [
+            "https://schema.org/DesktopWebPlatform",
+            "https://schema.org/MobileWebPlatform",
+          ],
+        },
       },
       contactPoint: {
         "@type": "ContactPoint",
@@ -170,44 +210,93 @@ const jsonLd = {
         "https://www.facebook.com/profile.php?id=61590179200262",
       ],
       priceRange: "$$-$$$$",
-      makesOffer: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Applications full-stack",
-            description:
-              "Plateformes SaaS, dashboards, outils internes et systèmes sur mesure pour PME.",
+      // Same eight services, in the same order, as the Services section of the
+      // Google Business Profile. Keep the two lists in sync when either changes.
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Services de Lavoie Digital",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Création de site web",
+              description:
+                "Conception et développement de sites web sur mesure pour les PME du Québec, livrés en environ deux semaines.",
+              url: `${SITE_URL}/creation-site-web-quebec`,
+            },
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Sites web premium",
-            description:
-              "Sites vitrines, e-commerce et pages de vente avec animations soignées.",
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Site web vitrine",
+              description:
+                "Site de présentation d'entreprise conçu pour établir la crédibilité et générer des appels.",
+              url: `${SITE_URL}/creation-site-web-quebec`,
+            },
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Branding digital",
-            description:
-              "Identité visuelle, design system et refonte UX/UI.",
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Site e-commerce",
+              description:
+                "Boutique en ligne avec catalogue, panier, paiement sécurisé et gestion des commandes.",
+              url: `${SITE_URL}/creation-site-web-quebec`,
+            },
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Suivi et croissance",
-            description:
-              "Itérations continues, A/B testing, analytics et accompagnement stratégique.",
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Refonte de site web",
+              description:
+                "Reconstruction d'un site existant avec redirections et conservation du référencement acquis.",
+              url: `${SITE_URL}/creation-site-web-quebec`,
+            },
           },
-        },
-      ],
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Application web sur mesure",
+              description:
+                "Plateformes SaaS, portails clients et tableaux de bord développés selon vos règles d'affaires.",
+              url: `${SITE_URL}/creation-application-web-quebec`,
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Développement d'application d'affaires",
+              description:
+                "Outils internes qui remplacent les fichiers partagés et les processus manuels.",
+              url: `${SITE_URL}/creation-application-web-quebec`,
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Intégration d'intelligence artificielle",
+              description:
+                "Automatisation du travail répétitif : tri de demandes, extraction documentaire, réponses sur vos données.",
+              url: `${SITE_URL}/creation-application-web-quebec`,
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Optimisation SEO et AEO",
+              description:
+                "Référencement Google et optimisation pour les moteurs de réponse par IA (ChatGPT, Perplexity, aperçus IA).",
+            },
+          },
+        ],
+      },
     },
     {
       "@type": "WebSite",

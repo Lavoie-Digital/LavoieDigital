@@ -4,7 +4,20 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import { FAQ_ITEMS } from "./faqData";
 
-export default function Faq() {
+/**
+ * Accordion FAQ. Defaults render the home-page set; the SEO landing pages pass
+ * their own items and title so each route gets a distinct FAQ (duplicate Q&A
+ * across pages competes with itself and dilutes the FAQPage rich result).
+ */
+export default function Faq({
+  items = FAQ_ITEMS,
+  title = "Tout savoir sur nos sites web et applications au Québec.",
+  eyebrow = "Questions fréquentes",
+}: {
+  items?: { q: string; a: string }[];
+  title?: string;
+  eyebrow?: string;
+} = {}) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -22,7 +35,7 @@ export default function Faq() {
           className="inline-flex w-fit items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-white/55 backdrop-blur"
         >
           <span className="h-1 w-1 rounded-full bg-white/70" />
-          Questions fréquentes
+          {eyebrow}
         </motion.div>
 
         <motion.h2
@@ -33,11 +46,11 @@ export default function Faq() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="display mt-6 max-w-2xl text-[clamp(2rem,5vw,3.2rem)] text-white"
         >
-          Tout savoir sur nos sites web et applications au Québec.
+          {title}
         </motion.h2>
 
         <div className="mt-12 flex flex-col gap-3">
-          {FAQ_ITEMS.map((item, i) => {
+          {items.map((item, i) => {
             const isOpen = open === i;
             return (
               <motion.div

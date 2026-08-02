@@ -59,7 +59,7 @@ export default function Footer() {
         </motion.p>
       </div>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 pb-12 sm:grid-cols-4 sm:px-10">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 pb-12 sm:grid-cols-2 sm:px-10 lg:grid-cols-5">
         <div className="sm:col-span-2">
           <div className="flex items-center gap-3">
             <Image
@@ -78,6 +78,32 @@ export default function Footer() {
             Applications full-stack et expériences web haut de gamme pour
             les PME du Québec. Conçus pour durer, optimisés pour convertir.
           </p>
+        </div>
+
+        {/* Keyword-bearing anchors to the search-intent landing pages. Generic
+            anchors like "Services" tell Google nothing about what ranks here. */}
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/35">
+            Expertises
+          </p>
+          <ul className="mt-4 space-y-2.5 text-[14px]">
+            <li>
+              <a
+                href="/creation-site-web-quebec"
+                className="link-underline text-white/70 hover:text-white"
+              >
+                Création de site web à Québec
+              </a>
+            </li>
+            <li>
+              <a
+                href="/creation-application-web-quebec"
+                className="link-underline text-white/70 hover:text-white"
+              >
+                Création d&apos;application web à Québec
+              </a>
+            </li>
+          </ul>
         </div>
 
         <div>
