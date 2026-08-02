@@ -3,7 +3,7 @@ import PageNav from "../_components/PageNav";
 import Process from "../_components/Process";
 
 const DESCRIPTION =
-  "Découverte, design, développement, suivi : notre processus en 4 étapes pour livrer des projets prévisibles et de qualité. Méthodologie claire, échéancier transparent, suivi mensuel après le lancement.";
+  "Découverte, design, développement, suivi : notre processus en 4 étapes pour des projets prévisibles. Échéancier et devis fixés dès le départ.";
 
 export const metadata: Metadata = {
   title: "Approche — Notre processus en 4 étapes",

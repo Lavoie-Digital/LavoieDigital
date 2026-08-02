@@ -19,13 +19,18 @@ const geistMono = Geist_Mono({
 
 const SITE_URL = "https://lavoiedigital.ca";
 const SITE_NAME = "Lavoie Digital";
+// Keyword first, brand last, under 60 characters so Google shows it whole.
+const SITE_TITLE = "Sites web et applications au Québec — Lavoie Digital";
+// Under 160 characters — past that Google truncates the snippet mid-sentence.
 const SITE_DESCRIPTION =
-  "Studio de développement full-stack à Québec. Conception d'applications, sites web premium et plateformes SaaS sur mesure pour les PME du Québec. Code production, design haut de gamme, suivi client illimité.";
+  "Studio de création de sites web et d'applications sur mesure au Québec. Site web livré en 2 semaines, application en 4. Suivi client illimité.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Création de sites web et d'applications · Québec`,
+    default: SITE_TITLE,
+    // Child pages supply a short title; the brand is appended here. Keep child
+    // titles free of "Lavoie Digital" or it lands twice in the same tag.
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -68,7 +73,7 @@ export const metadata: Metadata = {
     locale: "fr_CA",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} — Création de sites web et d'applications · Québec`,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: [
       {
@@ -81,7 +86,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Création de sites web et d'applications · Québec`,
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: ["/opengraph-image"],
   },

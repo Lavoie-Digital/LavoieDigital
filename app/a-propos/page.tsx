@@ -5,10 +5,11 @@ import PageNav from "../_components/PageNav";
 const SITE_URL = "https://lavoiedigital.ca";
 
 const DESCRIPTION =
-  "Rencontrez Xavier Lavoie, fondateur de Lavoie Digital — studio de développement web à Québec. Sites web et applications sur mesure pour les PME, conçus et codés par le fondateur, avec un suivi client illimité.";
+  "Xavier Lavoie, fondateur du studio. Il conçoit et code lui-même chaque site web et application, de A à Z, pour les PME du Québec.";
 
 export const metadata: Metadata = {
-  title: "À propos — Xavier Lavoie, fondateur de Lavoie Digital",
+  // No brand name here — the root template already appends " — Lavoie Digital".
+  title: "À propos — Xavier Lavoie, fondateur",
   description: DESCRIPTION,
   alternates: { canonical: "/a-propos" },
   keywords: [

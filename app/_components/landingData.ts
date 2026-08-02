@@ -57,11 +57,11 @@ export type Landing = {
 
 export const SITE_WEB: Landing = {
   slug: "/creation-site-web-quebec",
-  breadcrumb: "Création de site web à Québec",
+  breadcrumb: "Création de site web au Québec",
   serviceName: "Création de site web",
   serviceType: "Conception et développement de sites web",
   eyebrow: "Sites web · Québec",
-  h1: "Création de site web à Québec",
+  h1: "Création de site web au Québec",
   sub: "Sites vitrines, boutiques en ligne et refontes codés sur mesure pour les entrepreneurs et les PME du Québec. Environ deux semaines jusqu'au lancement, suivi illimité ensuite.",
   blocks: [
     {
@@ -171,7 +171,7 @@ export const SITE_WEB: Landing = {
     {
       kind: "prose",
       eyebrow: "Investissement",
-      heading: "Combien coûte un site web à Québec ?",
+      heading: "Combien coûte un site web au Québec ?",
       paragraphs: [
         "Ça dépend du nombre de pages, des fonctions requises et de la quantité de contenu à produire. N'importe qui vous donnant un chiffre avant d'avoir posé une seule question improvise.",
         "Ce qui est garanti, c'est la méthode : après l'appel découverte — gratuit et sans engagement — vous recevez un devis fixe et détaillé, ligne par ligne. Le montant ne bouge pas en cours de route, sauf si vous décidez vous-même d'ajouter quelque chose au projet.",
@@ -226,11 +226,11 @@ export const SITE_WEB: Landing = {
 
 export const APPLICATION_WEB: Landing = {
   slug: "/creation-application-web-quebec",
-  breadcrumb: "Création d'application web à Québec",
+  breadcrumb: "Création d'application web au Québec",
   serviceName: "Création d'application web sur mesure",
   serviceType: "Développement d'applications web et de plateformes SaaS",
   eyebrow: "Applications · Québec",
-  h1: "Création d'application web à Québec",
+  h1: "Création d'application web au Québec",
   sub: "Plateformes SaaS, outils internes, portails clients et tableaux de bord développés sur mesure pour les entreprises du Québec. Environ quatre semaines jusqu'à la mise en service.",
   blocks: [
     {

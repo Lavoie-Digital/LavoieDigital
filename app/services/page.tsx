@@ -3,10 +3,10 @@ import PageNav from "../_components/PageNav";
 import Services from "../_components/Services";
 
 const DESCRIPTION =
-  "Applications full-stack, sites web premium, branding digital et suivi continu pour PME du Québec. Plateformes SaaS, dashboards, e-commerce et outils internes sur mesure.";
+  "Applications full-stack, sites web premium, branding digital et suivi continu pour les PME du Québec. Du concept à la mise en marché.";
 
 export const metadata: Metadata = {
-  title: "Services — Développement web et applications sur mesure",
+  title: "Services — sites web et applications",
   description: DESCRIPTION,
   alternates: { canonical: "/services" },
   keywords: [

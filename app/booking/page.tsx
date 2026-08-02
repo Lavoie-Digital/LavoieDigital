@@ -3,7 +3,7 @@ import Booking from "../_components/Booking";
 import PageNav from "../_components/PageNav";
 
 const DESCRIPTION =
-  "Quelques questions pour cadrer votre projet web ou application. Réponse sous 24 heures avec un appel découverte gratuit. Lavoie Digital — studio code & web à Québec.";
+  "Quelques questions pour cadrer votre projet web ou application. Réponse sous 24 heures et appel découverte gratuit, sans engagement.";
 
 export const metadata: Metadata = {
   title: "Réserver un appel — Consultation gratuite",

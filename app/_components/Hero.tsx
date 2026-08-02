@@ -228,6 +228,12 @@ export default function Hero() {
         >
           On code,{" "}
           <span className="shine inline-block">vous grandissez.</span>
+          {/* Inside the h1 on purpose: the slogan carries the brand but no
+              keyword, so the descriptive line rides along in the same heading.
+              Visitors read the slogan first, crawlers get both. */}
+          <span className="mt-7 block text-[clamp(1.05rem,2.3vw,1.5rem)] font-medium leading-snug tracking-tight text-white/45">
+            Création de sites web et d&apos;applications au Québec.
+          </span>
         </motion.h1>
 
         <motion.p
@@ -236,9 +242,9 @@ export default function Hero() {
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="text-pretty mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60 sm:text-xl"
         >
-          Création de sites web et d&apos;applications sur mesure pour les
-          PME du Québec. Code production, esthétique hors du commun, suivi
-          client&nbsp;illimité.
+          Pour les entrepreneurs et les PME du Québec. Code production,
+          esthétique hors du commun, suivi client&nbsp;illimité — et des sites
+          conçus pour être trouvés sur Google comme dans les réponses des IA.
         </motion.p>
 
         {/* CTAs */}

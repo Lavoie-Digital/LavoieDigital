@@ -3,10 +3,11 @@ import Edge from "../_components/Edge";
 import PageNav from "../_components/PageNav";
 
 const DESCRIPTION =
-  "Suivi client illimité, esthétique hors du commun, code production : ce qu'on apporte que les autres agences web n'apportent pas. Studio indépendant à Québec, accessible et obsédé par la qualité.";
+  "Suivi client illimité, esthétique hors du commun, code production : ce qu'on apporte que les autres agences web du Québec n'apportent pas.";
 
 export const metadata: Metadata = {
-  title: "Différence — Pourquoi choisir Lavoie Digital",
+  // No brand name here — the root template already appends " — Lavoie Digital".
+  title: "Différence — pourquoi nous choisir",
   description: DESCRIPTION,
   alternates: { canonical: "/difference" },
   keywords: [

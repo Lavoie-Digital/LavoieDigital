@@ -93,7 +93,7 @@ export default function Footer() {
                 href="/creation-site-web-quebec"
                 className="link-underline text-white/70 hover:text-white"
               >
-                Création de site web à Québec
+                Création de site web au Québec
               </Link>
             </li>
             <li>
@@ -101,7 +101,7 @@ export default function Footer() {
                 href="/creation-application-web-quebec"
                 className="link-underline text-white/70 hover:text-white"
               >
-                Création d&apos;application web à Québec
+                Création d&apos;application web au Québec
               </Link>
             </li>
           </ul>

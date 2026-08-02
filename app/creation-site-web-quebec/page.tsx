@@ -4,12 +4,12 @@ import { SITE_WEB } from "../_components/landingData";
 
 // Kept near 155 characters — Google truncates the snippet past that.
 const DESCRIPTION =
-  "Création de site web à Québec : sites vitrines, boutiques en ligne et refontes codés sur mesure pour les PME. Livré en 2 semaines. Devis fixe, appel gratuit.";
+  "Création de site web au Québec : sites vitrines, boutiques en ligne et refontes codés sur mesure pour les PME. Livré en 2 semaines. Devis fixe, appel gratuit.";
 
 export const metadata: Metadata = {
   // Kept short: the root template appends " — Lavoie Digital", and Google
   // truncates around 60 characters. Selling points live in the description.
-  title: "Création de site web à Québec",
+  title: "Création de site web au Québec",
   description: DESCRIPTION,
   alternates: { canonical: "/creation-site-web-quebec" },
   keywords: [
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     "site web sur mesure Québec",
   ],
   openGraph: {
-    title: "Création de site web à Québec — Lavoie Digital",
+    title: "Création de site web au Québec — Lavoie Digital",
     description: DESCRIPTION,
     url: "/creation-site-web-quebec",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Création de site web à Québec — Lavoie Digital",
+    title: "Création de site web au Québec — Lavoie Digital",
     description: DESCRIPTION,
   },
 };
