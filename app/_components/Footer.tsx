@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const SOCIALS = [
   {
@@ -88,20 +89,20 @@ export default function Footer() {
           </p>
           <ul className="mt-4 space-y-2.5 text-[14px]">
             <li>
-              <a
+              <Link
                 href="/creation-site-web-quebec"
                 className="link-underline text-white/70 hover:text-white"
               >
                 Création de site web à Québec
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="/creation-application-web-quebec"
                 className="link-underline text-white/70 hover:text-white"
               >
                 Création d&apos;application web à Québec
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -111,12 +112,12 @@ export default function Footer() {
             Navigation
           </p>
           <ul className="mt-4 space-y-2.5 text-[14px]">
-            <li><a href="/services" className="link-underline text-white/70 hover:text-white">Services</a></li>
-            <li><a href="/travaux" className="link-underline text-white/70 hover:text-white">Travaux</a></li>
-            <li><a href="/approche" className="link-underline text-white/70 hover:text-white">Approche</a></li>
-            <li><a href="/difference" className="link-underline text-white/70 hover:text-white">Différence</a></li>
-            <li><a href="/a-propos" className="link-underline text-white/70 hover:text-white">À propos</a></li>
-            <li><a href="/booking" className="link-underline text-white/70 hover:text-white">Réserver</a></li>
+            <li><Link href="/services" className="link-underline text-white/70 hover:text-white">Services</Link></li>
+            <li><Link href="/travaux" className="link-underline text-white/70 hover:text-white">Travaux</Link></li>
+            <li><Link href="/approche" className="link-underline text-white/70 hover:text-white">Approche</Link></li>
+            <li><Link href="/difference" className="link-underline text-white/70 hover:text-white">Différence</Link></li>
+            <li><Link href="/a-propos" className="link-underline text-white/70 hover:text-white">À propos</Link></li>
+            <li><Link href="/booking" className="link-underline text-white/70 hover:text-white">Réserver</Link></li>
           </ul>
         </div>
 
