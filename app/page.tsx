@@ -1,8 +1,9 @@
-import ExplorePanels from "./_components/ExplorePanels";
 import Faq from "./_components/Faq";
 import { FAQ_ITEMS } from "./_components/faqData";
 import Hero from "./_components/Hero";
 import PageNav from "./_components/PageNav";
+import Reviews from "./_components/Reviews";
+import WorkPreview from "./_components/WorkPreview";
 
 const faqJsonLd = {
   "@context": "https://schema.org",
@@ -25,14 +26,13 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <Hero />
-      <ExplorePanels />
+      {/* Preuve avant la FAQ : les travaux montrent, les avis confirment. */}
+      <WorkPreview />
+      <Reviews />
       <Faq />
-      {/* Mobile only — desktop has the active-content area in ExplorePanels */}
-      <div className="md:hidden">
-        <PageNav
-          next={{ href: "/services", label: "Services", eyebrow: "Suivant — 01" }}
-        />
-      </div>
+      <PageNav
+        next={{ href: "/services", label: "Services", eyebrow: "Suivant — 01" }}
+      />
     </>
   );
 }

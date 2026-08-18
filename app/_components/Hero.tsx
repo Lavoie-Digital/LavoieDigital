@@ -1,19 +1,11 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useScroll,
-} from "motion/react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
-import { useRef } from "react";
+import ConstellationField from "./ConstellationField";
 import MagneticButton from "./MagneticButton";
 
 export default function Hero() {
-  const heroRef = useRef<HTMLElement>(null);
-
   // Mouse parallax
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -28,15 +20,6 @@ export default function Hero() {
   const orb2X = useTransform(smx, [-0.5, 0.5], [30, -30]);
   const orb2Y = useTransform(smy, [-0.5, 0.5], [20, -20]);
 
-  // Scroll-driven zoom-out on the logo card
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-
   const onMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
     mx.set((e.clientX - r.left) / r.width - 0.5);
@@ -47,7 +30,6 @@ export default function Hero() {
 
   return (
     <section
-      ref={heroRef}
       onMouseMove={onMouseMove}
       onMouseLeave={() => {
         mx.set(0);
@@ -55,13 +37,24 @@ export default function Hero() {
       }}
       className="relative min-h-[100svh] w-full overflow-hidden"
     >
+      {/* Maille de points blancs réactive au curseur */}
+      <ConstellationField />
+
+      {/* Scrim central : la maille reste lisible sur les bords, le titre garde
+          son contraste au centre. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          background:
+            "radial-gradient(ellipse 62% 52% at 50% 50%, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.45) 45%, transparent 72%)",
+        }}
+      />
+
       {/* Mouse spotlight overlay */}
       <div className="spotlight pointer-events-none absolute inset-0 z-[1]" />
 
-      <motion.div
-        style={{ scale: heroScale, opacity: heroOpacity, y: heroY }}
-        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col items-center justify-center px-6 pt-28 pb-20 text-center sm:px-10"
-      >
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col items-center justify-center px-6 pt-28 pb-20 text-center sm:px-10">
         {/* Tech masthead — live signal · metadata · cursor */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -293,7 +286,7 @@ export default function Hero() {
             />
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
