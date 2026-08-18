@@ -46,6 +46,10 @@ Quatre projets livrés et en ligne, chacun avec son étude de cas :
 - Facebook: https://www.facebook.com/profile.php?id=61590179200262
 - Réservation d'appel découverte gratuit: https://lavoiedigital.ca/booking
 
+## Confidentialité
+
+- [Politique de confidentialité](https://lavoiedigital.ca/politique-de-confidentialite): Conforme à la Loi 25 du Québec. Le site n'utilise aucun témoin de suivi, aucun outil de mesure d'audience et aucun pixel publicitaire. Seuls les renseignements soumis au formulaire de réservation sont recueillis, uniquement pour répondre à la demande. Responsable de la protection des renseignements personnels : Xavier Lavoie (info@lavoiedigital.ca).
+
 ## À propos
 
 - Fondateur: Xavier Lavoie

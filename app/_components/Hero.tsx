@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
 import ConstellationField from "./ConstellationField";
+import { GoogleRatingPill } from "./GoogleRating";
 import MagneticButton from "./MagneticButton";
 
 export default function Hero() {
@@ -240,12 +241,23 @@ export default function Hero() {
           conçus pour être trouvés sur Google comme dans les réponses des IA.
         </motion.p>
 
+        {/* Preuve sociale juste avant les CTA. Note et nombre d'avis sont
+            calculés depuis les avis Google réels. */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-10"
+        >
+          <GoogleRatingPill />
+        </motion.div>
+
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 flex flex-col items-center gap-4 sm:flex-row"
+          transition={{ duration: 0.9, delay: 0.68, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
         >
           <MagneticButton href="/booking">
             Réserver un appel

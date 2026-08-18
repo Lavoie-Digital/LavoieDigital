@@ -34,5 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
     })),
     { url: `${BASE}/booking`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    // Page légale : indexable pour la conformité Loi 25, mais sans poids SEO.
+    {
+      url: `${BASE}/politique-de-confidentialite`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 }

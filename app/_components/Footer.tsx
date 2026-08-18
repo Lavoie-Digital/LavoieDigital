@@ -149,7 +149,16 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-3 border-t border-white/8 px-6 py-6 text-[12px] text-white/40 sm:flex-row sm:items-center sm:px-10">
-        <p>© {new Date().getFullYear()} Lavoie Digital. Tous droits réservés.</p>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <p>© {new Date().getFullYear()} Lavoie Digital. Tous droits réservés.</p>
+          <span className="hidden text-white/15 sm:inline">·</span>
+          <Link
+            href="/politique-de-confidentialite"
+            className="link-underline text-white/55 hover:text-white"
+          >
+            Politique de confidentialité
+          </Link>
+        </div>
         <p className="font-mono uppercase tracking-[0.22em]">
           Conçu &amp; codé à Québec
         </p>

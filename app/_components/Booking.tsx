@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
 import { useState } from "react";
 import { SectionHeader } from "./Services";
 
@@ -388,6 +389,22 @@ function ContactStep({
           multiline
         />
       </div>
+
+      {/* Avis de collecte — la Loi 25 exige d'informer la personne des fins de
+          la collecte au moment où elle a lieu, pas seulement dans la politique. */}
+      <p className="mt-6 text-[13px] leading-relaxed text-white/40">
+        En envoyant ce formulaire, vous consentez à ce qu&apos;on utilise ces
+        renseignements pour répondre à votre demande et cadrer votre projet.
+        Aucun partage à des fins commerciales, retrait du consentement possible
+        en tout temps.{" "}
+        <Link
+          href="/politique-de-confidentialite"
+          className="link-underline text-white/65 hover:text-white"
+        >
+          Politique de confidentialité
+        </Link>
+        .
+      </p>
     </div>
   );
 }
