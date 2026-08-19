@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { trackLeadSubmitted } from "./analyticsEvents";
 import { SectionHeader } from "./Services";
 
 type FormData = {
@@ -159,6 +160,13 @@ export default function Booking() {
       } | null;
       if (!res.ok) throw new Error(body?.error || "Erreur lors de l'envoi");
       setDone(true);
+      // Conversion mesurée seulement si la personne a accepté la finalité
+      // correspondante, et sans aucune donnée nominative.
+      trackLeadSubmitted({
+        projectType: data.projectType,
+        budget: data.budget,
+        timeline: data.timeline,
+      });
       try {
         sessionStorage.removeItem(DRAFT_KEY);
       } catch {

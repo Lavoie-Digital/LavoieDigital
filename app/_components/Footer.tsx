@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import ConsentSettingsButton from "./ConsentSettingsButton";
 
 const SOCIALS = [
   {
@@ -158,6 +159,10 @@ export default function Footer() {
           >
             Politique de confidentialité
           </Link>
+          <span className="hidden text-white/15 sm:inline">·</span>
+          {/* Loi 25 : le consentement doit rester révocable, donc joignable
+              depuis n'importe quelle page. */}
+          <ConsentSettingsButton />
         </div>
         <p className="font-mono uppercase tracking-[0.22em]">
           Conçu &amp; codé à Québec

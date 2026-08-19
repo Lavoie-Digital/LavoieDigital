@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ConsentSettingsButton from "../_components/ConsentSettingsButton";
 import { SectionHeader } from "../_components/Services";
 
 const DESCRIPTION =
-  "Politique de confidentialité de Lavoie Digital, conforme à la Loi 25 du Québec : renseignements recueillis, finalités, consentement, conservation, droits et recours.";
+  "Politique de confidentialité de Lavoie Digital, conforme à la Loi 25 du Québec : renseignements recueillis, témoins, finalités, consentement, conservation, droits et recours.";
 
 /** Date de la dernière révision de fond. À mettre à jour à chaque modification. */
-const LAST_UPDATED = "18 août 2026";
+const LAST_UPDATED = "19 août 2026";
 
 export const metadata: Metadata = {
   // Pas de nom de marque ici — le template racine ajoute déjà " — Lavoie Digital".
@@ -34,16 +35,16 @@ export const metadata: Metadata = {
 
 const SUMMARY = [
   {
-    title: "Aucun traceur",
-    body: "Pas de Google Analytics, pas de pixel publicitaire, pas de témoin de suivi. Les polices sont hébergées sur notre serveur.",
+    title: "Rien avant votre accord",
+    body: "Aucun témoin de mesure ni de publicité n'est déposé tant que vous n'avez pas accepté. Refuser prend un clic et ne retire aucune fonctionnalité.",
   },
   {
     title: "Ce que vous nous donnez",
     body: "Uniquement ce que vous inscrivez au formulaire ou nous écrivez : nom, courriel, entreprise, téléphone, contexte du projet.",
   },
   {
-    title: "Un seul usage",
-    body: "Vous répondre et cadrer votre projet. Aucune vente, aucune location, aucun échange de vos renseignements.",
+    title: "Jamais revendu",
+    body: "Vos renseignements servent à vous répondre et à cadrer votre projet. Aucune vente, aucune location, aucun échange.",
   },
   {
     title: "Vos droits",
@@ -147,6 +148,26 @@ const SECTIONS: Section[] = [
           identifier, ni pour construire un profil.
         </P>
 
+        <SubTitle>Données de navigation — seulement si vous acceptez</SubTitle>
+        <P>
+          Si, et seulement si, vous acceptez la catégorie correspondante dans la
+          bannière de témoins, Google Analytics 4 et Google Ads recueillent des
+          données de navigation : pages consultées, durée de la visite, page de
+          provenance, campagne publicitaire d&apos;origine, type d&apos;appareil,
+          navigateur, langue et localisation approximative (ville ou région,
+          déduite de l&apos;adresse IP puis tronquée par Google). Ces données
+          sont associées à un identifiant technique aléatoire, pas à votre nom.
+        </P>
+        <P>
+          Le détail des témoins, de leur durée et du fonctionnement du refus se
+          trouve à la{" "}
+          <a href="#temoins" className="link-underline text-white/85">
+            section 05
+          </a>
+          . Tant que vous n&apos;avez pas accepté, rien de tout cela
+          n&apos;est recueilli.
+        </P>
+
         <SubTitle>Ce que nous ne recueillons pas</SubTitle>
         <P>
           Nous ne recueillons aucun renseignement de paiement sur ce site,
@@ -175,8 +196,20 @@ const SECTIONS: Section[] = [
             "Assurer le suivi de la relation d'affaires : échéancier, livrables, facturation et soutien après la mise en ligne.",
             "Respecter nos obligations légales, fiscales et comptables.",
             "Maintenir la sécurité du site, prévenir la fraude et les envois automatisés abusifs.",
+            "Avec votre consentement seulement : mesurer la fréquentation du site pour l'améliorer, et évaluer l'efficacité de nos annonces publicitaires.",
           ]}
         />
+        <P>
+          Les deux dernières finalités reposent sur des bases différentes : la
+          sécurité relève de notre intérêt légitime à protéger le site, tandis
+          que la mesure d&apos;audience et la publicité dépendent uniquement de
+          votre consentement, demandé séparément pour chacune et révocable en
+          tout temps (voir la{" "}
+          <a href="#temoins" className="link-underline text-white/85">
+            section 05
+          </a>
+          ).
+        </P>
         <P>
           Nous n&apos;utilisons jamais vos renseignements à d&apos;autres fins
           que celles-ci sans obtenir au préalable votre consentement distinct.
@@ -212,11 +245,24 @@ const SECTIONS: Section[] = [
           contrat ou l&apos;obligation subsiste.
         </P>
         <P>
+          Le consentement aux témoins de mesure d&apos;audience et de publicité
+          est distinct de celui-ci : il se donne, se refuse et se retire dans la
+          bannière prévue à cette fin, catégorie par catégorie. Remplir le
+          formulaire n&apos;autorise pas les traceurs, et accepter les traceurs
+          ne nous autorise pas à vous démarcher. Voir la{" "}
+          <a href="#temoins" className="link-underline text-white/85">
+            section 05
+          </a>
+          .
+        </P>
+        <P>
           Vous pouvez retirer votre consentement en tout temps, sans
-          justification, en écrivant à info@lavoiedigital.ca. Le retrait ne
-          compromet pas la légalité du traitement effectué avant celui-ci. Si
-          le retrait nous empêche de poursuivre un mandat en cours, nous vous
-          en informerons clairement avant d&apos;y donner suite.
+          justification, en écrivant à info@lavoiedigital.ca — ou, pour les
+          témoins, par le lien{" "}
+          <strong className="text-white/90">Gérer les témoins</strong> du pied de
+          page. Le retrait ne compromet pas la légalité du traitement effectué
+          avant celui-ci. Si le retrait nous empêche de poursuivre un mandat en
+          cours, nous vous en informerons clairement avant d&apos;y donner suite.
         </P>
       </>
     ),
@@ -224,36 +270,126 @@ const SECTIONS: Section[] = [
   {
     id: "temoins",
     num: "05",
-    title: "Témoins, traceurs et profilage",
+    title: "Témoins, traceurs et consentement",
     body: (
       <>
         <Callout>
-          Ce site ne dépose aucun témoin (cookie) de suivi, de mesure
-          d&apos;audience ou de publicité. Aucune bannière de consentement
-          n&apos;est nécessaire parce qu&apos;il n&apos;y a rien à consentir.
+          Aucun témoin de mesure d&apos;audience ou de publicité n&apos;est
+          déposé avant que vous ayez accepté. Tant que vous n&apos;avez pas
+          choisi, ou si vous refusez, aucune requête ne part vers les serveurs
+          de Google : la balise n&apos;est pas simplement bridée, elle
+          n&apos;est pas chargée du tout.
         </Callout>
-        <P>Concrètement, cela signifie que le site n&apos;utilise pas :</P>
-        <List
-          items={[
-            "Google Analytics ou tout autre outil de mesure d'audience",
-            "Le pixel Meta, les balises LinkedIn ou tout autre traceur publicitaire",
-            "Des outils d'enregistrement de session ou de cartes de chaleur",
-            "Des témoins tiers déposés par des régies publicitaires",
+
+        <SubTitle>Les trois catégories</SubTitle>
+        <P>
+          Conformément à l&apos;article 8.1 de la Loi, toute technologie
+          permettant de vous identifier, de vous localiser ou d&apos;effectuer un
+          profilage est désactivée par défaut. Conformément à l&apos;article 14,
+          chaque finalité vous est présentée séparément et se refuse séparément :
+          accepter la mesure d&apos;audience ne déclenche pas la balise
+          publicitaire.
+        </P>
+        <Table
+          head={["Catégorie", "À quoi elle sert", "Par défaut"]}
+          rows={[
+            [
+              "Strictement nécessaire",
+              "Mémoriser le choix que vous faites dans la bannière. Sans cette catégorie, la question vous serait reposée à chaque page.",
+              "Actif — aucun consentement requis",
+            ],
+            [
+              "Mesure d'audience",
+              "Compter les visites, savoir quelles pages sont consultées et par quel canal vous êtes arrivé, pour améliorer le site.",
+              "Refusé",
+            ],
+            [
+              "Publicité",
+              "Savoir quelles annonces mènent à une demande de soumission, afin de ne pas payer pour de la publicité inefficace.",
+              "Refusé",
+            ],
+          ]}
+        />
+
+        <SubTitle>Les témoins concernés</SubTitle>
+        <Table
+          head={["Témoin", "Déposé par", "Finalité", "Durée"]}
+          rows={[
+            [
+              "ld_consent",
+              "Lavoie Digital (première partie)",
+              "Conserve votre décision et sa date. Ne contient aucun identifiant unique et ne permet pas de vous reconnaître.",
+              "6 mois",
+            ],
+            [
+              "_ga, _ga_*",
+              "Google Analytics 4",
+              "Distingue les appareils afin de ne pas compter deux fois la même visite. Déposé seulement si vous acceptez la mesure d'audience.",
+              "24 mois",
+            ],
+            [
+              "_gcl_au",
+              "Google Ads",
+              "Attribue une demande de soumission au clic publicitaire qui l'a précédée. Déposé seulement si vous acceptez la publicité.",
+              "90 jours",
+            ],
           ]}
         />
         <P>
-          Les polices de caractères sont hébergées directement sur notre
-          serveur : votre navigateur n&apos;effectue donc aucune requête vers
-          les serveurs de Google lorsque vous consultez une page.
+          Au terme de six mois, le témoin de consentement expire et la question
+          vous est reposée : nous ne présumons pas d&apos;un accord donné
+          indéfiniment.
         </P>
+
+        <SubTitle>Comment votre choix est appliqué</SubTitle>
         <P>
-          Conformément à l&apos;article 8.1 de la Loi, toute technologie
-          permettant de vous identifier, de vous localiser ou d&apos;effectuer
-          un profilage serait désactivée par défaut. Nous ne pratiquons aucun
-          profilage, aucune publicité ciblée et aucune segmentation
-          comportementale. Si nous devions un jour ajouter un outil de mesure,
-          cette politique serait mise à jour et votre consentement serait
-          recueilli au préalable, de façon distincte et révocable.
+          Le refus n&apos;est pas déclaratif, il est technique. Concrètement :
+        </P>
+        <List
+          items={[
+            "La librairie de Google (gtag.js) n'est ajoutée à la page qu'après une acceptation. Un refus signifie zéro connexion à googletagmanager.com.",
+            "Le mode Consentement v2 de Google est initialisé avec tous les signaux refusés — stockage publicitaire, données publicitaires, personnalisation, stockage de mesure — avant toute autre commande.",
+            "La suppression des données publicitaires (ads_data_redaction) est activée : les identifiants publicitaires sont retirés des requêtes tant que la publicité est refusée.",
+            "Les signaux Google (allow_google_signals) et la personnalisation publicitaire restent désactivés sans accord explicite pour la publicité : aucun recoupement entre vos appareils, aucune audience de remarketing.",
+            "Votre adresse IP est tronquée par Google avant d'être stockée. Nous ne recevons jamais d'adresse IP dans nos rapports.",
+            "Un retrait supprime immédiatement les témoins déjà déposés par Google, en plus de couper les envois.",
+          ]}
+        />
+
+        <SubTitle>Modifier ou retirer votre consentement</SubTitle>
+        <P>
+          Votre choix est révocable en tout temps, sans justification et sans
+          conséquence sur votre utilisation du site. Le lien{" "}
+          <strong className="text-white/90">Gérer les témoins</strong> figure
+          dans le pied de page de chaque page, ou utilisez le bouton
+          ci-dessous :
+        </P>
+        <div className="mt-5">
+          <ConsentSettingsButton className="inline-flex items-center justify-center rounded-full border border-white/12 bg-white/[0.04] px-6 py-3 text-[14px] font-medium tracking-tight text-white/85 transition-colors duration-300 hover:border-white/25 hover:bg-white/[0.08] hover:text-white">
+            Gérer mes préférences de témoins
+          </ConsentSettingsButton>
+        </div>
+        <P>
+          Vous pouvez aussi bloquer ou effacer les témoins depuis les réglages de
+          votre navigateur. Si vous supprimez le témoin{" "}
+          <code className="font-mono text-[13px] text-white/70">ld_consent</code>
+          , la bannière réapparaîtra à votre prochaine visite.
+        </P>
+
+        <SubTitle>Ce que nous n&apos;utilisons pas</SubTitle>
+        <List
+          items={[
+            "Aucun pixel Meta (Facebook, Instagram), aucune balise LinkedIn, aucune régie publicitaire tierce.",
+            "Aucun outil d'enregistrement de session ni de carte de chaleur : nous ne rejouons pas vos mouvements de souris ni vos frappes au clavier.",
+            "Aucune segmentation comportementale, aucun score, aucun profil publicitaire constitué à votre sujet.",
+            "Aucun mur de témoins : le contenu du site est intégralement accessible que vous acceptiez ou non.",
+            "Aucune vente ni location de données de navigation.",
+          ]}
+        />
+        <P>
+          Les polices de caractères sont hébergées directement sur notre serveur.
+          Votre navigateur n&apos;effectue donc aucune requête vers les serveurs
+          de Google pour afficher une page, même après acceptation.
         </P>
       </>
     ),
@@ -284,8 +420,27 @@ const SECTIONS: Section[] = [
               "Hébergement du site, diffusion des pages et journaux techniques de sécurité.",
               "États-Unis (réseau mondial)",
             ],
+            [
+              "Google LLC — Analytics 4",
+              "Mesure de la fréquentation du site. Uniquement si vous avez accepté la catégorie « mesure d'audience ». Aucune donnée nominative ne lui est transmise.",
+              "États-Unis (réseau mondial)",
+            ],
+            [
+              "Google LLC — Ads",
+              "Mesure des conversions publicitaires. Uniquement si vous avez accepté la catégorie « publicité ». Aucune donnée nominative ne lui est transmise.",
+              "États-Unis (réseau mondial)",
+            ],
           ]}
         />
+        <P>
+          Les deux dernières lignes ne s&apos;activent qu&apos;avec votre
+          consentement : en son absence, aucune donnée ne quitte votre navigateur
+          en direction de Google. Nous ne transmettons jamais votre nom, votre
+          courriel ni votre numéro de téléphone à ces outils — même après
+          acceptation, seules les caractéristiques non nominatives de la demande
+          (type de projet, fourchette budgétaire, échéancier) accompagnent
+          l&apos;événement de conversion.
+        </P>
         <P>
           Nous pouvons également communiquer des renseignements personnels sans
           votre consentement lorsque la loi l&apos;exige ou le permet :
@@ -322,12 +477,24 @@ const SECTIONS: Section[] = [
           Comme l&apos;exige l&apos;article 17 de la Loi, nous avons évalué
           avant toute communication hors Québec les facteurs relatifs à la vie
           privée en tenant compte de la sensibilité des renseignements
-          (coordonnées d&apos;affaires, faible sensibilité), de la finalité de
-          leur utilisation, des mesures de protection en place et du régime
-          juridique applicable. Nous avons conclu que les renseignements
-          bénéficient d&apos;une protection adéquate. Chaque communication est
-          par ailleurs encadrée par une entente écrite prévoyant des
-          obligations de confidentialité et de sécurité.
+          (coordonnées d&apos;affaires et données de navigation, faible
+          sensibilité), de la finalité de leur utilisation, des mesures de
+          protection en place et du régime juridique applicable. Nous avons
+          conclu que les renseignements bénéficient d&apos;une protection
+          adéquate. Chaque communication est par ailleurs encadrée par une
+          entente écrite prévoyant des obligations de confidentialité et de
+          sécurité.
+        </P>
+        <P>
+          La communication vers Google LLC, aux fins de mesure d&apos;audience et
+          de publicité, ne se produit que si vous y avez consenti dans la
+          bannière de témoins. Refuser, ou simplement ne rien choisir, signifie
+          qu&apos;aucune donnée vous concernant ne quitte le Québec en direction
+          de Google. Vous pouvez revenir sur ce choix en tout temps à la{" "}
+          <a href="#temoins" className="link-underline text-white/85">
+            section 05
+          </a>
+          .
         </P>
         <P>
           Cette évaluation est révisée lorsque nous changeons de prestataire ou
@@ -375,6 +542,16 @@ const SECTIONS: Section[] = [
               "Journaux techniques du serveur",
               "12 mois au maximum",
               "Suppression automatique",
+            ],
+            [
+              "Choix de consentement aux témoins",
+              "6 mois",
+              "Expiration du témoin, la question est reposée",
+            ],
+            [
+              "Données de mesure d'audience (Google Analytics 4)",
+              "14 mois — la durée la plus courte offerte par l'outil",
+              "Suppression automatique par Google",
             ],
           ]}
         />
@@ -715,7 +892,7 @@ export default function PolitiqueConfidentialitePage() {
             <span className="hidden text-white/15 sm:inline">·</span>
             <span>Loi 25 · RLRQ c. P-39.1</span>
             <span className="hidden text-white/15 sm:inline">·</span>
-            <span>Lecture — 9 min</span>
+            <span>Lecture — 11 min</span>
           </div>
 
           {/* Résumé en langage clair — la Loi 25 exige une politique rédigée en
@@ -866,8 +1043,8 @@ function Table({
   head = ["Prestataire", "Rôle", "Emplacement"],
   rows,
 }: {
-  head?: [string, string, string];
-  rows: [string, string, string][];
+  head?: string[];
+  rows: string[][];
 }) {
   return (
     <div className="mt-6 overflow-x-auto rounded-2xl border border-white/10">
@@ -887,15 +1064,18 @@ function Table({
         <tbody>
           {rows.map((row) => (
             <tr key={row[0]} className="align-top">
-              <td className="border-b border-white/8 px-5 py-4 text-[14px] font-medium text-white/90">
-                {row[0]}
-              </td>
-              <td className="border-b border-white/8 px-5 py-4 text-[14px] leading-relaxed text-white/55">
-                {row[1]}
-              </td>
-              <td className="border-b border-white/8 px-5 py-4 text-[14px] text-white/55">
-                {row[2]}
-              </td>
+              {row.map((cell, i) => (
+                <td
+                  key={i}
+                  className={
+                    i === 0
+                      ? "border-b border-white/8 px-5 py-4 text-[14px] font-medium text-white/90"
+                      : "border-b border-white/8 px-5 py-4 text-[14px] leading-relaxed text-white/55"
+                  }
+                >
+                  {cell}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>

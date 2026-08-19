@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import AmbientBackdrop from "./_components/AmbientBackdrop";
+import ConsentProvider from "./_components/ConsentProvider";
 import Footer from "./_components/Footer";
 import Nav from "./_components/Nav";
 import "./globals.css";
@@ -342,12 +343,17 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full bg-black text-[var(--fg)] flex flex-col grain">
-        <AmbientBackdrop />
-        <Nav />
-        <main id="top" className="relative z-10 flex-1">
-          {children}
-        </main>
-        <Footer />
+        {/* Enveloppe tout le site : c'est ce fournisseur qui décide si les
+            balises Google se chargent, et il alimente le bouton « Gérer les
+            témoins » du pied de page. */}
+        <ConsentProvider>
+          <AmbientBackdrop />
+          <Nav />
+          <main id="top" className="relative z-10 flex-1">
+            {children}
+          </main>
+          <Footer />
+        </ConsentProvider>
       </body>
     </html>
   );
