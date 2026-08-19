@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     "PME Québec site web",
     "application sur mesure Québec",
     "site web premium",
-    "branding digital Québec",
+    "automatisation IA Québec",
     "création application web Québec",
     "refonte site web Québec",
     "SaaS Québec",

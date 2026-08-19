@@ -14,7 +14,7 @@ Lavoie Digital est un studio indépendant fondé par Xavier Lavoie en 2026. Le s
 
 - [Création de site web au Québec](https://lavoiedigital.ca/creation-site-web-quebec): Sites vitrines, boutiques en ligne, pages de vente et refontes codés sur mesure. Livraison en environ 2 semaines. Devis fixe après un appel découverte gratuit.
 - [Création d'application web au Québec](https://lavoiedigital.ca/creation-application-web-quebec): Plateformes SaaS, outils internes, portails clients, tableaux de bord et intégration d'intelligence artificielle. Mise en service en environ 4 semaines. Le client est propriétaire du code et des données.
-- [Services](https://lavoiedigital.ca/services): Applications full-stack (SaaS, dashboards, outils internes), sites web premium (vitrine, e-commerce, landing), branding digital (identité, design system) et suivi de croissance continu.
+- [Services](https://lavoiedigital.ca/services): Applications full-stack (SaaS, dashboards, outils internes), sites web premium (vitrine, e-commerce, landing), automatisation et intégration d'intelligence artificielle (assistants sur vos données, tri de demandes, extraction documentaire) et référencement SEO et AEO (Google, ChatGPT, Perplexity, aperçus IA, recherche locale).
 ## Réalisations
 
 Quatre projets livrés et en ligne, chacun avec son étude de cas :

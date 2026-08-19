@@ -4,11 +4,12 @@ import { NextResponse } from "next/server";
 const PROJECT_TYPE_LABEL: Record<string, string> = {
   app: "Application full-stack",
   site: "Site web premium",
-  branding: "Branding digital",
+  ia: "Automatisation & IA",
   autre: "Autre projet",
 };
 
 const BUDGET_LABEL: Record<string, string> = {
+  unsure: "Pas encore défini",
   "5k": "Moins de 5 000 $",
   "5-15k": "5 000 — 15 000 $",
   "15-40k": "15 000 — 40 000 $",
@@ -31,7 +32,14 @@ type BookingPayload = {
   company?: string;
   phone?: string;
   message?: string;
+  /** Champ leurre : rempli uniquement par un robot. */
+  website?: string;
+  /** Temps de remplissage mesuré côté client, en millisecondes. */
+  elapsedMs?: number;
 };
+
+/** En deçà, c'est un robot : personne ne remplit quatre étapes en trois secondes. */
+const MIN_FILL_MS = 3000;
 
 function escapeHtml(s: string) {
   return s
@@ -44,9 +52,37 @@ function escapeHtml(s: string) {
 
 export async function POST(request: Request) {
   try {
-    const data = (await request.json()) as BookingPayload;
+    const payload = (await request.json()) as BookingPayload;
 
-    if (!data?.email || !data?.name) {
+    // Robots : on répond « ok » sans rien envoyer. Un refus explicite ne ferait
+    // qu'indiquer au script quelle heuristique contourner.
+    if (payload.website) {
+      console.warn("[booking] honeypot déclenché — ignoré");
+      return NextResponse.json({ ok: true });
+    }
+    // On ne rejette que sur une valeur explicitement trop basse. Si le champ
+    // manque, on laisse passer : perdre un vrai lead à cause d'un bogue client
+    // coûte bien plus cher que laisser filer un pourriel.
+    if (
+      typeof payload.elapsedMs === "number" &&
+      payload.elapsedMs < MIN_FILL_MS
+    ) {
+      console.warn(`[booking] soumission en ${payload.elapsedMs}ms — ignorée`);
+      return NextResponse.json({ ok: true });
+    }
+
+    // Les espaces de bord viennent du collage et de la saisie mobile : ils
+    // feraient passer un nom de deux espaces pour un nom valide.
+    const data: BookingPayload = {
+      ...payload,
+      name: payload.name?.trim(),
+      email: payload.email?.trim(),
+      company: payload.company?.trim(),
+      phone: payload.phone?.trim(),
+      message: payload.message?.trim(),
+    };
+
+    if (!data.email || !data.name) {
       return NextResponse.json(
         { error: "Nom et courriel requis." },
         { status: 400 },
@@ -149,31 +185,26 @@ export async function POST(request: Request) {
       signature: "Xavier Lavoie — Lavoie Digital",
     });
 
-    const [notifResult, confirmResult] = await Promise.allSettled([
-      sgMail.send({
-        to,
-        from,
-        replyTo: data.email,
-        subject: notifSubject,
-        text: notifText,
-        html: notifHtml,
-      }),
-      sgMail.send({
-        to: data.email,
-        from,
-        subject: confirmSubject,
-        text: confirmText,
-        html: confirmHtml,
-      }),
-    ]);
-
-    if (notifResult.status === "fulfilled") {
-      const r = notifResult.value?.[0];
+    // Séquentiel et non en parallèle : la notification est le seul envoi qui
+    // fait réellement exister le lead. Tant qu'elle n'est pas partie, on
+    // n'accuse pas réception au client — sinon il repart rassuré alors que la
+    // demande n'existe nulle part ailleurs que dans les journaux.
+    try {
+      const r = (
+        await sgMail.send({
+          to,
+          from,
+          replyTo: data.email,
+          subject: notifSubject,
+          text: notifText,
+          html: notifHtml,
+        })
+      )[0];
       console.log(
         `[booking] notif → ${to} status=${r?.statusCode ?? "?"} messageId=${r?.headers?.["x-message-id"] ?? "?"}`,
       );
-    } else {
-      const err = notifResult.reason as {
+    } catch (e) {
+      const err = e as {
         response?: { body?: unknown };
         message?: string;
         code?: number;
@@ -183,16 +214,32 @@ export async function POST(request: Request) {
         err.code,
         err.message,
         JSON.stringify(err.response?.body ?? {}),
+        // Dernier filet : la demande complète reste lisible dans les journaux.
+        JSON.stringify(data),
+      );
+      return NextResponse.json(
+        { error: "L'envoi a échoué de notre côté." },
+        { status: 500 },
       );
     }
 
-    if (confirmResult.status === "fulfilled") {
-      const r = confirmResult.value?.[0];
+    // L'accusé de réception est un confort : s'il échoue, le lead est déjà
+    // arrivé, donc on ne fait pas repartir la personne dans le formulaire.
+    try {
+      const r = (
+        await sgMail.send({
+          to: data.email,
+          from,
+          subject: confirmSubject,
+          text: confirmText,
+          html: confirmHtml,
+        })
+      )[0];
       console.log(
         `[booking] confirm → ${data.email} status=${r?.statusCode ?? "?"} messageId=${r?.headers?.["x-message-id"] ?? "?"}`,
       );
-    } else {
-      const err = confirmResult.reason as {
+    } catch (e) {
+      const err = e as {
         response?: { body?: unknown };
         message?: string;
         code?: number;
@@ -202,18 +249,6 @@ export async function POST(request: Request) {
         err.code,
         err.message,
         JSON.stringify(err.response?.body ?? {}),
-      );
-    }
-
-    // If notification failed but confirmation succeeded, still return ok so the
-    // client gets feedback — we have the lead data in the logs at minimum.
-    if (
-      notifResult.status === "rejected" &&
-      confirmResult.status === "rejected"
-    ) {
-      return NextResponse.json(
-        { error: "Erreur lors de l'envoi du courriel." },
-        { status: 500 },
       );
     }
 

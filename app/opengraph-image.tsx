@@ -139,7 +139,7 @@ export default async function Image() {
                 color: "rgba(255,255,255,0.4)",
               }}
             >
-              Applications full-stack · Sites web premium · Branding
+              Applications full-stack · Sites web premium · Automatisation IA
             </div>
             <div
               style={{

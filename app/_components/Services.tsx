@@ -48,12 +48,12 @@ const SERVICES: Service[] = [
   },
   {
     num: "03",
-    title: "Branding digital",
-    desc: "Identité visuelle, design system et refonte UX/UI pour donner à votre marque la finesse qu'elle mérite.",
+    title: "Automatisation & IA",
+    desc: "Intégration d'intelligence artificielle et automatisation du travail répétitif, pour que votre équipe arrête de faire à la main ce qu'un système fait mieux.",
     bullets: [
-      "Logo, palette, typographie",
-      "Composants réutilisables",
-      "Charte d'animations",
+      "Assistants branchés sur vos données",
+      "Tri de demandes, extraction de documents",
+      "Connexion de vos outils entre eux",
     ],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className={ICON_CLASS}>
@@ -63,17 +63,18 @@ const SERVICES: Service[] = [
   },
   {
     num: "04",
-    title: "Suivi & croissance",
-    desc: "Itérations continues, A/B testing, analytics et accompagnement stratégique mois après mois.",
+    title: "Référencement & visibilité IA",
+    desc: "Être trouvé sur Google, mais aussi dans ChatGPT, Perplexity et les aperçus IA — là où vos clients cherchent maintenant.",
     bullets: [
-      "Suivi client illimité",
-      "Rapports mensuels",
-      "Optimisations en continu",
+      "SEO technique et contenu",
+      "Données structurées et AEO",
+      "Fiche Google et recherche locale",
     ],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className={ICON_CLASS}>
-        <path d="M3 17l5-5 4 4 8-9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M14 7h6v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="10.5" cy="10.5" r="6" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M15 15l5.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M19 2.5l.75 1.75L21.5 5l-1.75.75L19 7.5l-.75-1.75L16.5 5l1.75-.75L19 2.5z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
       </svg>
     ),
   },

@@ -3,7 +3,7 @@ import PageNav from "../_components/PageNav";
 import Services from "../_components/Services";
 
 const DESCRIPTION =
-  "Applications full-stack, sites web premium, branding digital et suivi continu pour les PME du Québec. Du concept à la mise en marché.";
+  "Applications full-stack, sites web premium, automatisation IA et référencement Google pour les PME du Québec. Du concept à la mise en marché.";
 
 export const metadata: Metadata = {
   title: "Services — sites web et applications",
@@ -15,7 +15,8 @@ export const metadata: Metadata = {
     "site web sur mesure PME",
     "agence web Québec services",
     "développement SaaS Québec",
-    "branding digital Québec",
+    "automatisation IA Québec",
+    "intégration intelligence artificielle PME",
     "plateforme B2B Québec",
   ],
   openGraph: {

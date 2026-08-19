@@ -29,7 +29,7 @@ const SECTIONS: Section[] = [
     bullets: [
       "Applications full-stack",
       "Sites web premium",
-      "Branding digital",
+      "Automatisation & IA",
     ],
     Visual: GridVisual,
     Icon: ServicesIcon,
