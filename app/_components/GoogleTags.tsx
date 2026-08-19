@@ -85,6 +85,10 @@ export default function GoogleTags() {
     }
     lastPath.current = pathname;
     gtag("event", "page_view", {
+      // Sans `send_to`, gtag diffuse l'événement à toutes les balises
+      // configurées : Google Ads recevrait un ping de remarketing en double, en
+      // plus de celui qu'il envoie déjà de lui-même sur changement d'historique.
+      send_to: GA_MEASUREMENT_ID,
       page_path: pathname,
       page_location: window.location.href,
     });

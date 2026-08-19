@@ -39,6 +39,9 @@ export function trackLeadSubmitted({
   if (consent.analytics && GA_MEASUREMENT_ID) {
     gtag("event", "generate_lead", {
       // Nom d'événement recommandé par GA4 pour une demande entrante.
+      // `send_to` cible GA4 seulement : sans lui, gtag diffuse aussi à Google
+      // Ads, qui compte déjà la conversion étiquetée juste en dessous.
+      send_to: GA_MEASUREMENT_ID,
       form_id: "booking",
       project_type: projectType,
       budget_range: budget,

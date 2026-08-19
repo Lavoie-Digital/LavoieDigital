@@ -416,8 +416,8 @@ const SECTIONS: Section[] = [
               "États-Unis",
             ],
             [
-              "Vercel Inc.",
-              "Hébergement du site, diffusion des pages et journaux techniques de sécurité.",
+              "Google LLC — Firebase App Hosting",
+              "Hébergement du site, diffusion des pages par le réseau mondial de Google et journaux techniques de sécurité. Nécessaire à l'affichage du site : cette communication n'est pas soumise au consentement.",
               "États-Unis (réseau mondial)",
             ],
             [
@@ -486,15 +486,23 @@ const SECTIONS: Section[] = [
           sécurité.
         </P>
         <P>
-          La communication vers Google LLC, aux fins de mesure d&apos;audience et
-          de publicité, ne se produit que si vous y avez consenti dans la
-          bannière de témoins. Refuser, ou simplement ne rien choisir, signifie
-          qu&apos;aucune donnée vous concernant ne quitte le Québec en direction
-          de Google. Vous pouvez revenir sur ce choix en tout temps à la{" "}
+          Google LLC intervient à deux titres distincts, qu&apos;il importe de ne
+          pas confondre :
+        </P>
+        <List
+          items={[
+            "Comme hébergeur (Firebase App Hosting), en permanence : afficher une page suppose que votre navigateur communique avec ses serveurs. Cette communication est nécessaire à la livraison du site et se limite aux journaux techniques décrits à la section 02.",
+            "Comme outil de mesure et de publicité (Analytics 4, Ads), seulement si vous y avez consenti. Refuser, ou ne rien choisir, signifie qu'aucune donnée de navigation vous concernant n'est transmise à ces deux outils.",
+          ]}
+        />
+        <P>
+          Vous pouvez revenir sur le second choix en tout temps à la{" "}
           <a href="#temoins" className="link-underline text-white/85">
             section 05
           </a>
-          .
+          . Le premier n&apos;est pas révocable autrement qu&apos;en cessant de
+          consulter le site — c&apos;est la contrepartie inévitable de tout
+          hébergement web, quel qu&apos;en soit le fournisseur.
         </P>
         <P>
           Cette évaluation est révisée lorsque nous changeons de prestataire ou
