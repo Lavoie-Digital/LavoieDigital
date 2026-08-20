@@ -61,10 +61,10 @@ function Banner({ onCustomise }: { onCustomise: () => void }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 28 }}
       transition={{ duration: 0.5, ease: EASE }}
-      className="fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-4 sm:px-6 sm:pb-6"
+      className="fixed inset-x-0 bottom-0 z-50 flex justify-center px-3 pb-3 sm:px-6 sm:pb-6"
     >
       <div
-        className="w-full max-w-3xl overflow-hidden rounded-[1.75rem] border border-white/12 p-5 sm:p-7"
+        className="w-full max-w-3xl overflow-hidden rounded-3xl border border-white/12 p-4 sm:rounded-[1.75rem] sm:p-7"
         style={{
           background:
             "linear-gradient(180deg, rgba(14,14,17,0.92) 0%, rgba(6,6,8,0.94) 100%)",
@@ -74,38 +74,46 @@ function Banner({ onCustomise }: { onCustomise: () => void }) {
             "inset 0 1px 0 rgba(255,255,255,0.1), 0 40px 100px -30px rgba(0,0,0,0.9)",
         }}
       >
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+        <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/40 sm:text-[10px]">
           Témoins
         </p>
         <h2
           id={titleId}
-          className="mt-3 text-[17px] font-semibold tracking-tight text-white sm:text-[19px]"
+          className="mt-1.5 text-[15px] font-semibold tracking-tight text-white sm:mt-3 sm:text-[19px]"
         >
           On aimerait mesurer ce qui fonctionne.
         </h2>
-        <p className="mt-2.5 max-w-2xl text-[14px] leading-relaxed text-white/55">
+        {/* Version courte sur mobile : la bannière ne doit pas manger l'écran. */}
+        <p className="mt-1.5 text-[12.5px] leading-snug text-white/55 sm:hidden">
+          Aucun témoin de mesure ou de publicité sans votre accord. Refuser ne
+          retire rien.
+        </p>
+        <p className="mt-2.5 hidden max-w-2xl text-[14px] leading-relaxed text-white/55 sm:block">
           Aucun témoin de mesure ou de publicité n&apos;est déposé sans votre
           accord. Avec votre consentement, on suit la fréquentation du site et
           l&apos;efficacité de nos annonces. Refuser ne retire rien : le site
           fonctionne à l&apos;identique.
         </p>
 
-        <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center">
+        <div className="mt-3.5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-row sm:items-center sm:gap-2.5">
           <Action variant="primary" onClick={acceptAll}>
             Tout accepter
           </Action>
           <Action variant="ghost" onClick={rejectAll}>
             Tout refuser
           </Action>
-          <Action variant="quiet" onClick={onCustomise}>
-            Personnaliser
-          </Action>
-          <Link
-            href="/politique-de-confidentialite"
-            className="link-underline mt-1 self-start text-[13px] text-white/45 hover:text-white sm:ml-auto sm:mt-0 sm:self-auto"
-          >
-            Politique de confidentialité
-          </Link>
+          {/* `sm:contents` : sur grand écran les deux enfants rejoignent la rangée. */}
+          <div className="col-span-2 flex items-center justify-between sm:contents">
+            <Action variant="quiet" onClick={onCustomise}>
+              Personnaliser
+            </Action>
+            <Link
+              href="/politique-de-confidentialite"
+              className="link-underline text-[12px] text-white/45 hover:text-white sm:ml-auto sm:text-[13px]"
+            >
+              Politique de confidentialité
+            </Link>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -355,12 +363,13 @@ function Action({
   variant: "primary" | "ghost" | "quiet";
 }) {
   const base =
-    "inline-flex items-center justify-center rounded-full px-6 py-3 text-[14px] font-medium tracking-tight transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60";
+    "inline-flex items-center justify-center rounded-full text-[13px] font-medium tracking-tight transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 sm:text-[14px]";
+  const sizing = "px-4 py-2.5 sm:px-6 sm:py-3";
   const skins = {
-    primary: "bg-white text-black hover:bg-white/90",
-    ghost:
-      "border border-white/12 bg-white/[0.04] text-white/85 hover:border-white/25 hover:bg-white/[0.08] hover:text-white",
-    quiet: "text-white/55 hover:text-white",
+    primary: `${sizing} bg-white text-black hover:bg-white/90`,
+    ghost: `${sizing} border border-white/12 bg-white/[0.04] text-white/85 hover:border-white/25 hover:bg-white/[0.08] hover:text-white`,
+    quiet:
+      "px-0 py-1 text-white/55 hover:text-white sm:px-6 sm:py-3",
   } as const;
 
   return (
