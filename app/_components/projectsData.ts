@@ -43,8 +43,8 @@ export const PROJECTS: Project[] = [
   {
     slug: "amethyste",
     client: "Améthyste",
-    url: "https://amethystehairproducts.com/",
-    domain: "amethystehairproducts.com",
+    url: "https://amethystehairproductscanada.ca/",
+    domain: "amethystehairproductscanada.ca",
     sector: "Soins capillaires professionnels",
     location: "Québec",
     year: "2026",
