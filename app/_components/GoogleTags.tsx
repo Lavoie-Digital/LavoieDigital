@@ -3,67 +3,50 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useConsent } from "./ConsentProvider";
-import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID, gtag } from "./consent";
+import { GA_MEASUREMENT_ID, gtag } from "./consent";
 
 const GTAG_LIBRARY = "https://www.googletagmanager.com/gtag/js";
 
 /**
- * Balises Google — Google Analytics 4 et Google Ads.
+ * Balise Google Analytics 4 — la seule du site. Aucune balise Google Ads : les
+ * conversions publicitaires passent par un événement clé GA4 importé dans
+ * Google Ads.
  *
  * Ce composant ne rend rien : charger une balise est une écriture dans un
  * système extérieur (le DOM et la file `dataLayer`), pas un morceau
  * d'interface. `gtag/js` est donc injecté à la main, et seulement après un
- * consentement explicite — refuser signifie zéro requête vers
- * googletagmanager.com, pas une balise chargée puis bridée.
+ * consentement explicite à la mesure d'audience — refuser signifie zéro requête
+ * vers googletagmanager.com, pas une balise chargée puis bridée.
  *
- * Chaque identifiant est configuré séparément : accepter la mesure d'audience
- * ne fait pas démarrer la balise publicitaire, et inversement. Les commandes
- * `consent default` / `consent update` sont poussées en amont par
- * ConsentProvider.
+ * La catégorie « publicité » ne charge rien par elle-même : elle pilote les
+ * signaux `ad_storage` / `ad_user_data` du mode Consentement, poussés par
+ * ConsentProvider, dont dépend l'attribution d'une conversion GA4 à la campagne
+ * Google Ads qui l'a précédée.
  */
 export default function GoogleTags() {
   const { decision } = useConsent();
   const pathname = usePathname();
 
   const analytics = Boolean(decision?.analytics) && Boolean(GA_MEASUREMENT_ID);
-  const marketing = Boolean(decision?.marketing) && Boolean(GOOGLE_ADS_ID);
 
-  /** Identifiants déjà passés à `config` — une seule fois chacun par page. */
-  const configured = useRef(new Set<string>());
-  /** La librairie est injectée une fois pour toutes, jamais retirée ni remplacée. */
-  const libraryInjected = useRef(false);
+  /** `config` n'est passé qu'une fois par chargement de page. */
+  const configured = useRef(false);
 
   useEffect(() => {
-    const pending: string[] = [];
-    if (analytics && !configured.current.has(GA_MEASUREMENT_ID)) {
-      pending.push(GA_MEASUREMENT_ID);
-    }
-    if (marketing && !configured.current.has(GOOGLE_ADS_ID)) {
-      pending.push(GOOGLE_ADS_ID);
-    }
-    if (pending.length === 0) return;
+    if (!analytics || configured.current) return;
+    configured.current = true;
 
-    for (const id of pending) {
-      configured.current.add(id);
-      if (id === GA_MEASUREMENT_ID) {
-        // `config` déclenche déjà la première page vue.
-        gtag("config", id, {
-          // Le témoin `_ga` hérite des mêmes garde-fous que le nôtre.
-          cookie_flags: "SameSite=Lax;Secure",
-        });
-      } else {
-        gtag("config", id);
-      }
-    }
-
-    if (libraryInjected.current) return;
-    libraryInjected.current = true;
+    // `config` déclenche déjà la première page vue.
+    gtag("config", GA_MEASUREMENT_ID, {
+      // Le témoin `_ga` hérite des mêmes garde-fous que le nôtre.
+      cookie_flags: "SameSite=Lax;Secure",
+    });
 
     const el = document.createElement("script");
     el.async = true;
-    el.src = `${GTAG_LIBRARY}?id=${encodeURIComponent(pending[0])}`;
+    el.src = `${GTAG_LIBRARY}?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
     document.head.appendChild(el);
-  }, [analytics, marketing]);
+  }, [analytics]);
 
   /**
    * Navigations côté client : Next.js ne recharge pas la page, donc `config` ne

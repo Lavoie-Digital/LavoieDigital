@@ -8,7 +8,6 @@ import {
   CONSENT_MAX_AGE_DAYS,
   DENY_ALL,
   GA_MEASUREMENT_ID,
-  GOOGLE_ADS_ID,
   type ConsentChoices,
 } from "./consent";
 
@@ -30,7 +29,7 @@ export default function ConsentBanner() {
   const { ready, decision, panelOpen, openPanel } = useConsent();
 
   // Aucune balise configurée : il n'y a rien à consentir, donc pas de bannière.
-  const hasTags = Boolean(GA_MEASUREMENT_ID) || Boolean(GOOGLE_ADS_ID);
+  const hasTags = Boolean(GA_MEASUREMENT_ID);
 
   // Rien à afficher avant d'avoir lu le témoin, sinon la bannière clignote pour
   // les personnes qui ont déjà choisi.
@@ -150,8 +149,8 @@ const PURPOSES: Purpose[] = [
   {
     key: "marketing",
     title: "Publicité",
-    vendor: "Google Ads — Google LLC",
-    body: "Permet de savoir quelles annonces mènent à une demande de soumission et d'éviter de payer deux fois pour la même personne. Refuser n'empêche pas de voir nos annonces : elles sont simplement moins pertinentes.",
+    vendor: "Google Analytics 4 — Google LLC",
+    body: "Permet de savoir laquelle de nos annonces vous a amené ici, et donc lesquelles valent la peine d'être payées. Aucune régie publicitaire n'est chargée sur ce site. Refuser n'empêche pas de voir nos annonces : nous ne saurons simplement pas qu'elles ont fonctionné.",
     cookies: "_gcl_au · 90 jours",
   },
 ];
@@ -278,8 +277,10 @@ function PreferencesPanel() {
             {PURPOSES.map((p) => {
               // Une finalité sans identifiant configuré n'est pas proposée :
               // demander un consentement pour une balise absente serait faux.
-              if (p.key === "analytics" && !GA_MEASUREMENT_ID) return null;
-              if (p.key === "marketing" && !GOOGLE_ADS_ID) return null;
+              // Les deux finalités optionnelles dépendent de la même balise :
+              // sans GA4, il n'y a ni mesure d'audience ni signal publicitaire
+              // à autoriser. Le strictement nécessaire, lui, existe toujours.
+              if (p.key !== "necessary" && !GA_MEASUREMENT_ID) return null;
 
               const checked =
                 p.key === "necessary" ? true : draft[p.key as keyof ConsentChoices];

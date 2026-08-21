@@ -21,32 +21,12 @@
 /** Mesure d'audience GA4 — format `G-XXXXXXXXXX`. Vide = GA4 désactivé. */
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "";
 
-/** Google Ads — format `AW-XXXXXXXXX`. Vide = balise publicitaire désactivée. */
-export const GOOGLE_ADS_ID =
-  process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "AW-18397742027";
-
-/**
- * Étiquette de la conversion « demande de soumission » dans Google Ads
- * (Objectifs → la conversion → Configurer avec la balise Google : la valeur
- * après la barre oblique dans `send_to`). Vide = aucune conversion envoyée,
- * l'événement GA4 `generate_lead` part quand même.
+/*
+ * Aucune balise Google Ads n'est chargée sur ce site. Les conversions
+ * publicitaires passent par un événement clé GA4 (`generate_lead`) importé dans
+ * Google Ads : une seule balise à charger, une seule source de vérité, et aucun
+ * risque de compter deux fois la même demande. Voir analyticsEvents.ts.
  */
-export const GOOGLE_ADS_LEAD_LABEL =
-  process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL ?? "";
-
-/**
- * Étiquettes des deux conversions secondaires « clic de contact ». Se
- * configurent comme celle du dessus, mais à déclarer en **objectif secondaire**
- * dans Google Ads : un clic sur un numéro n'est pas une demande, on peut
- * raccrocher aussitôt. Les compter gonflerait le signal d'enchère avec du
- * bruit. Elles servent à ne plus être aveugle sur les mots-clés qui produisent
- * des appels plutôt que des formulaires. Vides = rien n'est envoyé à Ads.
- */
-export const GOOGLE_ADS_PHONE_LABEL =
-  process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_LABEL ?? "";
-
-export const GOOGLE_ADS_EMAIL_LABEL =
-  process.env.NEXT_PUBLIC_GOOGLE_ADS_EMAIL_LABEL ?? "";
 
 /* ------------------------------- Décision ------------------------------- */
 
@@ -54,7 +34,13 @@ export const GOOGLE_ADS_EMAIL_LABEL =
 export type ConsentChoices = {
   /** GA4 : fréquentation, pages vues, provenance du trafic. */
   analytics: boolean;
-  /** Google Ads : mesure des conversions et remarketing. */
+  /**
+   * Signaux publicitaires de GA4. Cette catégorie survit à la suppression de la
+   * balise Ads, et n'est pas décorative : sans `ad_storage`, gtag ne conserve
+   * pas le `gclid` de l'annonce cliquée. L'événement de conversion est alors
+   * bien enregistré dans GA4, mais Google Ads ne peut plus le rattacher à la
+   * campagne — donc plus aucune attribution.
+   */
   marketing: boolean;
 };
 

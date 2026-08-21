@@ -151,8 +151,8 @@ const SECTIONS: Section[] = [
         <SubTitle>Données de navigation — seulement si vous acceptez</SubTitle>
         <P>
           Si, et seulement si, vous acceptez la catégorie correspondante dans la
-          bannière de témoins, Google Analytics 4 et Google Ads recueillent des
-          données de navigation : pages consultées, durée de la visite, page de
+          bannière de témoins, Google Analytics 4 recueille des données de
+          navigation : pages consultées, durée de la visite, page de
           provenance, campagne publicitaire d&apos;origine, type d&apos;appareil,
           navigateur, langue et localisation approximative (ville ou région,
           déduite de l&apos;adresse IP puis tronquée par Google). Ces données
@@ -287,8 +287,8 @@ const SECTIONS: Section[] = [
           permettant de vous identifier, de vous localiser ou d&apos;effectuer un
           profilage est désactivée par défaut. Conformément à l&apos;article 14,
           chaque finalité vous est présentée séparément et se refuse séparément :
-          accepter la mesure d&apos;audience ne déclenche pas la balise
-          publicitaire.
+          accepter la mesure d&apos;audience n&apos;active pas les signaux
+          publicitaires.
         </P>
         <Table
           head={["Catégorie", "À quoi elle sert", "Par défaut"]}
@@ -329,8 +329,8 @@ const SECTIONS: Section[] = [
             ],
             [
               "_gcl_au",
-              "Google Ads",
-              "Attribue une demande de soumission au clic publicitaire qui l'a précédée. Déposé seulement si vous acceptez la publicité.",
+              "Google Analytics 4",
+              "Conserve l'identifiant de l'annonce cliquée, afin de rattacher une demande de soumission à la campagne qui l'a précédée. Déposé seulement si vous acceptez la publicité.",
               "90 jours",
             ],
           ]}
@@ -422,12 +422,7 @@ const SECTIONS: Section[] = [
             ],
             [
               "Google LLC — Analytics 4",
-              "Mesure de la fréquentation du site. Uniquement si vous avez accepté la catégorie « mesure d'audience ». Aucune donnée nominative ne lui est transmise.",
-              "États-Unis (réseau mondial)",
-            ],
-            [
-              "Google LLC — Ads",
-              "Mesure des conversions publicitaires. Uniquement si vous avez accepté la catégorie « publicité ». Aucune donnée nominative ne lui est transmise.",
+              "Mesure de la fréquentation du site, et mesure des conversions publicitaires lorsque la catégorie « publicité » est aussi acceptée. Uniquement si vous avez accepté la catégorie « mesure d'audience ». Aucune donnée nominative ne lui est transmise.",
               "États-Unis (réseau mondial)",
             ],
           ]}
