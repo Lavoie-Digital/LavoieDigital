@@ -83,6 +83,7 @@ export default function LandingPage({
         h1={data.h1}
         sub={data.sub}
         crumb={data.breadcrumb}
+        facts={data.facts}
       />
       <LandingBlocks blocks={data.blocks} />
       <Faq items={data.faq} title={data.faqTitle} />

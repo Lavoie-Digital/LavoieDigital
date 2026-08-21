@@ -1,5 +1,5 @@
 /**
- * Content for the two SEO landing pages (/creation-site-web-quebec and
+ * Content for the two landing pages (/creation-site-web-quebec and
  * /creation-application-web-quebec).
  *
  * Kept in a plain (non-"use client") module so the server components can read
@@ -9,9 +9,18 @@
  * Keep FAQ answers plain-text and self-contained so answer engines (ChatGPT,
  * Perplexity, Google AI Overviews) can quote them verbatim. Questions must not
  * duplicate the home-page FAQ in faqData.ts.
+ *
+ * These two pages carry the Google Ads traffic, so `blocks` is ordered for a
+ * stranger who has never heard of the studio: the offer, then the proof (real
+ * projects, real Google reviews), then a mid-page call to action, then the
+ * process. The long prose is SEO and answer-engine depth — it stays, but it
+ * sits below the point where a paid visitor decides to book or leave.
  */
 
 export type Faq = { q: string; a: string };
+
+/** Chiffre de réassurance affiché sous le H1, au-dessus de la ligne de flottaison. */
+export type Fact = { value: string; label: string };
 
 export type Block =
   | {
@@ -33,6 +42,31 @@ export type Block =
       heading: string;
       intro?: string;
       steps: { num: string; title: string; meta: string; desc: string }[];
+    }
+  /**
+   * Réalisations réelles, tirées de projectsData.ts par leur slug. On ne
+   * recopie ni le titre ni l'image ici : un projet n'est décrit qu'à un seul
+   * endroit, et les captures affichées sont celles des sites en ligne.
+   */
+  | {
+      kind: "work";
+      eyebrow: string;
+      heading: string;
+      intro?: string;
+      slugs: string[];
+    }
+  /** Avis Google réels. Le bloc disparaît si reviewsData.ts est vide. */
+  | { kind: "reviews" }
+  /**
+   * Appel à l'action de mi-page. Une page publicitaire longue ne peut pas
+   * n'avoir qu'un seul point de conversion tout en bas : le visiteur convaincu
+   * à la moitié de la page doit pouvoir agir sans remonter ni descendre.
+   */
+  | {
+      kind: "band";
+      title: string;
+      text: string;
+      cta: string;
     };
 
 export type Landing = {
@@ -44,6 +78,8 @@ export type Landing = {
   eyebrow: string;
   h1: string;
   sub: string;
+  /** Réassurance immédiate sous le H1 — quatre au maximum, sinon plus rien ne ressort. */
+  facts: Fact[];
   blocks: Block[];
   faqTitle: string;
   faq: Faq[];
@@ -63,18 +99,13 @@ export const SITE_WEB: Landing = {
   eyebrow: "Sites web · Québec",
   h1: "Création de site web au Québec",
   sub: "Sites vitrines, boutiques en ligne et refontes codés sur mesure pour les entrepreneurs et les PME du Québec. Environ deux semaines jusqu'au lancement, suivi illimité ensuite.",
+  facts: [
+    { value: "≈ 2 semaines", label: "du feu vert au lancement" },
+    { value: "Devis fixe", label: "après un appel gratuit" },
+    { value: "Sur mesure", label: "aucun thème, aucun gabarit" },
+    { value: "Suivi illimité", label: "réponse en moins de 24 h" },
+  ],
   blocks: [
-    {
-      kind: "prose",
-      eyebrow: "Le studio",
-      heading: "Un site web codé sur mesure, pas un thème reconfiguré.",
-      paragraphs: [
-        "Lavoie Digital est un studio de développement web basé à Québec. On conçoit et on code des sites pour les entreprises qui ont besoin d'un vrai outil de travail : quelque chose qui charge vite, qui se retrouve sur Google, et qui donne envie de vous appeler.",
-        "La différence avec un site monté sur un thème acheté, c'est le contrôle. Un thème arrive avec des dizaines de fonctions dont vous n'aurez jamais besoin, du code que personne n'a écrit pour votre projet, et un plafond de performance que vous ne pouvez pas dépasser. Ici, chaque page est construite pour ce que vous avez à dire.",
-        "En pratique, ça donne des pages qui s'affichent en une fraction de seconde, une structure que les moteurs de recherche comprennent du premier coup, et aucune dépendance à une extension tierce qui casse à la prochaine mise à jour.",
-        "Le fondateur conçoit et code lui-même chaque projet. Vous parlez directement à la personne qui construit votre site — pas à un gestionnaire de comptes qui relaie vos messages.",
-      ],
-    },
     {
       kind: "cards",
       eyebrow: "Ce qu'on construit",
@@ -125,15 +156,19 @@ export const SITE_WEB: Landing = {
       ],
     },
     {
-      kind: "prose",
-      eyebrow: "Découvrabilité",
-      heading: "Conçu pour être trouvé — sur Google et dans les réponses des IA.",
-      paragraphs: [
-        "Un beau site que personne ne trouve ne sert à rien. Le référencement n'est pas une étape qu'on ajoute à la fin du projet : il est dans la structure du site dès le premier jour.",
-        "Côté Google, ça veut dire des titres et des descriptions travaillés page par page, des données structurées qui décrivent votre entreprise et vos services dans un format que les moteurs lisent directement, un plan de site propre, et des performances qui tiennent la route sur un téléphone en réseau cellulaire.",
-        "Côté intelligence artificielle, c'est un chantier plus récent que la plupart des sites ignorent encore complètement. Vos futurs clients posent maintenant leurs questions à ChatGPT, à Perplexity et aux aperçus IA de Google. Pour être cité dans ces réponses, un site doit exposer son contenu en texte clair, répondre à de vraies questions plutôt qu'empiler des slogans, et autoriser explicitement les robots de ces plateformes à le lire. C'est ce qu'on appelle l'AEO et le GEO.",
-        "On applique à votre site exactement ce qu'on applique au nôtre — et on vous explique ce qui a été fait, pour que vous puissiez le vérifier.",
-      ],
+      kind: "work",
+      eyebrow: "Travaux",
+      heading: "Des sites en ligne, pour de vrais clients.",
+      intro:
+        "Trois sites livrés et publics. Chacun est en ligne en ce moment — cliquez sur le lien et jugez par vous-même.",
+      slugs: ["amethyste", "josee-ann-jomphe", "amelia-ruby"],
+    },
+    { kind: "reviews" },
+    {
+      kind: "band",
+      title: "Trente minutes suffisent pour savoir si ça vaut la peine.",
+      text: "Un appel découverte gratuit, sans engagement. On regarde votre situation et vous ressortez avec un plan écrit — même si vous décidez de ne pas aller plus loin.",
+      cta: "Réserver mon appel gratuit",
     },
     {
       kind: "steps",
@@ -170,12 +205,34 @@ export const SITE_WEB: Landing = {
     },
     {
       kind: "prose",
+      eyebrow: "Le studio",
+      heading: "Un site web codé sur mesure, pas un thème reconfiguré.",
+      paragraphs: [
+        "Lavoie Digital est un studio de développement web basé à Québec. On conçoit et on code des sites pour les entreprises qui ont besoin d'un vrai outil de travail : quelque chose qui charge vite, qui se retrouve sur Google, et qui donne envie de vous appeler.",
+        "La différence avec un site monté sur un thème acheté, c'est le contrôle. Un thème arrive avec des dizaines de fonctions dont vous n'aurez jamais besoin, du code que personne n'a écrit pour votre projet, et un plafond de performance que vous ne pouvez pas dépasser. Ici, chaque page est construite pour ce que vous avez à dire.",
+        "En pratique, ça donne des pages qui s'affichent en une fraction de seconde, une structure que les moteurs de recherche comprennent du premier coup, et aucune dépendance à une extension tierce qui casse à la prochaine mise à jour.",
+        "Le fondateur conçoit et code lui-même chaque projet. Vous parlez directement à la personne qui construit votre site — pas à un gestionnaire de comptes qui relaie vos messages.",
+      ],
+    },
+    {
+      kind: "prose",
       eyebrow: "Investissement",
       heading: "Combien coûte un site web au Québec ?",
       paragraphs: [
         "Ça dépend du nombre de pages, des fonctions requises et de la quantité de contenu à produire. N'importe qui vous donnant un chiffre avant d'avoir posé une seule question improvise.",
         "Ce qui est garanti, c'est la méthode : après l'appel découverte — gratuit et sans engagement — vous recevez un devis fixe et détaillé, ligne par ligne. Le montant ne bouge pas en cours de route, sauf si vous décidez vous-même d'ajouter quelque chose au projet.",
         "Aucun abonnement obligatoire, aucun frais caché, aucune rétention. Le site vous appartient, le nom de domaine reste à votre nom, et vous pouvez partir avec le tout si un jour vous le souhaitez.",
+      ],
+    },
+    {
+      kind: "prose",
+      eyebrow: "Découvrabilité",
+      heading: "Conçu pour être trouvé — sur Google et dans les réponses des IA.",
+      paragraphs: [
+        "Un beau site que personne ne trouve ne sert à rien. Le référencement n'est pas une étape qu'on ajoute à la fin du projet : il est dans la structure du site dès le premier jour.",
+        "Côté Google, ça veut dire des titres et des descriptions travaillés page par page, des données structurées qui décrivent votre entreprise et vos services dans un format que les moteurs lisent directement, un plan de site propre, et des performances qui tiennent la route sur un téléphone en réseau cellulaire.",
+        "Côté intelligence artificielle, c'est un chantier plus récent que la plupart des sites ignorent encore complètement. Vos futurs clients posent maintenant leurs questions à ChatGPT, à Perplexity et aux aperçus IA de Google. Pour être cité dans ces réponses, un site doit exposer son contenu en texte clair, répondre à de vraies questions plutôt qu'empiler des slogans, et autoriser explicitement les robots de ces plateformes à le lire. C'est ce qu'on appelle l'AEO et le GEO.",
+        "On applique à votre site exactement ce qu'on applique au nôtre — et on vous explique ce qui a été fait, pour que vous puissiez le vérifier.",
       ],
     },
     {
@@ -232,17 +289,13 @@ export const APPLICATION_WEB: Landing = {
   eyebrow: "Applications · Québec",
   h1: "Création d'application web au Québec",
   sub: "Plateformes SaaS, outils internes, portails clients et tableaux de bord développés sur mesure pour les entreprises du Québec. Environ quatre semaines jusqu'à la mise en service.",
+  facts: [
+    { value: "≈ 4 semaines", label: "jusqu'à la mise en service" },
+    { value: "Devis fixe", label: "après un appel de cadrage" },
+    { value: "Code et données", label: "à vous, sans exception" },
+    { value: "Suivi illimité", label: "réponse en moins de 24 h" },
+  ],
   blocks: [
-    {
-      kind: "prose",
-      eyebrow: "Le point de bascule",
-      heading: "Quand un site web ne suffit plus.",
-      paragraphs: [
-        "Un site web présente votre entreprise. Une application web la fait fonctionner. La bascule arrive généralement le jour où vous constatez que vos opérations se gèrent dans des fichiers Excel qui s'échangent par courriel, ou dans un logiciel générique qui n'a jamais été pensé pour votre métier.",
-        "Une application web, c'est un outil accessible depuis un navigateur : des comptes utilisateurs, des données qui se conservent et s'interrogent, et une logique qui reflète vos règles d'affaires plutôt que celles d'un éditeur américain. Rien à installer, rien à mettre à jour manuellement, accessible du bureau comme du chantier.",
-        "Lavoie Digital conçoit et code ces outils sur mesure pour les entrepreneurs et les PME du Québec. C'est la partie du métier qu'on préfère, et celle où un développement fait main change le plus de choses.",
-      ],
-    },
     {
       kind: "cards",
       eyebrow: "Ce qu'on construit",
@@ -293,14 +346,19 @@ export const APPLICATION_WEB: Landing = {
       ],
     },
     {
-      kind: "prose",
-      eyebrow: "Intelligence artificielle",
-      heading: "L'IA, quand elle sert réellement à quelque chose.",
-      paragraphs: [
-        "L'intelligence artificielle est utile dans une application quand elle retire du travail répétitif : trier des demandes entrantes, extraire l'information d'un document scanné, résumer l'historique d'un dossier, répondre à des questions posées en langage courant sur vos propres données.",
-        "Ce qu'on évite : ajouter un module d'IA parce que ça se vend bien. Si un traitement classique fait le travail de façon plus fiable, plus rapide et moins coûteuse, c'est celui-là qu'on met en place. On vous dira franchement quand l'IA n'est pas la bonne réponse.",
-        "Quand elle a sa place, on l'intègre avec les mêmes exigences que le reste du système : vos données demeurent les vôtres et ne servent pas à entraîner un modèle public, les traitements sont journalisés et vérifiables, et le comportement reste prévisible même quand le modèle se trompe.",
-      ],
+      kind: "work",
+      eyebrow: "Travaux",
+      heading: "Deux projets où le site est devenu un outil.",
+      intro:
+        "Dans les deux cas, la partie publique n'était que la moitié du mandat : derrière l'authentification, il y a un espace où le client travaille pour de vrai.",
+      slugs: ["lm-gestion-immobiliere", "amethyste"],
+    },
+    { kind: "reviews" },
+    {
+      kind: "band",
+      title: "Décrivez-moi votre processus actuel. Trente minutes.",
+      text: "Un appel de cadrage gratuit, sans engagement. On regarde ce qui vous coûte du temps aujourd'hui et à quoi ressemblerait une première version utile.",
+      cta: "Réserver mon appel gratuit",
     },
     {
       kind: "steps",
@@ -337,12 +395,12 @@ export const APPLICATION_WEB: Landing = {
     },
     {
       kind: "prose",
-      eyebrow: "Fondations",
-      heading: "Sécurité, sauvegardes et évolutivité.",
+      eyebrow: "Le point de bascule",
+      heading: "Quand un site web ne suffit plus.",
       paragraphs: [
-        "Une application qui gère vos données d'affaires n'a pas le droit de tomber. Authentification sérieuse, permissions par rôle, chiffrement des échanges, sauvegardes automatiques et journal des accès font partie de la base du projet, pas d'une liste d'options à cocher en supplément.",
-        "L'application est construite pour grandir. Ajouter un module, un type d'utilisateur ou une intégration six mois après le lancement ne doit pas obliger à tout reprendre — et c'est le genre de décision qui se joue à l'étape d'architecture, avant le premier écran.",
-        "Vous êtes propriétaire du code et de vos données, sans exception. Si un jour vous voulez changer de fournisseur ou monter votre propre équipe technique, tout vous est remis, documenté.",
+        "Un site web présente votre entreprise. Une application web la fait fonctionner. La bascule arrive généralement le jour où vous constatez que vos opérations se gèrent dans des fichiers Excel qui s'échangent par courriel, ou dans un logiciel générique qui n'a jamais été pensé pour votre métier.",
+        "Une application web, c'est un outil accessible depuis un navigateur : des comptes utilisateurs, des données qui se conservent et s'interrogent, et une logique qui reflète vos règles d'affaires plutôt que celles d'un éditeur américain. Rien à installer, rien à mettre à jour manuellement, accessible du bureau comme du chantier.",
+        "Lavoie Digital conçoit et code ces outils sur mesure pour les entrepreneurs et les PME du Québec. C'est la partie du métier qu'on préfère, et celle où un développement fait main change le plus de choses.",
       ],
     },
     {
@@ -353,6 +411,26 @@ export const APPLICATION_WEB: Landing = {
         "Une application se chiffre à partir de son périmètre : le nombre d'écrans, la complexité des règles d'affaires, les intégrations avec vos systèmes actuels et le nombre de types d'utilisateurs à gérer.",
         "L'approche qu'on recommande presque toujours : commencer par une première version restreinte mais complètement fonctionnelle, la mettre en service rapidement, puis ajouter au fil de l'usage réel. Ça coûte nettement moins cher qu'un cahier de charges de quatre-vingts pages dont la moitié des fonctions ne servira jamais — et vous commencez à en tirer de la valeur des semaines plus tôt.",
         "Devis fixe après l'appel de cadrage, gratuit et sans engagement.",
+      ],
+    },
+    {
+      kind: "prose",
+      eyebrow: "Intelligence artificielle",
+      heading: "L'IA, quand elle sert réellement à quelque chose.",
+      paragraphs: [
+        "L'intelligence artificielle est utile dans une application quand elle retire du travail répétitif : trier des demandes entrantes, extraire l'information d'un document scanné, résumer l'historique d'un dossier, répondre à des questions posées en langage courant sur vos propres données.",
+        "Ce qu'on évite : ajouter un module d'IA parce que ça se vend bien. Si un traitement classique fait le travail de façon plus fiable, plus rapide et moins coûteuse, c'est celui-là qu'on met en place. On vous dira franchement quand l'IA n'est pas la bonne réponse.",
+        "Quand elle a sa place, on l'intègre avec les mêmes exigences que le reste du système : vos données demeurent les vôtres et ne servent pas à entraîner un modèle public, les traitements sont journalisés et vérifiables, et le comportement reste prévisible même quand le modèle se trompe.",
+      ],
+    },
+    {
+      kind: "prose",
+      eyebrow: "Fondations",
+      heading: "Sécurité, sauvegardes et évolutivité.",
+      paragraphs: [
+        "Une application qui gère vos données d'affaires n'a pas le droit de tomber. Authentification sérieuse, permissions par rôle, chiffrement des échanges, sauvegardes automatiques et journal des accès font partie de la base du projet, pas d'une liste d'options à cocher en supplément.",
+        "L'application est construite pour grandir. Ajouter un module, un type d'utilisateur ou une intégration six mois après le lancement ne doit pas obliger à tout reprendre — et c'est le genre de décision qui se joue à l'étape d'architecture, avant le premier écran.",
+        "Vous êtes propriétaire du code et de vos données, sans exception. Si un jour vous voulez changer de fournisseur ou monter votre propre équipe technique, tout vous est remis, documenté.",
       ],
     },
     {
