@@ -9,6 +9,7 @@ import MagneticButton from "./MagneticButton";
 import ProjectCard from "./ProjectCard";
 import Reviews from "./Reviews";
 import TiltCard from "./TiltCard";
+import Portrait from "./Portrait";
 import { trackContactClick } from "./analyticsEvents";
 import { Icon } from "./icons";
 import { getProject } from "./projectsData";
@@ -286,6 +287,8 @@ export function LandingBlocks({ blocks }: { blocks: Block[] }) {
             return <Reviews key={i} />;
           case "band":
             return <BandBlock key={i} block={block} />;
+          case "founder":
+            return <FounderBlock key={i} block={block} />;
         }
       })}
     </>
@@ -348,6 +351,28 @@ function ProseBlock({
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-14">
           <div className="md:col-span-5">
             <BlockHeader eyebrow={block.eyebrow} heading={block.heading} />
+            {/* Le portrait accompagne le bloc qui affirme que le fondateur code
+                lui-même chaque projet. Sans visage, c'est une promesse ; avec,
+                c'est vérifiable. */}
+            {block.portrait && (
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-70px" }}
+                transition={{ duration: 0.7, ease: EASE }}
+                className="mt-9 flex items-center gap-4"
+              >
+                <Portrait size={68} />
+                <div>
+                  <p className="text-[15px] font-semibold tracking-tight text-white">
+                    Xavier Lavoie
+                  </p>
+                  <p className="mt-0.5 text-[13px] text-white/45">
+                    Fondateur — à l&apos;avant de votre projet
+                  </p>
+                </div>
+              </motion.div>
+            )}
           </div>
           <div className="flex flex-col gap-5 md:col-span-7 md:pt-2">
             {block.paragraphs.map((p, i) => (
@@ -360,6 +385,78 @@ function ProseBlock({
                 className="text-pretty text-[16px] leading-[1.75] text-white/65 sm:text-[17px]"
               >
                 {p}
+              </motion.p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Qui est derrière                                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Un site soigné ne prouve plus qu'il y a une compétence derrière — il peut
+ * être généré. Ce bloc répond à ce doute avec du vérifiable plutôt qu'avec une
+ * formule : un nom, un visage, un parcours, et un renvoi aux projets en ligne.
+ *
+ * Portrait en rectangle arrondi et non en disque : à cette taille, un disque
+ * lit « avatar de vendeur ». Aucun bouton dans ce bloc, il n'a pas à convertir
+ * — il a à rassurer.
+ */
+function FounderBlock({
+  block,
+}: {
+  block: Extract<Block, { kind: "founder" }>;
+}) {
+  return (
+    <section className="relative z-10 px-6 py-14 sm:px-10 md:py-20">
+      <div className="mx-auto max-w-6xl">
+        <BlockHeader eyebrow={block.eyebrow} heading={block.heading} />
+
+        <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-14">
+          <motion.div
+            initial={{ opacity: 0, y: 26 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-70px" }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="md:col-span-4"
+          >
+            <Portrait size={224} shape="rounded" />
+
+            <p className="mt-5 text-[17px] font-semibold tracking-tight text-white">
+              {block.name}
+            </p>
+            <p className="mt-1 text-[13px] leading-relaxed text-white/45">
+              {block.role}
+            </p>
+
+            <dl className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-6">
+              {block.facts.map((f) => (
+                <div key={f.label} className="flex items-baseline justify-between gap-4">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/35">
+                    {f.label}
+                  </dt>
+                  <dd className="text-right text-[13px] text-white/70">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </motion.div>
+
+          <div className="flex flex-col gap-5 md:col-span-8 md:pt-1">
+            {block.paragraphs.map((par, i) => (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-70px" }}
+                transition={{ duration: 0.7, delay: i * 0.06, ease: EASE }}
+                className="text-pretty text-[16px] leading-[1.75] text-white/65 sm:text-[17px]"
+              >
+                {par}
               </motion.p>
             ))}
           </div>

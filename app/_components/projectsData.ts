@@ -100,18 +100,18 @@ export const PROJECTS: Project[] = [
     sector: "Gestion immobilière",
     location: "Saguenay–Lac-Saint-Jean",
     year: "2026",
-    tag: "Site + espace client",
+    tag: "Site + application de gestion",
     teaser:
-      "Site corporatif et espace client pour une maison de gestion immobilière privée au Saguenay.",
+      "Site corporatif, espace client et automatisation des opérations pour une maison de gestion immobilière privée au Saguenay.",
     image: "/travaux/lmgestion.jpg",
     imageAlt:
       "Page d'accueil du site LM Gestion Immobilière, gestion immobilière au Saguenay–Lac-Saint-Jean",
-    title: "LM Gestion Immobilière — site corporatif et espace client",
+    title: "LM Gestion Immobilière — site corporatif et application de gestion",
     metaTitle: "LM Gestion Immobilière — étude de cas",
     metaDescription:
-      "Étude de cas : site corporatif et espace client pour LM Gestion Immobilière, maison de gestion immobilière privée au Saguenay–Lac-Saint-Jean.",
+      "Étude de cas : site corporatif, espace client et automatisation des opérations pour LM Gestion Immobilière, maison de gestion immobilière privée au Saguenay–Lac-Saint-Jean.",
     intro:
-      "LM Gestion Immobilière gère des immeubles pour des propriétaires du Saguenay–Lac-Saint-Jean — Chicoutimi, Jonquière, La Baie, Alma et la région. Le mandat visait deux publics à la fois : les propriétaires à convaincre, et les clients existants à outiller.",
+      "LM Gestion Immobilière gère des immeubles pour des propriétaires du Saguenay–Lac-Saint-Jean — Chicoutimi, Jonquière, La Baie, Alma et la région. Le mandat visait trois fronts à la fois : les propriétaires à convaincre, les clients existants à outiller, et les opérations de la maison de gestion elle-même à décharger.",
     sections: [
       {
         heading: "Le mandat",
@@ -127,9 +127,17 @@ export const PROJECTS: Project[] = [
           "Derrière, un espace client donne aux propriétaires une vue sur leur parc immobilier, avec une assistance par intelligence artificielle pour interroger l'information plutôt que de fouiller dans des tableaux. C'est la partie qui fait basculer le projet d'un site vers une application — et c'est celle qui change le quotidien du client.",
         ],
       },
+      {
+        heading: "Les opérations",
+        paragraphs: [
+          "L'espace client n'aurait réglé que la moitié du problème : la charge restait entière du côté de LM, où chaque rapport, chaque avis et chaque suivi se montait à la main. L'application a donc pris en charge le travail répétitif de la maison de gestion elle-même.",
+          "Les rapports aux propriétaires se génèrent à partir des données déjà saisies. Les avis de renouvellement de bail partent sans que personne y pense. Les demandes de réparation se suivent de la réception à la clôture, au même endroit. Les états de compte, la facturation récurrente et la relance des retards de paiement suivent la même logique.",
+          "L'assistance par intelligence artificielle sert les deux publics avec le même principe : poser une question en français plutôt que de chercher la bonne colonne dans le bon tableau. Le temps ainsi rendu — au propriétaire comme au gestionnaire — est du temps qui retourne à l'entreprise plutôt qu'à la saisie.",
+        ],
+      },
     ],
     specs: [
-      { label: "Type", value: "Site corporatif + espace client" },
+      { label: "Type", value: "Site corporatif + application de gestion" },
       { label: "Secteur", value: "Immobilier · Gestion locative" },
       { label: "Territoire", value: "Saguenay–Lac-Saint-Jean" },
       { label: "Année", value: "2026" },
@@ -138,6 +146,10 @@ export const PROJECTS: Project[] = [
       "Site corporatif : services, approche, portefeuille",
       "Espace client authentifié pour les propriétaires",
       "Vue du parc immobilier assistée par IA",
+      "Rapports aux propriétaires générés automatiquement",
+      "Avis de renouvellement de bail envoyés sans intervention",
+      "Suivi des demandes de réparation, de la réception à la clôture",
+      "États de compte, facturation récurrente et relance des retards",
       "Référencement local sur la région du Saguenay",
       "Pages légales et politique de confidentialité",
     ],

@@ -12,16 +12,64 @@
  *
  * These two pages carry the Google Ads traffic, so `blocks` is ordered for a
  * stranger who has never heard of the studio: the pain (application page only),
- * the offer, the proof (real projects, real Google reviews), then the breadth,
- * then a call to action, then the process. Breadth comes after proof on
- * purpose — widening the offer before showing you can deliver the basics reads
- * as a sales pitch. The long prose is SEO and answer-engine depth: it stays,
- * but it sits below the point where a paid visitor decides to book or leave.
+ * the offer, then a proof chain — real projects, real Google reviews, then the
+ * person responsible for both — then the breadth, then a call to action, then
+ * the process.
+ *
+ * Two orderings are deliberate and easy to undo by accident. The founder block
+ * sits inside the proof chain, not at the end of the page: "who am I dealing
+ * with" is a doubt that blocks everything downstream, so it is answered while
+ * the testimonials are still on screen. And breadth comes after proof, because
+ * widening the offer before showing you can deliver the basics reads as a sales
+ * pitch.
+ *
+ * The long prose is SEO and answer-engine depth: it stays, but it sits below
+ * the point where a paid visitor decides to book or leave.
  */
 
 import type { IconName } from "./icons";
 
 export type Faq = { q: string; a: string };
+
+/**
+ * Bloc « qui est derrière », partagé par les deux landings. Défini une seule
+ * fois : deux copies divergeraient à la première correction.
+ *
+ * Règle de rédaction à ne pas perdre en modifiant ce bloc : **aucune
+ * comparaison avec une agence**. Ni « pas de sous-traitance », ni « pas de
+ * gestionnaire de comptes », ni « et si je disparaissais ». Ces formules
+ * paraissent rassurantes, mais elles plaident un dossier — et argumenter « je
+ * ne vaux pas moins qu'une agence », c'est déjà accepter que la question se
+ * pose. Le mot « seul » ne doit apparaître nulle part.
+ *
+ * Ce qui installe la confiance ici, c'est l'inverse d'un plaidoyer : des faits
+ * sur le travail, un avis tranché, un refus assumé. Un jugement se démontre, il
+ * ne se revendique pas — et c'est précisément ce qui sépare une compétence
+ * réelle d'un site généré, la vraie question que se pose le visiteur.
+ *
+ * Le deuxième paragraphe cite des projets réels. Toute affirmation qui y est
+ * faite doit rester adossée à projectsData.ts — c'est ce qui rend la section
+ * vérifiable, et donc utile. Une réalisation embellie serait pire qu'aucune.
+ */
+const FOUNDER: Extract<Block, { kind: "founder" }> = {
+  kind: "founder",
+  eyebrow: "Qui est derrière",
+  heading: "Je conçois, je code, je livre.",
+  name: "Xavier Lavoie",
+  role: "Fondateur · Lavoie Digital, région de Québec",
+  paragraphs: [
+    "Je m'appelle Xavier Lavoie. Je conçois et je développe des sites et des applications web depuis la région de Québec, pour des entrepreneurs et des PME d'ici. Chaque projet passe par mes mains, du premier croquis jusqu'à la mise en ligne — c'est ce qui me permet de vous dire pendant l'appel ce qui est faisable, en combien de temps et à quel prix.",
+    "Les projets présentés juste au-dessus sont récents et tous en ligne. Prenez LM Gestion Immobilière, au Saguenay : le site public n'en était que la façade. L'application derrière travaille des deux côtés. Pour les propriétaires, un espace client où chacun voit l'état de son parc quand ça lui convient, au lieu de téléphoner ou d'attendre le rapport mensuel. Pour LM, tout ce qui se montait à la main est passé à l'application : les rapports aux propriétaires, les avis de renouvellement de bail, le suivi des demandes de réparation, la relance des paiements en retard. Et une intelligence artificielle intégrée interroge les données au lieu de laisser qui que ce soit fouiller des tableaux. Du temps récupéré des deux bords, remis dans la croissance plutôt que dans la saisie.",
+    "Je ne pars jamais d'un thème acheté ni d'un gabarit : chaque page est construite pour ce que vous avez à dire, et c'est ce qui donne des pages qui s'affichent en une fraction de seconde et qu'un moteur de recherche comprend du premier coup. Je vous dirai aussi franchement quand une technologie à la mode — l'intelligence artificielle comprise — n'est pas la bonne réponse à votre problème. Vendre une fonction inutile est le meilleur moyen de perdre un client pour de bon.",
+    "Ce que je préfère, c'est le moment où un site devient un outil : un portail client, un tableau de bord, quelque chose qui fait rouler l'entreprise au lieu de simplement la présenter. Et quoi qu'on construise, le code et les comptes sont à votre nom dès le départ. C'est votre outil, pas une location.",
+  ],
+  facts: [
+    { label: "Basé à", value: "Région de Québec" },
+    { label: "Langues", value: "Français et anglais" },
+    { label: "Disponibilité", value: "8 h à 18 h, 7 jours" },
+    { label: "Réponse", value: "Moins de 24 heures" },
+  ],
+};
 
 /** Chiffre de réassurance affiché sous le H1, au-dessus de la ligne de flottaison. */
 export type Fact = { value: string; label: string };
@@ -32,6 +80,12 @@ export type Block =
       eyebrow: string;
       heading: string;
       paragraphs: string[];
+      /**
+       * Affiche le portrait du fondateur sous le titre. À réserver au bloc qui
+       * affirme qu'il code lui-même chaque projet : ailleurs, le visage n'appuie
+       * aucun argument et devient de la décoration.
+       */
+      portrait?: boolean;
     }
   /**
    * Familles de projets. Volontairement présentées comme des points de départ
@@ -101,6 +155,25 @@ export type Block =
       title: string;
       text: string;
       cta: string;
+    }
+  /**
+   * Qui tient le studio. Répond à une objection devenue courante : un site
+   * soigné ne prouve plus qu'il y a une compétence derrière, puisqu'il peut
+   * être généré. L'antidote n'est pas une belle phrase mais du vérifiable — un
+   * nom, un visage, un parcours, des projets en ligne qu'on peut ouvrir.
+   *
+   * Écrit à la première personne, volontairement : le « nous » d'entreprise
+   * annule tout l'effet.
+   */
+  | {
+      kind: "founder";
+      eyebrow: string;
+      heading: string;
+      name: string;
+      role: string;
+      paragraphs: string[];
+      /** Repères courts, affichés en colonne à côté du portrait. */
+      facts: { label: string; value: string }[];
     };
 
 export type Landing = {
@@ -205,6 +278,7 @@ export const SITE_WEB: Landing = {
       slugs: ["amethyste", "josee-ann-jomphe", "amelia-ruby"],
     },
     { kind: "reviews" },
+    FOUNDER,
     {
       kind: "capabilities",
       eyebrow: "Ce qui se greffe",
@@ -299,6 +373,7 @@ export const SITE_WEB: Landing = {
       kind: "prose",
       eyebrow: "Le studio",
       heading: "Un site web codé sur mesure, pas un thème reconfiguré.",
+      portrait: true,
       paragraphs: [
         "Lavoie Digital est un studio de développement web basé à Québec. On conçoit et on code des sites pour les entreprises qui ont besoin d'un vrai outil de travail : quelque chose qui charge vite, qui se retrouve sur Google, et qui donne envie de vous appeler.",
         "La différence avec un site monté sur un thème acheté, c'est le contrôle. Un thème arrive avec des dizaines de fonctions dont vous n'aurez jamais besoin, du code que personne n'a écrit pour votre projet, et un plafond de performance que vous ne pouvez pas dépasser. Ici, chaque page est construite pour ce que vous avez à dire.",
@@ -466,6 +541,7 @@ export const APPLICATION_WEB: Landing = {
       slugs: ["lm-gestion-immobiliere", "amethyste"],
     },
     { kind: "reviews" },
+    FOUNDER,
     {
       kind: "capabilities",
       eyebrow: "Ce qui se greffe",
