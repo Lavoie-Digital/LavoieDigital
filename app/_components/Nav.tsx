@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { trackContactClick } from "./analyticsEvents";
 
 const LINKS = [
   { href: "/services", label: "Services" },
@@ -14,10 +15,24 @@ const LINKS = [
   { href: "/a-propos", label: "À propos" },
 ];
 
+/**
+ * Routes qui reçoivent le trafic Google Ads. Le menu complet y est remplacé par
+ * logo + téléphone + un seul bouton : sur une page payante, chaque entrée de
+ * menu est une porte de sortie de la page qu'on vient d'acheter. Le bouton
+ * pointe vers l'ancre du formulaire, qui est rendu sur ces pages.
+ */
+const LANDING_ROUTES = new Set([
+  "/creation-site-web-quebec",
+  "/creation-application-web-quebec",
+]);
+
+const PHONE = "+15142901648";
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isLanding = LANDING_ROUTES.has(pathname);
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
 
@@ -66,7 +81,11 @@ export default function Nav() {
           </Link>
 
           <ul className="hidden items-center gap-1 md:flex">
-            {LINKS.map((link) => {
+            {/* Rien à rendre sur une page payante : les liens sont retirés du
+                DOM, pas seulement masqués. Le maillage interne passe par le
+                pied de page, qui les reprend tous. */}
+            {!isLanding &&
+              LINKS.map((link) => {
               const active = pathname === link.href;
               return (
                 <li key={link.href} className="relative">
@@ -93,8 +112,30 @@ export default function Nav() {
           </ul>
 
           <div className="flex items-center gap-1.5">
+            {isLanding && (
+              <a
+                href={`tel:${PHONE}`}
+                onClick={() => trackContactClick("phone")}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-[13px] text-white/70 transition-colors duration-300 hover:bg-white/[0.06] hover:text-white"
+              >
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
+                  <path
+                    d="M5.2 2H3a1 1 0 0 0-1 1c0 5.5 5.5 11 11 11a1 1 0 0 0 1-1v-2.2a1 1 0 0 0-.8-1l-2.3-.5a1 1 0 0 0-1 .3l-.7.8a11 11 0 0 1-3.6-3.6l.8-.7a1 1 0 0 0 .3-1l-.5-2.3a1 1 0 0 0-1-.8Z"
+                    stroke="currentColor"
+                    strokeWidth="1.3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                {/* Le numéro complet à partir de sm : sur 390 px il pousserait
+                    le bouton de réservation hors de la barre. */}
+                <span className="hidden sm:inline">514 290-1648</span>
+                <span className="sr-only sm:hidden">Appeler le studio</span>
+              </a>
+            )}
+
             <Link
-              href="/booking"
+              href={isLanding ? "#booking" : "/booking"}
               onClick={() => setMenuOpen(false)}
               className="group relative inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13px] font-medium text-black transition-all duration-300 hover:gap-2.5 hover:bg-white/90"
             >
@@ -116,14 +157,16 @@ export default function Nav() {
               </svg>
             </Link>
 
-            {/* Hamburger — mobile only */}
+            {/* Hamburger — mobile only, et jamais sur une page payante */}
             <button
               type="button"
               onClick={() => setMenuOpen((o) => !o)}
               aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white transition-colors duration-300 hover:bg-white/[0.06] md:hidden"
+              className={`h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white transition-colors duration-300 hover:bg-white/[0.06] ${
+                isLanding ? "hidden" : "flex md:hidden"
+              }`}
             >
               <span className="relative block h-3 w-4">
                 <motion.span

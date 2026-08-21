@@ -1,27 +1,24 @@
+import Booking from "./Booking";
 import Faq from "./Faq";
-import { LandingBlocks, LandingCta, LandingHero } from "./LandingSections";
-import PageNav from "./PageNav";
+import { LandingBlocks, LandingHero } from "./LandingSections";
 import type { Landing } from "./landingData";
 
 const SITE_URL = "https://lavoiedigital.ca";
-
-type Item = { href: string; label: string; eyebrow?: string };
 
 /**
  * Shared body for the SEO landing pages. Server component so the JSON-LD is
  * emitted in the initial HTML (answer engines rarely execute JavaScript).
  *
  * Each page owns its own `metadata` export; only the body lives here.
+ *
+ * Ces deux pages reçoivent le trafic Google Ads, ce qui impose deux écarts par
+ * rapport aux autres routes : le formulaire est rendu ici même plutôt que lié
+ * vers /booking, et il n'y a aucune navigation de fin de page. Un visiteur
+ * payant qui vient de lire la page au complet est au sommet de son intention —
+ * lui proposer un autre service à ce moment-là est la fuite la plus chère de
+ * toutes. Le maillage interne reste assuré par le pied de page.
  */
-export default function LandingPage({
-  data,
-  prev,
-  next,
-}: {
-  data: Landing;
-  prev?: Item;
-  next?: Item;
-}) {
+export default function LandingPage({ data }: { data: Landing }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -87,8 +84,13 @@ export default function LandingPage({
       />
       <LandingBlocks blocks={data.blocks} />
       <Faq items={data.faq} title={data.faqTitle} />
-      <LandingCta title={data.ctaTitle} text={data.ctaText} />
-      <PageNav prev={prev} next={next} />
+      <Booking
+        titleAs="h2"
+        eyebrow="Réserver"
+        title={data.ctaTitle}
+        sub={data.ctaText}
+        defaultProjectType={data.bookingProjectType}
+      />
     </>
   );
 }

@@ -11,11 +11,15 @@
  * duplicate the home-page FAQ in faqData.ts.
  *
  * These two pages carry the Google Ads traffic, so `blocks` is ordered for a
- * stranger who has never heard of the studio: the offer, then the proof (real
- * projects, real Google reviews), then a mid-page call to action, then the
- * process. The long prose is SEO and answer-engine depth — it stays, but it
- * sits below the point where a paid visitor decides to book or leave.
+ * stranger who has never heard of the studio: the pain (application page only),
+ * the offer, the proof (real projects, real Google reviews), then the breadth,
+ * then a call to action, then the process. Breadth comes after proof on
+ * purpose — widening the offer before showing you can deliver the basics reads
+ * as a sales pitch. The long prose is SEO and answer-engine depth: it stays,
+ * but it sits below the point where a paid visitor decides to book or leave.
  */
+
+import type { IconName } from "./icons";
 
 export type Faq = { q: string; a: string };
 
@@ -29,12 +33,42 @@ export type Block =
       heading: string;
       paragraphs: string[];
     }
+  /**
+   * Familles de projets. Volontairement présentées comme des points de départ
+   * et non comme un catalogue fermé : un visiteur dont le besoin ne rentre dans
+   * aucune des quatre cases ferme l'onglet. C'est le bloc `capabilities`, plus
+   * bas dans la page, qui porte l'étendue réelle — ce qui laisse ces cartes
+   * rester concrètes.
+   */
   | {
       kind: "cards";
       eyebrow: string;
       heading: string;
       intro?: string;
-      cards: { num: string; title: string; desc: string; bullets: string[] }[];
+      cards: {
+        icon: IconName;
+        title: string;
+        desc: string;
+        bullets: string[];
+      }[];
+    }
+  /**
+   * Ce qui se greffe sur n'importe laquelle des familles de projets. Court,
+   * dense, balayable : le but n'est pas de détailler mais de retirer le plafond
+   * que le bloc `cards` a posé.
+   *
+   * Placé après la preuve et juste avant l'appel à l'action : on élargit
+   * l'offre une fois le doute levé, et la note de bas de bloc — pour le besoin
+   * qui n'entre dans aucune case — tombe alors directement avant le bouton.
+   */
+  | {
+      kind: "capabilities";
+      eyebrow: string;
+      heading: string;
+      intro?: string;
+      items: { icon: IconName; title: string; desc: string }[];
+      /** Dernière ligne, pour le besoin qui n'est dans aucune case. */
+      footnote?: string;
     }
   | {
       kind: "steps";
@@ -83,8 +117,15 @@ export type Landing = {
   blocks: Block[];
   faqTitle: string;
   faq: Faq[];
+  /** Titre et texte de l'en-tête du formulaire, rendu en bas de page. */
   ctaTitle: string;
   ctaText: string;
+  /**
+   * Présélection de la première étape du formulaire. Doit correspondre à une
+   * valeur de `PROJECT_TYPES` dans Booking.tsx. La page d'arrivée dit déjà quel
+   * est le besoin : c'est une question de moins à poser.
+   */
+  bookingProjectType: "site" | "app";
 };
 
 /* ------------------------------------------------------------------ */
@@ -108,13 +149,13 @@ export const SITE_WEB: Landing = {
   blocks: [
     {
       kind: "cards",
-      eyebrow: "Ce qu'on construit",
-      heading: "Quatre types de sites web.",
+      eyebrow: "Points de départ",
+      heading: "La plupart des projets commencent par l'un des quatre.",
       intro:
-        "La plupart des projets tombent dans une de ces catégories. Si le vôtre est à cheval sur deux, on en discute à l'appel découverte.",
+        "Ce ne sont pas des forfaits, ce sont des points d'entrée. Beaucoup de mandats sont à cheval sur deux, et tout ce qui suit peut s'y greffer.",
       cards: [
         {
-          num: "01",
+          icon: "window",
           title: "Site vitrine",
           desc: "Présenter l'entreprise, établir la crédibilité et générer des appels. Le format le plus demandé, et souvent le plus rentable.",
           bullets: [
@@ -124,7 +165,7 @@ export const SITE_WEB: Landing = {
           ],
         },
         {
-          num: "02",
+          icon: "bag",
           title: "Boutique en ligne",
           desc: "Vendre vos produits directement, sans commission de plateforme et sans limite imposée sur la présentation.",
           bullets: [
@@ -134,7 +175,7 @@ export const SITE_WEB: Landing = {
           ],
         },
         {
-          num: "03",
+          icon: "target",
           title: "Page de vente",
           desc: "Une offre, un objectif, une conversion. Idéale pour lancer un service précis ou soutenir une campagne publicitaire.",
           bullets: [
@@ -144,7 +185,7 @@ export const SITE_WEB: Landing = {
           ],
         },
         {
-          num: "04",
+          icon: "refresh",
           title: "Refonte de site web",
           desc: "Repartir d'une base saine quand le site actuel est lent, daté, impossible à modifier ou invisible sur Google.",
           bullets: [
@@ -164,6 +205,57 @@ export const SITE_WEB: Landing = {
       slugs: ["amethyste", "josee-ann-jomphe", "amelia-ruby"],
     },
     { kind: "reviews" },
+    {
+      kind: "capabilities",
+      eyebrow: "Ce qui se greffe",
+      heading: "Un site, et tout ce qui le rend utile.",
+      intro:
+        "Rien de tout ça n'est un module vendu à part : ce sont les briques qu'on ajoute quand elles servent votre objectif, et qu'on laisse de côté quand elles ne servent qu'à gonfler une facture.",
+      items: [
+        {
+          icon: "search",
+          title: "Référencement",
+          desc: "Structure, données structurées et performance travaillées dès le premier jour, pas ajoutées à la fin.",
+        },
+        {
+          icon: "sparkle",
+          title: "Visibilité dans l'IA",
+          desc: "Être cité par ChatGPT, Perplexity et les aperçus Google. Un chantier que la plupart des sites ignorent encore.",
+        },
+        {
+          icon: "bolt",
+          title: "Automatisations",
+          desc: "Formulaires qui créent une fiche, relances programmées, rapports envoyés seuls. Moins de saisie manuelle.",
+        },
+        {
+          icon: "link",
+          title: "Intégrations",
+          desc: "Votre comptabilité, votre CRM, votre calendrier, vos courriels. Le site parle à ce que vous utilisez déjà.",
+        },
+        {
+          icon: "card",
+          title: "Paiements",
+          desc: "Boutique, acomptes, abonnements ou prise de rendez-vous payante, encaissés sans commission de plateforme.",
+        },
+        {
+          icon: "sliders",
+          title: "Espace de gestion",
+          desc: "Modifier vos textes, vos images et vos pages vous-même, sans toucher au code ni demander la permission.",
+        },
+        {
+          icon: "chart",
+          title: "Mesure",
+          desc: "Savoir d'où viennent vos clients et quelles pages convertissent. Sans ça, tout budget publicitaire est aveugle.",
+        },
+        {
+          icon: "cloud",
+          title: "Mise en ligne et suivi",
+          desc: "Hébergement, nom de domaine, certificat, sauvegardes. Les comptes sont à votre nom, jamais au nôtre.",
+        },
+      ],
+      footnote:
+        "Votre besoin n'est dans aucune case ? C'est souvent le signe d'un projet intéressant. Décrivez-le à l'appel, on vous dira franchement si c'est pour nous.",
+    },
     {
       kind: "band",
       title: "Trente minutes suffisent pour savoir si ça vaut la peine.",
@@ -224,6 +316,15 @@ export const SITE_WEB: Landing = {
         "Aucun abonnement obligatoire, aucun frais caché, aucune rétention. Le site vous appartient, le nom de domaine reste à votre nom, et vous pouvez partir avec le tout si un jour vous le souhaitez.",
       ],
     },
+    /* Second point de conversion. La page est longue et le premier CTA est loin
+       derrière : celui-ci tombe juste après la réponse sur le prix, au moment
+       où la dernière objection vient d'être levée. */
+    {
+      kind: "band",
+      title: "Le devis est gratuit et le montant ne bouge pas.",
+      text: "Trente minutes d'appel, un plan écrit, un prix ferme. Vous repartez avec les deux même si vous décidez de ne pas aller plus loin.",
+      cta: "Obtenir mon devis",
+    },
     {
       kind: "prose",
       eyebrow: "Découvrabilité",
@@ -235,15 +336,10 @@ export const SITE_WEB: Landing = {
         "On applique à votre site exactement ce qu'on applique au nôtre — et on vous explique ce qui a été fait, pour que vous puissiez le vérifier.",
       ],
     },
-    {
-      kind: "prose",
-      eyebrow: "Territoire",
-      heading: "À Québec, et partout au Québec.",
-      paragraphs: [
-        "Le studio est établi dans la région de Québec. On rencontre en personne les entreprises de la ville de Québec et de Lévis quand ça aide, et on travaille à distance avec Montréal, Trois-Rivières, Sherbrooke, Saguenay, Gatineau et le reste du Canada.",
-        "Les projets se mènent aussi bien en français qu'en anglais. Les horaires sont de 8 h à 18 h, sept jours sur sept.",
-      ],
-    },
+    /* Le bloc « Territoire » a été retiré : il était placé juste avant la
+       question FAQ qui dit la même chose, donc le visiteur lisait deux fois de
+       suite l'information. Les villes desservies et les heures ont été repliées
+       dans cette réponse — le signal local est conservé, la section en moins. */
   ],
   faqTitle: "Les questions qu'on nous pose sur la création de sites web.",
   faq: [
@@ -269,12 +365,13 @@ export const SITE_WEB: Landing = {
     },
     {
       q: "Travaillez-vous avec des entreprises en dehors de la ville de Québec ?",
-      a: "Oui. Le studio est basé à Québec et sert les PME de partout au Québec et au Canada : Montréal, Lévis, Trois-Rivières, Sherbrooke, Saguenay et Gatineau notamment. Les projets à distance se déroulent exactement de la même façon, par visioconférence et par courriel.",
+      a: "Oui. Le studio est basé dans la région de Québec et sert les PME de partout au Québec et au Canada : Montréal, Lévis, Trois-Rivières, Sherbrooke, Saguenay et Gatineau notamment. On rencontre en personne les entreprises de Québec et de Lévis quand ça aide ; ailleurs, les projets se déroulent exactement de la même façon par visioconférence et par courriel. Les mandats se mènent aussi bien en français qu'en anglais, de 8 h à 18 h, sept jours sur sept.",
     },
   ],
   ctaTitle: "Parlons de votre site web.",
   ctaText:
     "Un appel découverte gratuit de 30 minutes. On regarde votre situation, ce que font vos concurrents, et ce qui serait réellement utile pour vous. Aucune obligation à la sortie.",
+  bookingProjectType: "site",
 };
 
 /* ------------------------------------------------------------------ */
@@ -297,14 +394,29 @@ export const APPLICATION_WEB: Landing = {
   ],
   blocks: [
     {
+      /* Premier bloc de la page, et pas plus bas : c'est celui qui nomme la
+         douleur dans les mots du visiteur (les Excel qui s'échangent par
+         courriel, le logiciel générique). La douleur doit précéder le
+         mécanisme — sinon les quatre cartes qui suivent arrivent à froid,
+         comme un catalogue. */
+      kind: "prose",
+      eyebrow: "Le point de bascule",
+      heading: "Quand un site web ne suffit plus.",
+      paragraphs: [
+        "Un site web présente votre entreprise. Une application web la fait fonctionner. La bascule arrive généralement le jour où vous constatez que vos opérations se gèrent dans des fichiers Excel qui s'échangent par courriel, ou dans un logiciel générique qui n'a jamais été pensé pour votre métier.",
+        "Une application web, c'est un outil accessible depuis un navigateur : des comptes utilisateurs, des données qui se conservent et s'interrogent, et une logique qui reflète vos règles d'affaires plutôt que celles d'un éditeur américain. Rien à installer, rien à mettre à jour manuellement, accessible du bureau comme du chantier.",
+        "Lavoie Digital conçoit et code ces outils sur mesure pour les entrepreneurs et les PME du Québec. C'est la partie du métier qu'on préfère, et celle où un développement fait main change le plus de choses.",
+      ],
+    },
+    {
       kind: "cards",
-      eyebrow: "Ce qu'on construit",
-      heading: "Quatre familles d'applications.",
+      eyebrow: "Points de départ",
+      heading: "La plupart des projets commencent par l'un des quatre.",
       intro:
-        "Beaucoup de projets combinent deux de ces familles — un portail client alimenté par un outil interne, par exemple.",
+        "Ce ne sont pas des forfaits, ce sont des points d'entrée. La majorité des mandats en combinent deux — un portail client alimenté par un outil interne, par exemple — et tout ce qui suit peut s'y greffer.",
       cards: [
         {
-          num: "01",
+          icon: "layers",
           title: "Plateforme SaaS",
           desc: "Un produit que vous vendez par abonnement. Vous avez l'idée et le marché ; on construit la première version et on la fait évoluer.",
           bullets: [
@@ -314,7 +426,7 @@ export const APPLICATION_WEB: Landing = {
           ],
         },
         {
-          num: "02",
+          icon: "sliders",
           title: "Outil interne",
           desc: "Remplacer les fichiers partagés et les processus manuels par un système unique où l'information ne se perd pas.",
           bullets: [
@@ -324,7 +436,7 @@ export const APPLICATION_WEB: Landing = {
           ],
         },
         {
-          num: "03",
+          icon: "portal",
           title: "Portail client",
           desc: "Donner à vos clients un espace à eux, et arrêter de répondre trois fois par jour aux mêmes demandes de suivi.",
           bullets: [
@@ -334,7 +446,7 @@ export const APPLICATION_WEB: Landing = {
           ],
         },
         {
-          num: "04",
+          icon: "chart",
           title: "Tableau de bord",
           desc: "Rassembler des données éparpillées entre plusieurs systèmes pour enfin voir ce qui se passe dans l'entreprise.",
           bullets: [
@@ -354,6 +466,57 @@ export const APPLICATION_WEB: Landing = {
       slugs: ["lm-gestion-immobiliere", "amethyste"],
     },
     { kind: "reviews" },
+    {
+      kind: "capabilities",
+      eyebrow: "Ce qui se greffe",
+      heading: "Les briques qui s'ajoutent, selon ce que vous avez à faire.",
+      intro:
+        "Aucune n'est un module vendu à part. On les met en place quand elles font gagner du temps ou de l'argent, et on les écarte quand elles ne serviraient qu'à alourdir le projet.",
+      items: [
+        {
+          icon: "bolt",
+          title: "Automatisations",
+          desc: "Tri des demandes entrantes, relances, génération de documents, rapports envoyés seuls. Le travail répétitif en moins.",
+        },
+        {
+          icon: "sparkle",
+          title: "Intelligence artificielle",
+          desc: "Extraction d'un document scanné, résumé d'un dossier, questions posées en langage courant sur vos propres données.",
+        },
+        {
+          icon: "link",
+          title: "Intégrations",
+          desc: "Comptabilité, CRM, paiements, courriels, calendriers. On branche l'application à vos systèmes pour éviter la double saisie.",
+        },
+        {
+          icon: "lock",
+          title: "Comptes et permissions",
+          desc: "Authentification sérieuse, accès distincts par équipe et par fonction, journal des actions vérifiable.",
+        },
+        {
+          icon: "card",
+          title: "Facturation",
+          desc: "Abonnements, forfaits, factures et paiements récurrents, y compris les cas de figure que les outils génériques refusent.",
+        },
+        {
+          icon: "database",
+          title: "Reprise de données",
+          desc: "Vos fichiers Excel, vos anciens systèmes et vos historiques, importés proprement plutôt que ressaisis à la main.",
+        },
+        {
+          icon: "chart",
+          title: "Rapports",
+          desc: "Indicateurs consolidés, exports et envois programmés. Voir ce qui se passe sans avoir à le compiler soi-même.",
+        },
+        {
+          icon: "cloud",
+          title: "Mise en service et suivi",
+          desc: "Déploiement, sauvegardes automatiques, formation de votre équipe, puis itérations selon l'usage réel.",
+        },
+      ],
+      footnote:
+        "Votre besoin n'est dans aucune case ? C'est souvent le signe d'un projet intéressant. Décrivez votre processus à l'appel, on vous dira franchement si c'est pour nous.",
+    },
     {
       kind: "band",
       title: "Décrivez-moi votre processus actuel. Trente minutes.",
@@ -395,16 +558,6 @@ export const APPLICATION_WEB: Landing = {
     },
     {
       kind: "prose",
-      eyebrow: "Le point de bascule",
-      heading: "Quand un site web ne suffit plus.",
-      paragraphs: [
-        "Un site web présente votre entreprise. Une application web la fait fonctionner. La bascule arrive généralement le jour où vous constatez que vos opérations se gèrent dans des fichiers Excel qui s'échangent par courriel, ou dans un logiciel générique qui n'a jamais été pensé pour votre métier.",
-        "Une application web, c'est un outil accessible depuis un navigateur : des comptes utilisateurs, des données qui se conservent et s'interrogent, et une logique qui reflète vos règles d'affaires plutôt que celles d'un éditeur américain. Rien à installer, rien à mettre à jour manuellement, accessible du bureau comme du chantier.",
-        "Lavoie Digital conçoit et code ces outils sur mesure pour les entrepreneurs et les PME du Québec. C'est la partie du métier qu'on préfère, et celle où un développement fait main change le plus de choses.",
-      ],
-    },
-    {
-      kind: "prose",
       eyebrow: "Investissement",
       heading: "Combien coûte une application web ?",
       paragraphs: [
@@ -412,6 +565,14 @@ export const APPLICATION_WEB: Landing = {
         "L'approche qu'on recommande presque toujours : commencer par une première version restreinte mais complètement fonctionnelle, la mettre en service rapidement, puis ajouter au fil de l'usage réel. Ça coûte nettement moins cher qu'un cahier de charges de quatre-vingts pages dont la moitié des fonctions ne servira jamais — et vous commencez à en tirer de la valeur des semaines plus tôt.",
         "Devis fixe après l'appel de cadrage, gratuit et sans engagement.",
       ],
+    },
+    /* Second point de conversion — même logique que sur la page site web : il
+       suit immédiatement la réponse sur le prix. */
+    {
+      kind: "band",
+      title: "Décrivez votre processus, on chiffre la première version.",
+      text: "Trente minutes d'appel de cadrage, un plan fonctionnel et un devis fixe. Gratuit, et sans engagement à la sortie.",
+      cta: "Obtenir mon devis",
     },
     {
       kind: "prose",
@@ -433,15 +594,9 @@ export const APPLICATION_WEB: Landing = {
         "Vous êtes propriétaire du code et de vos données, sans exception. Si un jour vous voulez changer de fournisseur ou monter votre propre équipe technique, tout vous est remis, documenté.",
       ],
     },
-    {
-      kind: "prose",
-      eyebrow: "Territoire",
-      heading: "Basé à Québec, au service de tout le Québec.",
-      paragraphs: [
-        "Le studio est établi dans la région de Québec. Les projets d'application se mènent très bien à distance : on travaille avec des entreprises de Montréal, Lévis, Trois-Rivières, Sherbrooke, Saguenay et Gatineau par visioconférence, avec des rencontres en personne quand le contexte le justifie.",
-        "Service en français et en anglais, de 8 h à 18 h, sept jours sur sept.",
-      ],
-    },
+    /* « Territoire » retiré pour la même raison que sur la page site web : la
+       question FAQ sur la distance le redisait intégralement, juste en dessous.
+       Villes et heures repliées dans cette réponse. */
   ],
   faqTitle: "Les questions qu'on nous pose sur les applications web.",
   faq: [
@@ -467,10 +622,11 @@ export const APPLICATION_WEB: Landing = {
     },
     {
       q: "Faut-il être à Québec pour travailler avec vous ?",
-      a: "Non. Le studio est basé à Québec, mais les projets d'application se déroulent aussi bien à distance, par visioconférence et sur un environnement de test partagé. On sert des entreprises de partout au Québec et au Canada, en français comme en anglais.",
+      a: "Non. Le studio est basé dans la région de Québec, mais les projets d'application se déroulent aussi bien à distance, par visioconférence et sur un environnement de test partagé. On travaille avec des entreprises de Montréal, Lévis, Trois-Rivières, Sherbrooke, Saguenay et Gatineau, et de partout ailleurs au Québec et au Canada, avec des rencontres en personne quand le contexte le justifie. Service en français et en anglais, de 8 h à 18 h, sept jours sur sept.",
     },
   ],
   ctaTitle: "Parlons de votre application.",
   ctaText:
     "Un appel de cadrage gratuit de 30 minutes. On regarde vos processus actuels, ce qui vous coûte du temps, et à quoi ressemblerait une première version utile. Aucune obligation à la sortie.",
+  bookingProjectType: "app",
 };

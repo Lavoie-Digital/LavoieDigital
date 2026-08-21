@@ -38,15 +38,7 @@ export const metadata: Metadata = {
 };
 
 export default function CreationSiteWebQuebecPage() {
-  return (
-    <LandingPage
-      data={SITE_WEB}
-      prev={{ href: "/services", label: "Tous les services", eyebrow: "Voir aussi" }}
-      next={{
-        href: "/creation-application-web-quebec",
-        label: "Création d'application web",
-        eyebrow: "Aussi au studio",
-      }}
-    />
-  );
+  // Aucune navigation de fin de page : voir LandingPage.tsx. Le formulaire est
+  // le dernier élément, et le pied de page conserve le maillage interne.
+  return <LandingPage data={SITE_WEB} />;
 }

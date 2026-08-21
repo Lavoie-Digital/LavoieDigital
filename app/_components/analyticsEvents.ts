@@ -12,8 +12,10 @@
  */
 import {
   GA_MEASUREMENT_ID,
+  GOOGLE_ADS_EMAIL_LABEL,
   GOOGLE_ADS_ID,
   GOOGLE_ADS_LEAD_LABEL,
+  GOOGLE_ADS_PHONE_LABEL,
   gtag,
   readConsent,
 } from "./consent";
@@ -55,5 +57,34 @@ export function trackLeadSubmitted({
     gtag("event", "conversion", {
       send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_LEAD_LABEL}`,
     });
+  }
+}
+
+/**
+ * Clic sur le numéro de téléphone ou l'adresse courriel.
+ *
+ * Sans ça, une demande qui arrive par appel est invisible côté publicité : les
+ * campagnes paraissent moins rentables qu'elles ne le sont, et les enchères
+ * n'apprennent jamais quels mots-clés produisent des appels. À déclarer en
+ * objectif **secondaire** dans Google Ads — voir GOOGLE_ADS_PHONE_LABEL.
+ *
+ * Les liens de contact du formulaire lui-même ne passent pas par ici : ils
+ * n'apparaissent qu'après un envoi réussi ou en repli d'erreur, deux cas où le
+ * clic ne dit rien sur l'annonce qui a amené la personne.
+ */
+export function trackContactClick(channel: "phone" | "email") {
+  const consent = readConsent();
+  if (!consent) return;
+
+  if (consent.analytics && GA_MEASUREMENT_ID) {
+    gtag("event", "contact_click", {
+      send_to: GA_MEASUREMENT_ID,
+      channel,
+    });
+  }
+
+  const label = channel === "phone" ? GOOGLE_ADS_PHONE_LABEL : GOOGLE_ADS_EMAIL_LABEL;
+  if (consent.marketing && GOOGLE_ADS_ID && label) {
+    gtag("event", "conversion", { send_to: `${GOOGLE_ADS_ID}/${label}` });
   }
 }

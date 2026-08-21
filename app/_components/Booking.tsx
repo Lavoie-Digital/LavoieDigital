@@ -75,9 +75,43 @@ const DRAFT_KEY = "ld-booking-draft";
 
 const EMAIL_RE = /.+@.+\..+/;
 
-export default function Booking() {
+/**
+ * Formulaire de demande, en quatre étapes.
+ *
+ * Rendu à deux endroits : la page /booking, où il est le contenu principal, et
+ * le bas des deux landings publicitaires, où il remplace un lien sortant. Sur
+ * une page qui reçoit du trafic payant, chaque chargement intermédiaire entre
+ * l'annonce et le formulaire est un point d'abandon — le formulaire vient donc
+ * au visiteur plutôt que l'inverse. Les valeurs par défaut reproduisent
+ * exactement le rendu de /booking.
+ */
+export default function Booking({
+  titleAs = "h1",
+  eyebrow = "Réserver",
+  title = "Parlons de votre projet web ou d'application.",
+  sub = "Quatre étapes courtes, environ une minute. On revient vers vous sous 24 heures avec un appel et une première piste.",
+  defaultProjectType = "",
+}: {
+  /** "h2" quand le formulaire est intégré à une page qui a déjà son h1. */
+  titleAs?: "h1" | "h2";
+  eyebrow?: string;
+  title?: string;
+  sub?: string;
+  /**
+   * Présélection de l'étape 1. Sur une landing publicitaire, la page d'arrivée
+   * dit déjà quel est le besoin : redemander « site ou application ? » fait
+   * répondre au visiteur une question à laquelle son clic a déjà répondu.
+   */
+  defaultProjectType?: FormData["projectType"];
+}) {
+  // Recréé à chaque rendu, mais seul le premier compte pour useState — et la
+  // remise à zéro après un envoi doit retrouver la même présélection.
+  const initial: FormData = defaultProjectType
+    ? { ...INITIAL, projectType: defaultProjectType }
+    : INITIAL;
+
   const [step, setStep] = useState(0);
-  const [data, setData] = useState<FormData>(INITIAL);
+  const [data, setData] = useState<FormData>(initial);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -134,10 +168,15 @@ export default function Booking() {
     if (step === 0) return !!data.projectType;
     if (step === 1)
       return data.name.trim().length > 1 && EMAIL_RE.test(data.email.trim());
-    if (step === 2) return !!data.budget && !!data.timeline;
-    // Dernière étape : tout est facultatif, on peut envoyer tel quel.
+    // Étapes 3 et 4 : rien d'obligatoire. Le budget et l'échéancier servent à
+    // préparer l'appel, pas à trier — et une question de qualification qui
+    // bloque coûte plus de demandes qu'elle n'en filtre, tant que l'agenda
+    // n'est pas plein. On les demande donc sans les exiger.
     return true;
   };
+
+  /** Rien de renseigné à l'étape de cadrage : le bouton le dit lui-même. */
+  const skippingScope = step === 2 && !data.budget && !data.timeline;
 
   const next = () => setStep((s) => Math.min(TOTAL_STEPS - 1, s + 1));
   const back = () => setStep((s) => Math.max(0, s - 1));
@@ -190,14 +229,11 @@ export default function Booking() {
   const isLast = step === TOTAL_STEPS - 1;
 
   return (
-    <section id="booking" className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
+    // `scroll-mt` : la barre de navigation est fixe, sans quoi une arrivée par
+    // l'ancre #booking masque l'en-tête du formulaire derrière elle.
+    <section id="booking" className="relative z-10 scroll-mt-24 px-6 py-16 sm:px-10 md:py-24">
       <div className="mx-auto max-w-5xl">
-        <SectionHeader
-          titleAs="h1"
-          eyebrow="Réserver"
-          title="Parlons de votre projet web ou d'application."
-          sub="Quatre étapes courtes, environ une minute. On revient vers vous sous 24 heures avec un appel et une première piste."
-        />
+        <SectionHeader titleAs={titleAs} eyebrow={eyebrow} title={title} sub={sub} />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -228,7 +264,7 @@ export default function Booking() {
               onReset={() => {
                 setDone(false);
                 setStep(0);
-                setData(INITIAL);
+                setData(initial);
                 startedAt.current = Date.now();
               }}
             />
@@ -316,7 +352,7 @@ export default function Booking() {
                     {step === 2 && (
                       <StepShell
                         title="Cadrons le projet."
-                        sub="Aucun jugement et rien d'engageant — ça nous sert à proposer la bonne approche dès le premier appel."
+                        sub="Les deux questions sont facultatives et rien n'est engageant. Si vous savez déjà, ça nous permet d'arriver au premier appel avec la bonne approche. Sinon, passez."
                       >
                         <RadioGroup
                           legend="Budget envisagé"
@@ -435,7 +471,9 @@ export default function Booking() {
                     ? "Envoi…"
                     : isLast
                       ? "Envoyer la demande"
-                      : "Suivant"}
+                      : skippingScope
+                        ? "Passer cette étape"
+                        : "Suivant"}
                   {!submitting && (
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
                       <path d="M1 7h12m0 0L7 1m6 6l-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

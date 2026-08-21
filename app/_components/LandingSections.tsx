@@ -9,6 +9,8 @@ import MagneticButton from "./MagneticButton";
 import ProjectCard from "./ProjectCard";
 import Reviews from "./Reviews";
 import TiltCard from "./TiltCard";
+import { trackContactClick } from "./analyticsEvents";
+import { Icon } from "./icons";
 import { getProject } from "./projectsData";
 import type { Block, Fact } from "./landingData";
 
@@ -182,16 +184,38 @@ export function LandingHero({
           transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
           className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
         >
-          <MagneticButton href="/booking">
+          {/* Ancres, jamais /booking : le formulaire est rendu en bas de cette
+              page. Sur du trafic payant, chaque chargement de page entre
+              l'annonce et le formulaire est un point d'abandon de plus, et le
+              second bouton ne doit pas faire sortir du parcours non plus. */}
+          <MagneticButton href="#booking">
             Réserver un appel gratuit
           </MagneticButton>
-          {/* Ancre plutôt que lien vers /travaux : sur une page qui reçoit du
-              trafic payant, le second bouton ne doit pas faire sortir le
-              visiteur du parcours. Les réalisations sont juste en dessous. */}
           <MagneticButton href="#travaux" variant="ghost">
             Voir des projets livrés
           </MagneticButton>
         </motion.div>
+
+        {/* Une partie des visiteurs les plus pressés — donc les plus qualifiés —
+            ne remplira jamais un formulaire en quatre étapes. Le numéro doit
+            être atteignable sans défiler jusqu'en bas. */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
+          className="mt-6 text-[13px] text-white/40"
+        >
+          Ou appelez directement{" "}
+          <a
+            href="tel:+15142901648"
+            onClick={() => trackContactClick("phone")}
+            className="link-underline text-white/70 hover:text-white"
+          >
+            514 290-1648
+          </a>
+          <span className="mx-2 text-white/20">·</span>
+          Réponse sous 24 h
+        </motion.p>
 
         {/* Réassurance chiffrée sous la ligne de flottaison : délai, prix,
             propriété, suivi. Les quatre objections qui reviennent à l'appel. */}
@@ -252,6 +276,8 @@ export function LandingBlocks({ blocks }: { blocks: Block[] }) {
             return <ProseBlock key={i} block={block} />;
           case "cards":
             return <CardsBlock key={i} block={block} />;
+          case "capabilities":
+            return <CapabilitiesBlock key={i} block={block} />;
           case "steps":
             return <StepsBlock key={i} block={block} />;
           case "work":
@@ -343,6 +369,71 @@ function ProseBlock({
   );
 }
 
+/* ------------------------------------------------------------------ */
+/* Capacités                                                           */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Contrepoids aux quatre cartes de projets. Volontairement dense et sans
+ * relief : ce bloc doit se balayer en cinq secondes et signaler l'étendue, pas
+ * rivaliser d'attention avec les cartes ni avec les réalisations qui suivent.
+ * Une grille de huit, en trait fin, sans carte de verre ni animation par item.
+ */
+function CapabilitiesBlock({
+  block,
+}: {
+  block: Extract<Block, { kind: "capabilities" }>;
+}) {
+  return (
+    <section className="relative z-10 px-6 py-14 sm:px-10 md:py-20">
+      <div className="mx-auto max-w-6xl">
+        <BlockHeader
+          eyebrow={block.eyebrow}
+          heading={block.heading}
+          intro={block.intro}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {block.items.map((item) => (
+            <div
+              key={item.title}
+              className="group bg-black/40 px-6 py-7 backdrop-blur transition-colors duration-300 hover:bg-white/[0.04]"
+            >
+              <span className="inline-flex text-white/55 transition-colors duration-300 group-hover:text-white/85">
+                <Icon name={item.icon} className="h-[22px] w-[22px]" />
+              </span>
+              <h3 className="mt-4 text-[15px] font-semibold tracking-tight text-white">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-[13px] leading-relaxed text-white/50">
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+
+        {block.footnote && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="text-pretty mt-8 max-w-2xl text-[14px] leading-relaxed text-white/45"
+          >
+            {block.footnote}
+          </motion.p>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function CardsBlock({
   block,
 }: {
@@ -360,7 +451,7 @@ function CardsBlock({
         <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
           {block.cards.map((c, i) => (
             <motion.div
-              key={c.num}
+              key={c.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
@@ -379,12 +470,15 @@ function CardsBlock({
                 >
                   <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/5" />
 
-                  <span
-                    className="font-mono text-xs tracking-[0.3em] text-white/30"
+                  {/* Une icône plutôt qu'un numéro : « 01 / 04 » annonce un
+                      catalogue fermé et fait fermer l'onglet à qui ne se
+                      reconnaît dans aucune des quatre cases. */}
+                  <div
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-white/75 backdrop-blur"
                     style={{ transform: "translateZ(40px)" }}
                   >
-                    {c.num}
-                  </span>
+                    <Icon name={c.icon} className="h-[22px] w-[22px]" />
+                  </div>
 
                   <h3
                     className="mt-6 text-2xl font-semibold tracking-tight text-white sm:text-[1.6rem]"
@@ -595,7 +689,7 @@ function BandBlock({ block }: { block: Extract<Block, { kind: "band" }> }) {
           </div>
 
           <div className="shrink-0">
-            <MagneticButton href="/booking">{block.cta}</MagneticButton>
+            <MagneticButton href="#booking">{block.cta}</MagneticButton>
           </div>
         </motion.div>
       </div>
@@ -603,62 +697,7 @@ function BandBlock({ block }: { block: Extract<Block, { kind: "band" }> }) {
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Closing CTA                                                         */
-/* ------------------------------------------------------------------ */
-
-export function LandingCta({
-  title,
-  text,
-}: {
-  title: string;
-  text: string;
-}) {
-  return (
-    <section className="relative z-10 px-6 py-16 sm:px-10 md:py-24">
-      <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="relative overflow-hidden rounded-3xl border border-white/10 px-8 py-14 text-center sm:px-14 sm:py-20"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.012) 100%)",
-            backdropFilter: "blur(24px) saturate(170%)",
-            boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.09), 0 40px 100px -40px rgba(0,0,0,0.7)",
-          }}
-        >
-          <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/5" />
-
-          <h2 className="display mx-auto max-w-2xl text-balance text-[clamp(1.9rem,4.6vw,3.2rem)] text-white">
-            {title}
-          </h2>
-          <p className="text-pretty mx-auto mt-6 max-w-xl text-[16px] leading-relaxed text-white/60">
-            {text}
-          </p>
-          {/* Un seul bouton, et le téléphone en lien discret plutôt qu'en
-              bouton d'égale importance : le formulaire est la seule conversion
-              que Google Ads peut mesurer, un appel direct reste invisible. On
-              garde donc l'option ouverte sans la mettre en concurrence. */}
-          <div className="mt-10 flex flex-col items-center justify-center gap-5">
-            <MagneticButton href="/booking">
-              Réserver un appel gratuit
-            </MagneticButton>
-            <p className="text-[13px] text-white/40">
-              Vous préférez parler tout de suite ?{" "}
-              <a
-                href="tel:+15142901648"
-                className="link-underline text-white/70 hover:text-white"
-              >
-                514 290-1648
-              </a>
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+/* Le CTA de fin de page a été retiré : il pointait vers /booking alors que le
+   formulaire est maintenant rendu directement en bas de la landing. Son titre
+   et son texte (`ctaTitle` / `ctaText` dans landingData.ts) servent désormais
+   d'en-tête à ce formulaire — voir LandingPage.tsx. */

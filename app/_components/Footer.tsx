@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackContactClick } from "./analyticsEvents";
 import ConsentSettingsButton from "./ConsentSettingsButton";
 
 const SOCIALS = [
@@ -127,8 +128,8 @@ export default function Footer() {
             Contact
           </p>
           <ul className="mt-4 space-y-2.5 text-[14px]">
-            <li><a href="mailto:info@lavoiedigital.ca" className="link-underline text-white/70 hover:text-white">info@lavoiedigital.ca</a></li>
-            <li><a href="tel:+15142901648" className="link-underline text-white/70 hover:text-white">+1 (514) 290-1648</a></li>
+            <li><a href="mailto:info@lavoiedigital.ca" onClick={() => trackContactClick("email")} className="link-underline text-white/70 hover:text-white">info@lavoiedigital.ca</a></li>
+            <li><a href="tel:+15142901648" onClick={() => trackContactClick("phone")} className="link-underline text-white/70 hover:text-white">+1 (514) 290-1648</a></li>
           </ul>
 
           <div className="mt-5 flex items-center gap-2.5">

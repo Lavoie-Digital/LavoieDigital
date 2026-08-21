@@ -34,6 +34,20 @@ export const GOOGLE_ADS_ID =
 export const GOOGLE_ADS_LEAD_LABEL =
   process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL ?? "";
 
+/**
+ * Étiquettes des deux conversions secondaires « clic de contact ». Se
+ * configurent comme celle du dessus, mais à déclarer en **objectif secondaire**
+ * dans Google Ads : un clic sur un numéro n'est pas une demande, on peut
+ * raccrocher aussitôt. Les compter gonflerait le signal d'enchère avec du
+ * bruit. Elles servent à ne plus être aveugle sur les mots-clés qui produisent
+ * des appels plutôt que des formulaires. Vides = rien n'est envoyé à Ads.
+ */
+export const GOOGLE_ADS_PHONE_LABEL =
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_PHONE_LABEL ?? "";
+
+export const GOOGLE_ADS_EMAIL_LABEL =
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_EMAIL_LABEL ?? "";
+
 /* ------------------------------- Décision ------------------------------- */
 
 /** Finalités soumises au consentement. Le strict nécessaire n'en fait pas partie. */
