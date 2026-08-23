@@ -1,4 +1,9 @@
-import { GOOGLE_REVIEWS_URL, REVIEWS, averageRating } from "./reviewsData";
+import {
+  GOOGLE_REVIEWS_URL,
+  REVIEWS,
+  TOTAL_REVIEW_COUNT,
+  averageRating,
+} from "./reviewsData";
 
 /** Jaune Google, pour que les étoiles soient reconnues comme des étoiles Google. */
 const STAR = "#fbbc04";
@@ -10,14 +15,15 @@ export function formatRating(value: number) {
 
 /**
  * Pastille de preuve sociale : logo Google, étoiles, note et nombre d'avis.
- * Les chiffres viennent des avis réels de `reviewsData.ts` — jamais codés en
- * dur — et la pastille disparaît si la liste est vide.
+ * Les chiffres viennent de `reviewsData.ts` — le compte est celui de la fiche
+ * complète, pas de l'extrait affiché — et la pastille disparaît si la liste
+ * est vide.
  */
 export function GoogleRatingPill({ className = "" }: { className?: string }) {
   if (REVIEWS.length === 0) return null;
 
   const avg = averageRating();
-  const count = REVIEWS.length;
+  const count = TOTAL_REVIEW_COUNT;
 
   return (
     <a
