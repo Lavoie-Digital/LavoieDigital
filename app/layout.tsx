@@ -268,7 +268,7 @@ const jsonLd = {
               "@type": "Service",
               name: "Application web sur mesure",
               description:
-                "Plateformes SaaS, portails clients et tableaux de bord développés selon vos règles d'affaires.",
+                "Logiciels de gestion, portails clients et tableaux de bord développés selon vos règles d'affaires.",
               url: `${SITE_URL}/creation-application-web-quebec`,
             },
           },

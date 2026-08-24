@@ -4,7 +4,7 @@ import { APPLICATION_WEB } from "../_components/landingData";
 
 // Kept near 155 characters — Google truncates the snippet past that.
 const DESCRIPTION =
-  "Création d'application web au Québec : plateformes SaaS, outils internes et portails clients sur mesure pour PME. Mise en service en 4 semaines environ.";
+  "Création d'application web au Québec : logiciels de gestion, outils internes et portails clients sur mesure pour PME. Mise en service en 4 semaines environ.";
 
 export const metadata: Metadata = {
   // Kept short: the root template appends " — Lavoie Digital", and Google

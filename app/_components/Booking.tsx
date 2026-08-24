@@ -31,7 +31,7 @@ const INITIAL: FormData = {
 type Option = { value: string; label: string; desc?: string };
 
 const PROJECT_TYPES: Option[] = [
-  { value: "app", label: "Application full-stack", desc: "SaaS, dashboard, outil interne" },
+  { value: "app", label: "Application full-stack", desc: "CRM, tableau de bord, outil interne" },
   { value: "site", label: "Site web premium", desc: "Vitrine, e-commerce, landing" },
   { value: "ia", label: "Automatisation & IA", desc: "Agents, intégrations, tâches répétitives" },
   { value: "autre", label: "Autre projet", desc: "Parlons-en directement" },

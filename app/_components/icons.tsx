@@ -19,8 +19,6 @@ const PATHS = {
   target: "M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16Zm0 4.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z",
   /** Refonte — reprise depuis une base existante. */
   refresh: "M20 12a8 8 0 1 1-2.4-5.7M20.5 3.5V8h-4.5",
-  /** Plateforme SaaS — couches d'un produit. */
-  layers: "M12 3 3 8l9 5 9-5-9-5ZM3 13l9 5 9-5",
   /** Outil interne — réglages calqués sur vos règles. */
   sliders: "M4 7h9M19 7h1M4 17h3M13 17h7",
   /** Portail client — un espace où l'on entre. */

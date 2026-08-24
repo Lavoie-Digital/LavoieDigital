@@ -17,7 +17,7 @@ const SERVICES: Service[] = [
   {
     num: "01",
     title: "Applications full-stack",
-    desc: "Plateformes SaaS, dashboards, outils internes et systèmes sur mesure conçus pour évoluer avec votre PME.",
+    desc: "Logiciels de gestion, CRM, portails clients et outils internes sur mesure, conçus pour évoluer avec votre PME.",
     bullets: [
       "Auth, paiements, base de données",
       "API performantes et sécurisées",
@@ -88,7 +88,7 @@ export default function Services() {
           titleAs="h1"
           eyebrow="Services"
           title="Création de sites web et d'applications sur mesure au Québec."
-          sub="Du concept à la mise en marché, on construit des sites web premium, des applications full-stack et des plateformes SaaS que vos clients ont envie d'utiliser."
+          sub="Du concept à la mise en marché, on construit des sites web premium, des applications full-stack et des logiciels de gestion que vos clients ont envie d'utiliser."
         />
 
         <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2">

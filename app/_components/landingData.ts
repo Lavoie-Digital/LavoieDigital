@@ -11,10 +11,20 @@
  * duplicate the home-page FAQ in faqData.ts.
  *
  * These two pages carry the Google Ads traffic, so `blocks` is ordered for a
- * stranger who has never heard of the studio: the pain (application page only),
- * the offer, then a proof chain — real projects, real Google reviews, then the
- * person responsible for both — then the breadth, then a call to action, then
- * the process.
+ * stranger who has never heard of the studio: the pain, the offer, then a proof
+ * chain — real projects, real Google reviews, then the person responsible for
+ * both — then the breadth, then a call to action, then the process.
+ *
+ * Les deux pages portent la douleur au même endroit : le sous-titre du hero,
+ * puis l'intro des points de départ. Aucune ne lui consacre de bloc dédié, et
+ * c'est délibéré — chacune en a eu un, chacune l'a perdu pour la même raison.
+ * Un bloc entier posé entre le hero et les cartes répète une douleur déjà
+ * nommée deux fois, et sur du trafic payant il retarde la preuve.
+ *
+ * Le corollaire, à ne pas réintroduire : ne jamais consacrer de section à
+ * « site ou application ? ». C'est une question d'avant-clic. Le visiteur
+ * arrive d'une annonce qui l'a déjà tranchée, et lui redémontrer son propre
+ * choix se lit comme du remplissage.
  *
  * Two orderings are deliberate and easy to undo by accident. The founder block
  * sits inside the proof chain, not at the end of the page: "who am I dealing
@@ -206,7 +216,17 @@ export const SITE_WEB: Landing = {
   serviceType: "Conception et développement de sites web",
   eyebrow: "Sites web · Québec",
   h1: "Création de site web au Québec",
-  sub: "Sites vitrines, boutiques en ligne et refontes codés sur mesure pour les entrepreneurs et les PME du Québec. Environ deux semaines jusqu'au lancement, suivi illimité ensuite.",
+  // Le sous-titre ouvre sur ce que le visiteur veut, pas sur ce qu'on vend :
+  // la liste des livrables est déjà portée par les quatre cartes juste en
+  // dessous, la répéter ici gaspillait la seule ligne lue par tout le monde.
+  //
+  // L'accroche promet le résultat et peint l'échec en une image concrète. Deux
+  // formulations à ne pas y remettre : « votre prochain client vous cherche sur
+  // Google en ce moment », qui est l'accroche la plus usée du marketing SEO et
+  // décrète une urgence invérifiable ; et toute variante qui invite à aller
+  // chercher sur Google, qui revient à payer une annonce pour envoyer le
+  // visiteur ailleurs.
+  sub: "Un site qui vous amène des appels, pas seulement une adresse à mettre sur vos cartes. Sites vitrines, boutiques et refontes codés sur mesure pour les PME du Québec — environ deux semaines jusqu'au lancement, suivi illimité.",
   facts: [
     { value: "≈ 2 semaines", label: "du feu vert au lancement" },
     { value: "Devis fixe", label: "après un appel gratuit" },
@@ -218,8 +238,11 @@ export const SITE_WEB: Landing = {
       kind: "cards",
       eyebrow: "Points de départ",
       heading: "La plupart des projets commencent par l'un des quatre.",
+      // L'intro nomme la douleur avant d'ouvrir le catalogue. Sans elle, les
+      // quatre cartes arrivent à froid — le même écueil que le bloc « point de
+      // bascule » évite sur la page applications.
       intro:
-        "Ce ne sont pas des forfaits, ce sont des points d'entrée. Beaucoup de mandats sont à cheval sur deux, et tout ce qui suit peut s'y greffer.",
+        "La plupart des gens arrivent ici avec le même constat : le site actuel n'amène aucun appel, ou il n'y en a pas encore. Ce ne sont pas des forfaits mais des points d'entrée — beaucoup de mandats sont à cheval sur deux.",
       cards: [
         {
           icon: "window",
@@ -368,17 +391,6 @@ export const SITE_WEB: Landing = {
     },
     {
       kind: "prose",
-      eyebrow: "Le studio",
-      heading: "Un site web codé sur mesure, pas un thème reconfiguré.",
-      paragraphs: [
-        "Lavoie Digital est un studio de développement web basé à Québec. On conçoit et on code des sites pour les entreprises qui ont besoin d'un vrai outil de travail : quelque chose qui charge vite, qui se retrouve sur Google, et qui donne envie de vous appeler.",
-        "La différence avec un site monté sur un thème acheté, c'est le contrôle. Un thème arrive avec des dizaines de fonctions dont vous n'aurez jamais besoin, du code que personne n'a écrit pour votre projet, et un plafond de performance que vous ne pouvez pas dépasser. Ici, chaque page est construite pour ce que vous avez à dire.",
-        "En pratique, ça donne des pages qui s'affichent en une fraction de seconde, une structure que les moteurs de recherche comprennent du premier coup, et aucune dépendance à une extension tierce qui casse à la prochaine mise à jour.",
-        "Le fondateur conçoit et code lui-même chaque projet. Vous parlez directement à la personne qui construit votre site — pas à un gestionnaire de comptes qui relaie vos messages.",
-      ],
-    },
-    {
-      kind: "prose",
       eyebrow: "Investissement",
       heading: "Combien coûte un site web au Québec ?",
       paragraphs: [
@@ -401,7 +413,10 @@ export const SITE_WEB: Landing = {
       eyebrow: "Découvrabilité",
       heading: "Conçu pour être trouvé — sur Google et dans les réponses des IA.",
       paragraphs: [
-        "Un beau site que personne ne trouve ne sert à rien. Le référencement n'est pas une étape qu'on ajoute à la fin du projet : il est dans la structure du site dès le premier jour.",
+        // La phrase d'accroche « un beau site que personne ne trouve ne sert à
+        // rien » a été retirée : le sous-titre du hero et l'intro des points de
+        // départ portent déjà ce constat, ça faisait la troisième fois.
+        "Le référencement n'est pas une étape qu'on ajoute à la fin du projet : il est dans la structure du site dès le premier jour.",
         "Côté Google, ça veut dire des titres et des descriptions travaillés page par page, des données structurées qui décrivent votre entreprise et vos services dans un format que les moteurs lisent directement, un plan de site propre, et des performances qui tiennent la route sur un téléphone en réseau cellulaire.",
         "Côté intelligence artificielle, c'est un chantier plus récent que la plupart des sites ignorent encore complètement. Vos futurs clients posent maintenant leurs questions à ChatGPT, à Perplexity et aux aperçus IA de Google. Pour être cité dans ces réponses, un site doit exposer son contenu en texte clair, répondre à de vraies questions plutôt qu'empiler des slogans, et autoriser explicitement les robots de ces plateformes à le lire. C'est ce qu'on appelle l'AEO et le GEO.",
         "On applique à votre site exactement ce qu'on applique au nôtre — et on vous explique ce qui a été fait, pour que vous puissiez le vérifier.",
@@ -453,10 +468,15 @@ export const APPLICATION_WEB: Landing = {
   slug: "/creation-application-web-quebec",
   breadcrumb: "Création d'application web au Québec",
   serviceName: "Création d'application web sur mesure",
-  serviceType: "Développement d'applications web et de plateformes SaaS",
+  serviceType: "Développement d'applications web, de logiciels de gestion et de portails clients",
   eyebrow: "Applications · Québec",
   h1: "Création d'application web au Québec",
-  sub: "Plateformes SaaS, outils internes, portails clients et tableaux de bord développés sur mesure pour les entreprises du Québec. Environ quatre semaines jusqu'à la mise en service.",
+  // Même logique que la page sites : l'accroche porte le résultat, la liste des
+  // livrables suit (elle reste entière, chaque terme est un mot-clé de
+  // recherche). C'est désormais le seul endroit de la page qui nomme la douleur
+  // avant les cartes — le bloc qui s'en chargeait a été retiré, voir la note en
+  // tête du fichier.
+  sub: "Ce que vous refaites à la main chaque semaine devrait se faire tout seul. Logiciels de gestion, CRM, portails clients et tableaux de bord développés sur mesure pour les entreprises du Québec — environ quatre semaines jusqu'à la mise en service.",
   facts: [
     { value: "≈ 4 semaines", label: "jusqu'à la mise en service" },
     { value: "Devis fixe", label: "après un appel de cadrage" },
@@ -465,35 +485,35 @@ export const APPLICATION_WEB: Landing = {
   ],
   blocks: [
     {
-      /* Premier bloc de la page, et pas plus bas : c'est celui qui nomme la
-         douleur dans les mots du visiteur (les Excel qui s'échangent par
-         courriel, le logiciel générique). La douleur doit précéder le
-         mécanisme — sinon les quatre cartes qui suivent arrivent à froid,
-         comme un catalogue. */
-      kind: "prose",
-      eyebrow: "Le point de bascule",
-      heading: "Quand un site web ne suffit plus.",
-      paragraphs: [
-        "Un site web présente votre entreprise. Une application web la fait fonctionner. La bascule arrive généralement le jour où vous constatez que vos opérations se gèrent dans des fichiers Excel qui s'échangent par courriel, ou dans un logiciel générique qui n'a jamais été pensé pour votre métier.",
-        "Une application web, c'est un outil accessible depuis un navigateur : des comptes utilisateurs, des données qui se conservent et s'interrogent, et une logique qui reflète vos règles d'affaires plutôt que celles d'un éditeur américain. Rien à installer, rien à mettre à jour manuellement, accessible du bureau comme du chantier.",
-        "Lavoie Digital conçoit et code ces outils sur mesure pour les entrepreneurs et les PME du Québec. C'est la partie du métier qu'on préfère, et celle où un développement fait main change le plus de choses.",
-      ],
-    },
-    {
       kind: "cards",
       eyebrow: "Points de départ",
       heading: "La plupart des projets commencent par l'un des quatre.",
+      // Premier bloc de la page, directement après le hero.
+      //
+      // Un bloc « Le point de bascule » occupait cette place et argumentait
+      // « site ou application ? ». Retiré : c'est une question d'avant-clic. Le
+      // visiteur arrive d'une annonce sur les applications, il a déjà tranché —
+      // lui redémontrer son propre choix retarde ce qu'il vient chercher. Sa
+      // seule phrase qui portait, l'antithèse, ouvre maintenant cette intro.
       intro:
-        "Ce ne sont pas des forfaits, ce sont des points d'entrée. La majorité des mandats en combinent deux — un portail client alimenté par un outil interne, par exemple — et tout ce qui suit peut s'y greffer.",
+        "Un site web présente votre entreprise ; une application la fait fonctionner. Ce ne sont pas des forfaits mais des points d'entrée — la majorité des mandats en combinent deux, un portail client alimenté par un outil interne par exemple, et tout ce qui suit peut s'y greffer.",
       cards: [
+        // L'automatisation est une porte d'entrée, pas une option : c'est elle
+        // qui tient la promesse du sous-titre, et le studio ne cherche pas de
+        // mandats de produit vendu par abonnement. La carte « SaaS » qui
+        // occupait cette place a été retirée pour cette raison — la remettre
+        // reviendrait à mettre en vitrine un mandat qu'on ne veut pas.
+        //
+        // À distinguer de « Outil interne », juste après : ici le travail se
+        // fait sans personne, là c'est l'endroit où les gens travaillent.
         {
-          icon: "layers",
-          title: "Plateforme SaaS",
-          desc: "Un produit que vous vendez par abonnement. Vous avez l'idée et le marché ; on construit la première version et on la fait évoluer.",
+          icon: "bolt",
+          title: "Automatisation des opérations",
+          desc: "Le travail répétitif exécuté par la machine : trier les demandes qui entrent, relancer, produire les documents, envoyer les rapports. Personne n'y pense, ça se fait.",
           bullets: [
-            "Comptes, rôles et permissions",
-            "Facturation récurrente et gestion des forfaits",
-            "Espace client et tableau de bord d'administration",
+            "Tri et acheminement des demandes entrantes",
+            "Relances et rappels déclenchés par vos règles",
+            "Documents et rapports générés puis expédiés seuls",
           ],
         },
         {
@@ -546,11 +566,10 @@ export const APPLICATION_WEB: Landing = {
       intro:
         "Aucune n'est un module vendu à part. On les met en place quand elles font gagner du temps ou de l'argent, et on les écarte quand elles ne serviraient qu'à alourdir le projet.",
       items: [
-        {
-          icon: "bolt",
-          title: "Automatisations",
-          desc: "Tri des demandes entrantes, relances, génération de documents, rapports envoyés seuls. Le travail répétitif en moins.",
-        },
+        // « Automatisations » a quitté cette liste : c'est maintenant la
+        // première des quatre portes d'entrée, plus haut dans la page. La
+        // laisser ici la présenterait comme un module d'appoint après l'avoir
+        // annoncée comme l'offre.
         {
           icon: "sparkle",
           title: "Intelligence artificielle",
