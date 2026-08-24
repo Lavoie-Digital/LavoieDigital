@@ -292,12 +292,14 @@ export default function Hero() {
           </MagneticButton>
         </motion.div>
 
-        {/* Scroll hint */}
+        {/* Indice de défilement, desktop seulement : sur mobile il disputait la
+            place aux CTA dans un hero déjà juste, et le geste de défiler n'a pas
+            besoin d'être enseigné sur un téléphone. */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-white/35 sm:bottom-8"
+          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-white/35 sm:block"
         >
           <div className="flex flex-col items-center gap-2">
             <span>Défilez</span>
