@@ -55,13 +55,19 @@ export default function Hero() {
       {/* Mouse spotlight overlay */}
       <div className="spotlight pointer-events-none absolute inset-0 z-[1]" />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col items-center justify-center px-6 pt-28 pb-20 text-center sm:px-10">
+      {/*
+        Tout l'écart mobile/desktop de ce bloc existe pour une raison : le hero
+        doit tenir dans un seul écran de téléphone, boutons et pastille Google
+        comprises. La barre de navigation fixe fait environ 64 px, donc `pt-20`
+        suffit à la dégager — `pt-28` laissait 48 px de vide pur.
+      */}
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1400px] flex-col items-center justify-center px-6 pt-20 pb-12 text-center sm:px-10 sm:pt-28 sm:pb-20">
         {/* Tech masthead — live signal · metadata · cursor */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-12 inline-flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-white/55"
+          className="mb-6 inline-flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-white/55 sm:mb-12"
         >
           {/* Live signal bars */}
           <span className="flex items-end gap-[2px]" aria-hidden>
@@ -138,8 +144,12 @@ export default function Hero() {
         </motion.div>
 
         {/* 3D Floating logo */}
+        {/* La plaque est purement décorative (`aria-hidden`), donc c'est le
+            premier poste qu'on réduit quand la place manque : sur mobile elle
+            passe de 128 à 80 px de logo, ce qui libère une cinquantaine de
+            pixels sans rien retirer au message. */}
         <div
-          className="relative mb-12 [perspective:1400px]"
+          className="relative mb-6 [perspective:1400px] sm:mb-12"
           aria-hidden="true"
         >
           {/* Orbiting glass shapes */}
@@ -183,7 +193,7 @@ export default function Hero() {
             className="relative inline-block will-change-transform"
           >
             <div
-              className="relative rounded-3xl border border-white/10 p-6 sm:p-8"
+              className="relative rounded-3xl border border-white/10 p-4 sm:p-8"
               style={{
                 background:
                   "linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%)",
@@ -198,7 +208,7 @@ export default function Hero() {
                 width={420}
                 height={420}
                 priority
-                className="h-32 w-32 object-contain sm:h-44 sm:w-44"
+                className="h-20 w-20 object-contain sm:h-44 sm:w-44"
                 style={{ transform: "translateZ(40px)" }}
               />
               {/* Glossy reflection */}
@@ -218,14 +228,14 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="display text-balance text-[clamp(2.8rem,8vw,7rem)] text-white"
+          className="display text-balance text-[clamp(2.35rem,8vw,7rem)] text-white"
         >
           On code,{" "}
           <span className="shine inline-block">vous grandissez.</span>
           {/* Inside the h1 on purpose: the slogan carries the brand but no
               keyword, so the descriptive line rides along in the same heading.
               Visitors read the slogan first, crawlers get both. */}
-          <span className="mt-7 block text-[clamp(1.05rem,2.3vw,1.5rem)] font-medium leading-snug tracking-tight text-white/45">
+          <span className="mt-4 block text-[clamp(1.05rem,2.3vw,1.5rem)] font-medium leading-snug tracking-tight text-white/45 sm:mt-7">
             Création de sites web et d&apos;applications au Québec.
           </span>
         </motion.h1>
@@ -234,7 +244,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="text-pretty mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60 sm:text-xl"
+          className="text-pretty mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-white/60 sm:mt-8 sm:text-xl"
         >
           Pour les entrepreneurs et les PME du Québec. Code production,
           esthétique hors du commun, suivi client&nbsp;illimité — et des sites
@@ -247,7 +257,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10"
+          className="mt-6 sm:mt-10"
         >
           <GoogleRatingPill />
         </motion.div>
@@ -257,7 +267,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.68, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-8 flex flex-col items-center gap-4 sm:flex-row"
+          className="mt-5 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:gap-4"
         >
           <MagneticButton href="/booking">
             Réserver un appel
@@ -287,7 +297,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-white/35"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-white/35 sm:bottom-8"
         >
           <div className="flex flex-col items-center gap-2">
             <span>Défilez</span>
