@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { trackLeadSubmitted } from "./analyticsEvents";
+import { trackContactClick, trackLeadSubmitted } from "./analyticsEvents";
 import { SectionHeader } from "./Services";
 
 type FormData = {
@@ -439,8 +439,12 @@ export default function Booking({
                   className="mt-6 rounded-xl border border-red-400/20 bg-red-400/[0.06] px-4 py-3 text-sm text-red-200/90"
                 >
                   {error} Vous pouvez aussi nous écrire directement à{" "}
+                  {/* Suivi aussi : un formulaire en échec suivi d'un courriel
+                      reste une demande, et c'est précisément le cas où on veut
+                      savoir combien de monde on récupère. Volume faible. */}
                   <a
                     href="mailto:info@lavoiedigital.ca"
+                    onClick={() => trackContactClick("email")}
                     className="link-underline text-white"
                   >
                     info@lavoiedigital.ca
@@ -500,14 +504,24 @@ export default function Booking({
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[13px]">
+            {/* Ce bloc est rendu en permanence à côté du formulaire, sur
+                l'accueil comme au bas des pages publicitaires. Quelqu'un qui
+                arrive d'une annonce, descend jusqu'au formulaire et choisit
+                d'écrire plutôt que de le remplir est une demande entrante — sans
+                ces deux appels, elle ne laisse aucune trace. */}
             <a
               href="mailto:info@lavoiedigital.ca"
+              onClick={() => trackContactClick("email")}
               className="link-underline text-white/90"
             >
               info@lavoiedigital.ca
             </a>
             <span className="hidden text-white/15 sm:inline">·</span>
-            <a href="tel:+15142901648" className="link-underline text-white/90">
+            <a
+              href="tel:+15142901648"
+              onClick={() => trackContactClick("phone")}
+              className="link-underline text-white/90"
+            >
               +1 (514) 290-1648
             </a>
           </div>

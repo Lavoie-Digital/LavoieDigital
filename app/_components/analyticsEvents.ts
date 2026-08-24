@@ -65,9 +65,15 @@ export function trackLeadSubmitted({
  * un clic sur un numéro n'est pas une demande — on peut raccrocher aussitôt —
  * et le compter gonflerait le signal d'enchère avec du bruit.
  *
- * Les liens de contact du formulaire lui-même ne passent pas par ici : ils
- * n'apparaissent qu'après un envoi réussi ou en repli d'erreur, deux cas où le
- * clic ne dit rien sur l'annonce qui a amené la personne.
+ * Couvre tous les liens de contact affichés sur le site : la navigation, le
+ * hero des pages publicitaires, le pied de page, et les deux liens du bloc
+ * « Préfère écrire directement ? » rendu en permanence à côté du formulaire.
+ *
+ * Seule exception assumée : les adresses de la politique de confidentialité.
+ * Elles portent un sujet « Protection des renseignements personnels » et servent
+ * à exercer un droit d'accès ou de rectification. Ce ne sont pas des demandes
+ * commerciales — les compter gonflerait la métrique avec du bruit, et mesurer
+ * l'exercice d'un droit pour en faire un signal publicitaire serait douteux.
  */
 export function trackContactClick(channel: "phone" | "email") {
   const consent = readConsent();
