@@ -80,12 +80,6 @@ export type Block =
       eyebrow: string;
       heading: string;
       paragraphs: string[];
-      /**
-       * Affiche le portrait du fondateur sous le titre. À réserver au bloc qui
-       * affirme qu'il code lui-même chaque projet : ailleurs, le visage n'appuie
-       * aucun argument et devient de la décoration.
-       */
-      portrait?: boolean;
     }
   /**
    * Familles de projets. Volontairement présentées comme des points de départ
@@ -277,8 +271,11 @@ export const SITE_WEB: Landing = {
         "Trois sites livrés et publics. Chacun est en ligne en ce moment — cliquez sur le lien et jugez par vous-même.",
       slugs: ["amethyste", "josee-ann-jomphe", "amelia-ruby"],
     },
-    { kind: "reviews" },
+    // FOUNDER suit immédiatement les travaux : son texte dit « les projets
+    // présentés juste au-dessus ». Les avis viennent ensuite, où ils cautionnent
+    // une personne qu'on vient de présenter plutôt qu'un studio anonyme.
     FOUNDER,
+    { kind: "reviews" },
     {
       kind: "capabilities",
       eyebrow: "Ce qui se greffe",
@@ -373,7 +370,6 @@ export const SITE_WEB: Landing = {
       kind: "prose",
       eyebrow: "Le studio",
       heading: "Un site web codé sur mesure, pas un thème reconfiguré.",
-      portrait: true,
       paragraphs: [
         "Lavoie Digital est un studio de développement web basé à Québec. On conçoit et on code des sites pour les entreprises qui ont besoin d'un vrai outil de travail : quelque chose qui charge vite, qui se retrouve sur Google, et qui donne envie de vous appeler.",
         "La différence avec un site monté sur un thème acheté, c'est le contrôle. Un thème arrive avec des dizaines de fonctions dont vous n'aurez jamais besoin, du code que personne n'a écrit pour votre projet, et un plafond de performance que vous ne pouvez pas dépasser. Ici, chaque page est construite pour ce que vous avez à dire.",
@@ -540,8 +536,9 @@ export const APPLICATION_WEB: Landing = {
         "Dans les deux cas, la partie publique n'était que la moitié du mandat : derrière l'authentification, il y a un espace où le client travaille pour de vrai.",
       slugs: ["lm-gestion-immobiliere", "amethyste"],
     },
-    { kind: "reviews" },
+    // Même ordre que la page « sites » : voir la note là-bas.
     FOUNDER,
+    { kind: "reviews" },
     {
       kind: "capabilities",
       eyebrow: "Ce qui se greffe",

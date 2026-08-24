@@ -1,5 +1,6 @@
 import Faq from "./_components/Faq";
 import { FAQ_ITEMS } from "./_components/faqData";
+import FounderSignature from "./_components/FounderSignature";
 import Hero from "./_components/Hero";
 import PageNav from "./_components/PageNav";
 import Reviews from "./_components/Reviews";
@@ -26,9 +27,11 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <Hero />
-      {/* Preuve avant la FAQ : les travaux montrent, les avis confirment. */}
+      {/* Preuve avant la FAQ : les travaux montrent, les avis confirment, le
+          visage dit qui les a faits. */}
       <WorkPreview />
       <Reviews />
+      <FounderSignature />
       <Faq />
       <PageNav
         next={{ href: "/services", label: "Services", eyebrow: "Suivant — 01" }}

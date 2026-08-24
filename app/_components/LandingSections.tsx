@@ -351,28 +351,6 @@ function ProseBlock({
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-14">
           <div className="md:col-span-5">
             <BlockHeader eyebrow={block.eyebrow} heading={block.heading} />
-            {/* Le portrait accompagne le bloc qui affirme que le fondateur code
-                lui-même chaque projet. Sans visage, c'est une promesse ; avec,
-                c'est vérifiable. */}
-            {block.portrait && (
-              <motion.div
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-70px" }}
-                transition={{ duration: 0.7, ease: EASE }}
-                className="mt-9 flex items-center gap-4"
-              >
-                <Portrait size={68} />
-                <div>
-                  <p className="text-[15px] font-semibold tracking-tight text-white">
-                    Xavier Lavoie
-                  </p>
-                  <p className="mt-0.5 text-[13px] text-white/45">
-                    Fondateur — à l&apos;avant de votre projet
-                  </p>
-                </div>
-              </motion.div>
-            )}
           </div>
           <div className="flex flex-col gap-5 md:col-span-7 md:pt-2">
             {block.paragraphs.map((p, i) => (
@@ -425,7 +403,7 @@ function FounderBlock({
             transition={{ duration: 0.7, ease: EASE }}
             className="md:col-span-4"
           >
-            <Portrait size={224} shape="rounded" />
+            <Portrait size={224} />
 
             <p className="mt-5 text-[17px] font-semibold tracking-tight text-white">
               {block.name}

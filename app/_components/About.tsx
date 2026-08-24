@@ -50,14 +50,26 @@ export default function About() {
                   "inset 0 1px 0 rgba(255,255,255,0.14), 0 40px 100px -20px rgba(0,0,0,0.8)",
               }}
             >
+              {/* Plan trois-quarts vertical : à cette taille on veut la
+                  posture entière, pas seulement le visage. Le conteneur est
+                  plafonné à `max-w-sm` (24rem) à toutes les largeurs, donc
+                  `sizes` l'annonce tel quel — déclarer plus large ferait
+                  télécharger un candidat inutilement lourd.
+
+                  `quality` à 95 comme dans Portrait.tsx : sans cette prop Next
+                  réencode à 75, et sur ce cliché le fond en dégradé se met à
+                  baver bien avant le reste du site. La valeur doit figurer dans
+                  `images.qualities` (next.config.ts), sinon Next la ramène en
+                  silence à la plus proche. */}
               <Image
-                src="/Fondateur.jpg"
+                src="/Fondateur-portrait.jpg"
                 alt="Xavier Lavoie, fondateur de Lavoie Digital"
-                width={896}
-                height={896}
+                width={1800}
+                height={2700}
+                quality={95}
                 priority
                 className="h-full w-full object-cover"
-                sizes="(max-width: 1024px) 24rem, 36rem"
+                sizes="24rem"
               />
               {/* Subtle top gloss to blend with the dark theme */}
               <div

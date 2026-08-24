@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/Fondateur.jpg",
-        width: 896,
-        height: 896,
+        width: 1200,
+        height: 1200,
         alt: "Xavier Lavoie, fondateur de Lavoie Digital",
       },
     ],
