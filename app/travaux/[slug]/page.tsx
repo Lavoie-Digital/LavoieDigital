@@ -5,7 +5,8 @@ import { PROJECTS, getProject } from "../../_components/projectsData";
 
 const SITE_URL = "https://lavoiedigital.ca";
 
-// Four known projects — prerender them all, nothing is resolved at request time.
+// A known, finite set of projects — prerender them all, nothing is resolved at
+// request time.
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
 }

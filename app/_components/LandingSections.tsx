@@ -657,7 +657,9 @@ function WorkBlock({ block }: { block: Extract<Block, { kind: "work" }> }) {
 
   if (projects.length === 0) return null;
 
-  const wide = projects.length > 2;
+  // Trois cartes tiennent sur une rangée de trois ; quatre retombent sur la
+  // grille à deux colonnes, qui donne un 2×2 plein plutôt qu'une orpheline.
+  const wide = projects.length === 3;
 
   return (
     <section

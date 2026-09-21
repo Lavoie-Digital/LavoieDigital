@@ -13,11 +13,11 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "fr-CA",
     orientation: "portrait",
     icons: [
-      {
-        src: "/logo.png",
-        sizes: "any",
-        type: "image/png",
-      },
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      // Android recadre les icônes adaptatives : la variante maskable a le
+      // fond pleine page et le monogramme réduit, pour survivre au masque.
+      { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
   };
 }

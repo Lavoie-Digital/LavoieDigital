@@ -291,8 +291,13 @@ export const SITE_WEB: Landing = {
       eyebrow: "Travaux",
       heading: "Des sites en ligne, pour de vrais clients.",
       intro:
-        "Trois sites livrés et publics. Chacun est en ligne en ce moment — cliquez sur le lien et jugez par vous-même.",
-      slugs: ["amethyste", "josee-ann-jomphe", "amelia-ruby"],
+        "Quatre sites livrés et publics. Chacun est en ligne en ce moment — cliquez sur le lien et jugez par vous-même.",
+      slugs: [
+        "saga-consultants",
+        "amethyste",
+        "josee-ann-jomphe",
+        "amelia-ruby",
+      ],
     },
     // FOUNDER suit immédiatement les travaux : son texte dit « les projets
     // présentés juste au-dessus ». Les avis viennent ensuite, où ils cautionnent

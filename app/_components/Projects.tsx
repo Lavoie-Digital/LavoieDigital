@@ -16,7 +16,7 @@ export default function Projects() {
           titleAs="h1"
           eyebrow="Travaux"
           title="Des sites et des applications en ligne, pour de vrais clients."
-          sub="Quatre projets livrés pour des entreprises du Québec — Montréal, Saguenay, Québec. Chaque site est en ligne et vous pouvez le visiter."
+          sub="Cinq projets livrés pour des entreprises du Québec — Montréal, Saguenay, Québec, Lévis. Chaque site est en ligne et vous pouvez le visiter."
         />
 
         <div className="mt-16 space-y-6">

@@ -24,7 +24,7 @@ export default function WorkPreview() {
           <SectionHeader
             eyebrow="Travaux"
             title="Des projets en ligne, pour de vrais clients."
-            sub="Boutiques, portails clients et sites de marque livrés pour des entreprises du Québec. Chaque site est en ligne — vous pouvez le visiter."
+            sub="Boutiques, portails clients, sites corporatifs et sites de marque livrés pour des entreprises du Québec. Chaque site est en ligne — vous pouvez le visiter."
           />
           <motion.div
             initial={{ opacity: 0, y: 14 }}
