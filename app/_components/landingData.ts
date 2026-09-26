@@ -293,10 +293,10 @@ export const SITE_WEB: Landing = {
       intro:
         "Quatre sites livrés et publics. Chacun est en ligne en ce moment — cliquez sur le lien et jugez par vous-même.",
       slugs: [
-        "saga-consultants",
         "amethyste",
         "josee-ann-jomphe",
         "amelia-ruby",
+        "saga-consultants",
       ],
     },
     // FOUNDER suit immédiatement les travaux : son texte dit « les projets

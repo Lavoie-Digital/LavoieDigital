@@ -41,67 +41,6 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
-    slug: "saga-consultants",
-    client: "SAGA Consultants",
-    url: "https://sagaconsultants.ca/",
-    domain: "sagaconsultants.ca",
-    sector: "Génie-conseil en structures",
-    location: "Saguenay et Lévis",
-    year: "2026",
-    tag: "Site corporatif · Portfolio administrable",
-    teaser:
-      "Site corporatif, portfolio de projets filtrable et espace d'administration pour une firme de génie-conseil en structures.",
-    image: "/travaux/saga.jpg",
-    imageAlt:
-      "Page d'accueil du site SAGA Consultants, firme de génie-conseil en structures à Saguenay et Lévis",
-    title: "SAGA Consultants — site corporatif et portfolio administrable",
-    metaTitle: "SAGA Consultants — étude de cas site de génie-conseil",
-    metaDescription:
-      "Étude de cas : site corporatif, portfolio de projets filtrable et espace d'administration pour SAGA Consultants, firme de génie-conseil en structures à Saguenay et Lévis.",
-    intro:
-      "SAGA Consultants est une firme de génie-conseil spécialisée en structures, avec des bureaux à Jonquière et à Lévis. Elle travaille pour des donneurs d'ouvrage publics et privés, du multilogement à l'institutionnel, au Québec comme au Nunavut. Une firme technique qui devait se présenter sans se réduire à une liste de services.",
-    sections: [
-      {
-        heading: "Le mandat",
-        paragraphs: [
-          "Les sites de firmes de génie se ressemblent tous : une page de services, une page d'équipe, un formulaire. Le problème n'est pas l'information manquante — c'est que rien ne distingue une firme de la suivante. Or SAGA se vend précisément sur ce qui ne se met pas en liste : le jugement, la compréhension du financement et des contraintes de chantier, la capacité à prendre les projets qui n'entrent dans aucune case.",
-          "Deuxième enjeu, concret celui-là : les projets livrés sont la meilleure preuve que la firme possède, et ils s'accumulent. Un portfolio figé dans le code aurait vieilli en trois mois. Il fallait que l'équipe puisse ajouter un projet, un membre ou une offre d'emploi elle-même.",
-        ],
-      },
-      {
-        heading: "La réponse",
-        paragraphs: [
-          "La page d'accueil est construite comme une démonstration plutôt qu'un dépliant : la vision de la firme, les quatre familles de services, puis les dix types de structures maîtrisées — ossature légère de bois, rétrofit structural, lamellé-collé, modulaire volumétrique, hors-normes. C'est cette grille qui fait la différence entre « on fait du génie de structure » et « on sait faire exactement ce que votre projet demande ».",
-          "Le portfolio est filtrable par marché, par expertise et par service, et chaque projet a sa propre page indexable — Projet Laforest, Bibliothèque Georges-Henri-Lévesque, Centre de santé l'Équilibre. Ces pages captent les recherches par type d'ouvrage, celles que fait un donneur d'ouvrage qui cherche quelqu'un ayant déjà réalisé le même genre de bâtiment.",
-          "La page équipe présente les gens par leur prénom et leur rôle, et les carrières sont traitées comme un vrai canal de recrutement plutôt qu'une page morte : offres affichées quand il y en a, candidature spontanée invitée quand il n'y en a pas.",
-        ],
-      },
-      {
-        heading: "L'administration",
-        paragraphs: [
-          "Un espace privé protégé par authentification permet à l'équipe de gérer elle-même le contenu vivant du site : projets, membres de l'équipe, offres d'emploi. Aucun appel au développeur pour publier un mandat qui vient de se terminer.",
-          "C'est la partie invisible du mandat, et souvent celle qui décide si un site reste à jour deux ans plus tard. Un portfolio qu'on ne peut pas alimenter cesse d'être une preuve et devient une archive.",
-          "Le formulaire de contact segmente les demandes par type de projet dès la première saisie — institutionnel, multilogement, scolaire, communautés autochtones — ce qui permet de router la demande vers la bonne personne au lieu de la trier après coup.",
-        ],
-      },
-    ],
-    specs: [
-      { label: "Type", value: "Site corporatif + espace d'administration" },
-      { label: "Secteur", value: "Génie-conseil · Ingénierie des structures" },
-      { label: "Territoire", value: "Saguenay, Lévis et le reste du Canada" },
-      { label: "Année", value: "2026" },
-    ],
-    delivered: [
-      "Site corporatif : vision, services et types de structures",
-      "Portfolio filtrable par marché, expertise et service",
-      "Fiche de projet indexable individuellement",
-      "Page équipe et section carrières",
-      "Espace d'administration authentifié pour projets, équipe et offres d'emploi",
-      "Formulaire de contact segmenté par type de projet",
-      "Deux bureaux référencés avec cartes et itinéraires",
-    ],
-  },
-  {
     slug: "amethyste",
     client: "Améthyste",
     url: "https://amethystehairproductscanada.ca/",
@@ -314,6 +253,67 @@ export const PROJECTS: Project[] = [
       "Panier et parcours d'achat",
       "Site bilingue français-anglais",
       "Optimisation des images pour un affichage rapide",
+    ],
+  },
+  {
+    slug: "saga-consultants",
+    client: "SAGA Consultants",
+    url: "https://sagaconsultants.ca/",
+    domain: "sagaconsultants.ca",
+    sector: "Génie-conseil en structures",
+    location: "Saguenay et Lévis",
+    year: "2026",
+    tag: "Site corporatif · Portfolio administrable",
+    teaser:
+      "Site corporatif, portfolio de projets filtrable et espace d'administration pour une firme de génie-conseil en structures.",
+    image: "/travaux/saga.jpg",
+    imageAlt:
+      "Page d'accueil du site SAGA Consultants, firme de génie-conseil en structures à Saguenay et Lévis",
+    title: "SAGA Consultants — site corporatif et portfolio administrable",
+    metaTitle: "SAGA Consultants — étude de cas site de génie-conseil",
+    metaDescription:
+      "Étude de cas : site corporatif, portfolio de projets filtrable et espace d'administration pour SAGA Consultants, firme de génie-conseil en structures à Saguenay et Lévis.",
+    intro:
+      "SAGA Consultants est une firme de génie-conseil spécialisée en structures, avec des bureaux à Jonquière et à Lévis. Elle travaille pour des donneurs d'ouvrage publics et privés, du multilogement à l'institutionnel, au Québec comme au Nunavut. Une firme technique qui devait se présenter sans se réduire à une liste de services.",
+    sections: [
+      {
+        heading: "Le mandat",
+        paragraphs: [
+          "Les sites de firmes de génie se ressemblent tous : une page de services, une page d'équipe, un formulaire. Le problème n'est pas l'information manquante — c'est que rien ne distingue une firme de la suivante. Or SAGA se vend précisément sur ce qui ne se met pas en liste : le jugement, la compréhension du financement et des contraintes de chantier, la capacité à prendre les projets qui n'entrent dans aucune case.",
+          "Deuxième enjeu, concret celui-là : les projets livrés sont la meilleure preuve que la firme possède, et ils s'accumulent. Un portfolio figé dans le code aurait vieilli en trois mois. Il fallait que l'équipe puisse ajouter un projet, un membre ou une offre d'emploi elle-même.",
+        ],
+      },
+      {
+        heading: "La réponse",
+        paragraphs: [
+          "La page d'accueil est construite comme une démonstration plutôt qu'un dépliant : la vision de la firme, les quatre familles de services, puis les dix types de structures maîtrisées — ossature légère de bois, rétrofit structural, lamellé-collé, modulaire volumétrique, hors-normes. C'est cette grille qui fait la différence entre « on fait du génie de structure » et « on sait faire exactement ce que votre projet demande ».",
+          "Le portfolio est filtrable par marché, par expertise et par service, et chaque projet a sa propre page indexable — Projet Laforest, Bibliothèque Georges-Henri-Lévesque, Centre de santé l'Équilibre. Ces pages captent les recherches par type d'ouvrage, celles que fait un donneur d'ouvrage qui cherche quelqu'un ayant déjà réalisé le même genre de bâtiment.",
+          "La page équipe présente les gens par leur prénom et leur rôle, et les carrières sont traitées comme un vrai canal de recrutement plutôt qu'une page morte : offres affichées quand il y en a, candidature spontanée invitée quand il n'y en a pas.",
+        ],
+      },
+      {
+        heading: "L'administration",
+        paragraphs: [
+          "Un espace privé protégé par authentification permet à l'équipe de gérer elle-même le contenu vivant du site : projets, membres de l'équipe, offres d'emploi. Aucun appel au développeur pour publier un mandat qui vient de se terminer.",
+          "C'est la partie invisible du mandat, et souvent celle qui décide si un site reste à jour deux ans plus tard. Un portfolio qu'on ne peut pas alimenter cesse d'être une preuve et devient une archive.",
+          "Le formulaire de contact segmente les demandes par type de projet dès la première saisie — institutionnel, multilogement, scolaire, communautés autochtones — ce qui permet de router la demande vers la bonne personne au lieu de la trier après coup.",
+        ],
+      },
+    ],
+    specs: [
+      { label: "Type", value: "Site corporatif + espace d'administration" },
+      { label: "Secteur", value: "Génie-conseil · Ingénierie des structures" },
+      { label: "Territoire", value: "Saguenay, Lévis et le reste du Canada" },
+      { label: "Année", value: "2026" },
+    ],
+    delivered: [
+      "Site corporatif : vision, services et types de structures",
+      "Portfolio filtrable par marché, expertise et service",
+      "Fiche de projet indexable individuellement",
+      "Page équipe et section carrières",
+      "Espace d'administration authentifié pour projets, équipe et offres d'emploi",
+      "Formulaire de contact segmenté par type de projet",
+      "Deux bureaux référencés avec cartes et itinéraires",
     ],
   },
 ];
