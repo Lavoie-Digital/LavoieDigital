@@ -38,6 +38,12 @@ export const TOTAL_REVIEW_COUNT = 8;
 /** Du plus récent au plus ancien, comme sur la fiche Google. */
 export const REVIEWS: Review[] = [
   {
+    author: "Simon Savard",
+    rating: 5,
+    date: "Octobre 2026",
+    text: "Nous avons reçu un service efficace et personnalisé. L'équipe a su naturellement cerner notre style et l'image recherchée pour notre site web.",
+  },
+  {
     author: "Jocelyne Guertin",
     rating: 5,
     date: "Août 2026",
@@ -48,12 +54,6 @@ export const REVIEWS: Review[] = [
     rating: 5,
     date: "Août 2026",
     text: "Service impeccable et hyper professionnel, je recommande 110% ! A+++ 👌",
-  },
-  {
-    author: "Amelie Purtell",
-    rating: 5,
-    date: "Août 2026",
-    text: "Service impeccable, très satisfaite des services proposés.",
   },
   {
     author: "Josée-Ann Jomphe",
