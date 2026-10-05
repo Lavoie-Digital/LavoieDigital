@@ -6,7 +6,7 @@
  *    ni « améliorer » le texte d'un client : c'est une citation, pas de la copie.
  *  - Ne jamais ajouter un avis qui n'existe pas sur la fiche Google. Le visiteur
  *    peut cliquer sur le lien et comparer.
- *  - La liste ci-dessous est un extrait : on n'affiche pas les 8 avis. Le compte
+ *  - La liste ci-dessous est un extrait : on n'affiche pas les 9 avis. Le compte
  *    montré au visiteur vient donc de `TOTAL_REVIEW_COUNT`, pas de la longueur
  *    du tableau, sinon le site annoncerait moins d'avis qu'il n'en a vraiment.
  *  - `date` est une étiquette d'affichage (« Août 2026 ») et non une date ISO :
@@ -23,6 +23,11 @@ export type Review = {
   text: string;
   /** Optionnel : entreprise ou rôle, affiché sous le nom. */
   context?: string;
+  /**
+   * Optionnel : carte pleine largeur. Pour un avis long — dans une colonne
+   * d'un tiers, il étirerait toute la rangée et laisserait ses voisines vides.
+   */
+  featured?: boolean;
 };
 
 /** Fiche Google publique — lien « Voir tous les avis » et « Laisser un avis ». */
@@ -33,10 +38,17 @@ export const GOOGLE_REVIEWS_URL = "https://share.google/IdjzOyZkI1eoi8kBQ";
  * en même temps qu'on ajoute un avis ci-dessous : c'est ce chiffre que le
  * visiteur voit, et il doit correspondre à ce que Google affiche.
  */
-export const TOTAL_REVIEW_COUNT = 8;
+export const TOTAL_REVIEW_COUNT = 9;
 
 /** Du plus récent au plus ancien, comme sur la fiche Google. */
 export const REVIEWS: Review[] = [
+  {
+    author: "Caroline Chauvet",
+    rating: 5,
+    date: "Octobre 2026",
+    featured: true,
+    text: "J’ai eu l’occasion de travailler avec Lavoie Digital et je recommande vivement leurs services. Xavier est extrêmement réactif et toujours disponible pour répondre aux questions ou trouver rapidement des solutions adaptées aux besoins de ses clients.\n\nCe que j’apprécie particulièrement, c’est son approche honnête et personnalisée. Il prend le temps de comprendre les objectifs de ses clients et propose des solutions sur mesure, sans jamais essayer de vendre des services ou des produits qui ne sont pas réellement nécessaires.\n\nFiable, ingénieux et professionnel, Xavier sait faire preuve de créativité pour relever les défis et trouver des options efficaces, même dans des situations plus complexes. On sent qu’il a à cœur la réussite de ses clients et qu’il cherche avant tout à établir une relation de confiance à long terme.\n\nJe recommande sans hésitation Lavoie Digital à toute organisation ou entreprise à la recherche d’un partenaire numérique compétent, transparent et orienté vers les résultats.",
+  },
   {
     author: "Simon Savard",
     rating: 5,

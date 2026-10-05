@@ -75,10 +75,11 @@ export default function Reviews() {
           </motion.div>
         </div>
 
-        {/* Flex plutôt que grid : avec 5 cartes sur 3 colonnes, une grille
-            colle les 2 dernières à gauche et laisse un trou. Le flex-wrap
-            centré équilibre la rangée incomplète. Les largeurs reproduisent
-            les colonnes, gap-5 (1.25rem) déduit au prorata. */}
+        {/* Flex plutôt que grid : avec une rangée incomplète, une grille
+            colle les dernières cartes à gauche et laisse un trou. Le flex-wrap
+            centré équilibre la rangée. Les largeurs reproduisent les colonnes,
+            gap-5 (1.25rem) déduit au prorata ; un avis `featured` prend toute
+            la rangée. */}
         <div className="mt-14 flex flex-wrap justify-center gap-5">
           {REVIEWS.map((review, i) => (
             <motion.figure
@@ -87,7 +88,11 @@ export default function Reviews() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, delay: i * 0.07, ease: EASE }}
-              className="group relative flex w-full flex-col overflow-hidden rounded-[1.5rem] border border-white/10 p-7 md:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]"
+              className={`group relative flex w-full flex-col overflow-hidden rounded-[1.5rem] border border-white/10 p-7 ${
+                review.featured
+                  ? "md:p-9"
+                  : "md:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]"
+              }`}
               style={{
                 background:
                   "linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.01) 100%)",
@@ -103,7 +108,12 @@ export default function Reviews() {
                 </span>
               </div>
 
-              <blockquote className="mt-5 flex-1 text-[15px] leading-relaxed text-white/75">
+              {/* pre-line : garde les paragraphes de l'avis tels que sur Google */}
+              <blockquote
+                className={`mt-5 flex-1 whitespace-pre-line leading-relaxed text-white/75 ${
+                  review.featured ? "max-w-4xl text-[16px]" : "text-[15px]"
+                }`}
+              >
                 {review.text}
               </blockquote>
 
