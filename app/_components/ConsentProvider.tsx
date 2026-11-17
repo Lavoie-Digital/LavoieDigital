@@ -109,9 +109,9 @@ export default function ConsentProvider({
 
   const save = useCallback((choices: ConsentChoices) => {
     writeConsent(choices);
-    // Retrait total : `consent update` empêche les nouveaux dépôts, encore
-    // faut-il effacer ceux qui existent déjà.
-    if (!choices.analytics && !choices.marketing) clearGoogleCookies();
+    // Retrait : `consent update` empêche les nouveaux dépôts, encore faut-il
+    // effacer ceux qui existent déjà — pour chaque finalité refusée.
+    clearGoogleCookies(choices);
     setPanelOpen(false);
   }, []);
 

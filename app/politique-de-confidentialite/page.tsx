@@ -7,7 +7,7 @@ const DESCRIPTION =
   "Politique de confidentialité de Lavoie Digital, conforme à la Loi 25 du Québec : renseignements recueillis, témoins, finalités, consentement, conservation, droits et recours.";
 
 /** Date de la dernière révision de fond. À mettre à jour à chaque modification. */
-const LAST_UPDATED = "19 août 2026";
+const LAST_UPDATED = "17 novembre 2026";
 
 export const metadata: Metadata = {
   // Pas de nom de marque ici — le template racine ajoute déjà " — Lavoie Digital".
@@ -157,6 +157,13 @@ const SECTIONS: Section[] = [
           navigateur, langue et localisation approximative (ville ou région,
           déduite de l&apos;adresse IP puis tronquée par Google). Ces données
           sont associées à un identifiant technique aléatoire, pas à votre nom.
+        </P>
+        <P>
+          Si vous acceptez la catégorie « publicité », Google Ads enregistre
+          l&apos;identifiant de l&apos;annonce sur laquelle vous avez cliqué et,
+          le cas échéant, le fait qu&apos;une demande de soumission a été
+          envoyée. Rien de ce que vous écrivez dans le formulaire ne lui est
+          transmis.
         </P>
         <P>
           Le détail des témoins, de leur durée et du fonctionnement du refus se
@@ -328,8 +335,8 @@ const SECTIONS: Section[] = [
               "24 mois",
             ],
             [
-              "_gcl_au",
-              "Google Analytics 4",
+              "_gcl_au, _gcl_aw",
+              "Google Ads",
               "Conserve l'identifiant de l'annonce cliquée, afin de rattacher une demande de soumission à la campagne qui l'a précédée. Déposé seulement si vous acceptez la publicité.",
               "90 jours",
             ],
@@ -422,13 +429,18 @@ const SECTIONS: Section[] = [
             ],
             [
               "Google LLC — Analytics 4",
-              "Mesure de la fréquentation du site, et mesure des conversions publicitaires lorsque la catégorie « publicité » est aussi acceptée. Uniquement si vous avez accepté la catégorie « mesure d'audience ». Aucune donnée nominative ne lui est transmise.",
+              "Mesure de la fréquentation du site. Uniquement si vous avez accepté la catégorie « mesure d'audience ». Aucune donnée nominative ne lui est transmise.",
+              "États-Unis (réseau mondial)",
+            ],
+            [
+              "Google LLC — Google Ads",
+              "Mesure des conversions publicitaires : savoir quelle annonce a mené à une demande de soumission. Uniquement si vous avez accepté la catégorie « publicité ». Aucune donnée nominative ne lui est transmise.",
               "États-Unis (réseau mondial)",
             ],
           ]}
         />
         <P>
-          Les deux dernières lignes ne s&apos;activent qu&apos;avec votre
+          Les trois dernières lignes ne s&apos;activent qu&apos;avec votre
           consentement : en son absence, aucune donnée ne quitte votre navigateur
           en direction de Google. Nous ne transmettons jamais votre nom, votre
           courriel ni votre numéro de téléphone à ces outils — même après

@@ -21,11 +21,28 @@
 /** Mesure d'audience GA4 — format `G-XXXXXXXXXX`. Vide = GA4 désactivé. */
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "";
 
+/**
+ * Balise Google Ads — format `AW-XXXXXXXXXX`. Vide = balise Ads désactivée.
+ * Chargée seulement si la personne accepte la catégorie « publicité ».
+ */
+export const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
+
+/**
+ * Libellé de l'action de conversion « demande de soumission » — la partie
+ * après la barre oblique dans `send_to: 'AW-XXXXXXXXXX/LIBELLE'`. Vide = la
+ * balise Ads se charge (lien de conversion, gclid) mais aucune conversion
+ * n'est envoyée.
+ */
+export const GOOGLE_ADS_LEAD_LABEL =
+  process.env.NEXT_PUBLIC_GOOGLE_ADS_LEAD_LABEL ?? "";
+
 /*
- * Aucune balise Google Ads n'est chargée sur ce site. Les conversions
- * publicitaires passent par un événement clé GA4 (`generate_lead`) importé dans
- * Google Ads : une seule balise à charger, une seule source de vérité, et aucun
- * risque de compter deux fois la même demande. Voir analyticsEvents.ts.
+ * Deux voies de mesure coexistent : la conversion Google Ads directe (rapide,
+ * ~3 h, attribution native) et l'événement clé GA4 `generate_lead`. Dans
+ * Google Ads, une seule des deux doit être en objectif PRINCIPAL — la balise
+ * Ads directe — sinon chaque demande est comptée deux fois et l'enchère
+ * apprend sur un signal gonflé. L'import GA4 reste en secondaire, pour
+ * comparaison. Voir analyticsEvents.ts.
  */
 
 /* ------------------------------- Décision ------------------------------- */
@@ -35,11 +52,9 @@ export type ConsentChoices = {
   /** GA4 : fréquentation, pages vues, provenance du trafic. */
   analytics: boolean;
   /**
-   * Signaux publicitaires de GA4. Cette catégorie survit à la suppression de la
-   * balise Ads, et n'est pas décorative : sans `ad_storage`, gtag ne conserve
-   * pas le `gclid` de l'annonce cliquée. L'événement de conversion est alors
-   * bien enregistré dans GA4, mais Google Ads ne peut plus le rattacher à la
-   * campagne — donc plus aucune attribution.
+   * Balise Google Ads et signaux publicitaires de GA4. Sans `ad_storage`, gtag
+   * ne conserve pas le `gclid` de l'annonce cliquée : Google Ads ne peut plus
+   * rattacher une demande à la campagne qui l'a précédée.
    */
   marketing: boolean;
 };
@@ -59,7 +74,7 @@ export const CONSENT_COOKIE = "ld_consent";
  * consentement porte sur des fins précises, un choix donné pour d'anciennes
  * fins ne vaut pas pour les nouvelles.
  */
-export const CONSENT_VERSION = 1;
+export const CONSENT_VERSION = 2; // v2 : ajout de la balise Google Ads.
 
 /**
  * 6 mois. La Commission d'accès à l'information recommande de redemander le
@@ -181,16 +196,24 @@ export function getServerConsentSnapshot(): ConsentSnapshot {
   return SERVER_SNAPSHOT;
 }
 
-/** Témoins déposés par les balises Google, à effacer lors d'un retrait. */
-const GOOGLE_COOKIE_PREFIXES = ["_ga", "_gid", "_gcl", "_gac", "_gat"];
+/** Témoins déposés par les balises Google, par finalité, à effacer lors d'un retrait. */
+const GOOGLE_COOKIE_PREFIXES: Record<keyof ConsentChoices, string[]> = {
+  analytics: ["_ga", "_gid", "_gat"],
+  marketing: ["_gcl", "_gac"],
+};
 
 /**
  * `consent update: denied` empêche les nouveaux dépôts mais laisse en place les
  * témoins déjà écrits. Le retrait du consentement doit faire cesser
  * l'identification : on les supprime donc explicitement.
  */
-export function clearGoogleCookies() {
+export function clearGoogleCookies(choices: ConsentChoices = DENY_ALL) {
   if (typeof document === "undefined") return;
+
+  const prefixes = (Object.keys(GOOGLE_COOKIE_PREFIXES) as (keyof ConsentChoices)[])
+    .filter((k) => !choices[k])
+    .flatMap((k) => GOOGLE_COOKIE_PREFIXES[k]);
+  if (prefixes.length === 0) return;
 
   // Le témoin `_ga` est posé sur le domaine racine : il faut viser chaque
   // suffixe du host, sinon la suppression échoue silencieusement.
@@ -203,7 +226,7 @@ export function clearGoogleCookies() {
 
   for (const entry of document.cookie.split("; ")) {
     const name = entry.split("=")[0];
-    if (!GOOGLE_COOKIE_PREFIXES.some((p) => name.startsWith(p))) continue;
+    if (!prefixes.some((p) => name.startsWith(p))) continue;
 
     for (const domain of domains) {
       document.cookie = [

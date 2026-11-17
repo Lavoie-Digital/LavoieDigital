@@ -8,6 +8,7 @@ import {
   CONSENT_MAX_AGE_DAYS,
   DENY_ALL,
   GA_MEASUREMENT_ID,
+  GOOGLE_ADS_ID,
   type ConsentChoices,
 } from "./consent";
 
@@ -29,7 +30,7 @@ export default function ConsentBanner() {
   const { ready, decision, panelOpen, openPanel } = useConsent();
 
   // Aucune balise configurée : il n'y a rien à consentir, donc pas de bannière.
-  const hasTags = Boolean(GA_MEASUREMENT_ID);
+  const hasTags = Boolean(GA_MEASUREMENT_ID || GOOGLE_ADS_ID);
 
   // Rien à afficher avant d'avoir lu le témoin, sinon la bannière clignote pour
   // les personnes qui ont déjà choisi.
@@ -149,9 +150,9 @@ const PURPOSES: Purpose[] = [
   {
     key: "marketing",
     title: "Publicité",
-    vendor: "Google Analytics 4 — Google LLC",
-    body: "Permet de savoir laquelle de nos annonces vous a amené ici, et donc lesquelles valent la peine d'être payées. Aucune régie publicitaire n'est chargée sur ce site. Refuser n'empêche pas de voir nos annonces : nous ne saurons simplement pas qu'elles ont fonctionné.",
-    cookies: "_gcl_au · 90 jours",
+    vendor: "Google Ads et Google Analytics 4 — Google LLC",
+    body: "Permet de savoir laquelle de nos annonces vous a amené ici et si elle a mené à une demande de soumission, et donc lesquelles valent la peine d'être payées. Aucun nom, courriel ni numéro de téléphone n'est transmis. Refuser n'empêche pas de voir nos annonces : nous ne saurons simplement pas qu'elles ont fonctionné.",
+    cookies: "_gcl_au, _gcl_aw · 90 jours",
   },
 ];
 
@@ -277,10 +278,15 @@ function PreferencesPanel() {
             {PURPOSES.map((p) => {
               // Une finalité sans identifiant configuré n'est pas proposée :
               // demander un consentement pour une balise absente serait faux.
-              // Les deux finalités optionnelles dépendent de la même balise :
-              // sans GA4, il n'y a ni mesure d'audience ni signal publicitaire
-              // à autoriser. Le strictement nécessaire, lui, existe toujours.
-              if (p.key !== "necessary" && !GA_MEASUREMENT_ID) return null;
+              // Le strictement nécessaire, lui, existe toujours.
+              if (p.key === "analytics" && !GA_MEASUREMENT_ID) return null;
+              if (
+                p.key === "marketing" &&
+                !GA_MEASUREMENT_ID &&
+                !GOOGLE_ADS_ID
+              ) {
+                return null;
+              }
 
               const checked =
                 p.key === "necessary" ? true : draft[p.key as keyof ConsentChoices];

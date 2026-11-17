@@ -10,7 +10,21 @@
  * téléphone. Uniquement les caractéristiques non nominatives de la demande,
  * dont on a besoin pour savoir quelles annonces rapportent des mandats.
  */
-import { GA_MEASUREMENT_ID, gtag, readConsent } from "./consent";
+import {
+  GA_MEASUREMENT_ID,
+  GOOGLE_ADS_ID,
+  GOOGLE_ADS_LEAD_LABEL,
+  gtag,
+  readConsent,
+} from "./consent";
+
+/** Identifiant unique par demande : Google Ads dédoublonne sur cette valeur. */
+function newTransactionId() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 type LeadDetails = {
   /** Type de projet choisi à l'étape 1 (site, application…). */
@@ -32,23 +46,30 @@ export function trackLeadSubmitted({
 
   if (consent.analytics && GA_MEASUREMENT_ID) {
     // `generate_lead` est le nom recommandé par GA4 pour une demande entrante.
-    // C'est cet événement qu'on marque « événement clé » dans GA4 puis qu'on
-    // importe comme conversion dans Google Ads.
+    // Marqué « événement clé » dans GA4. S'il est importé dans Google Ads, il
+    // doit y rester en objectif SECONDAIRE : la conversion principale est celle
+    // de la balise Ads, juste en dessous — sinon double comptage.
     //
-    // `send_to` a été retiré : il ne servait qu'à empêcher gtag de diffuser
-    // aussi vers la balise Google Ads, laquelle n'existe plus. Avec un flux GA4
-    // unique, le paramètre n'a plus rien à cibler.
-    //
-    // Vérifié au navigateur : sa présence ne cassait pas l'envoi. Un test qui
-    // semblait le prouver ne mesurait en réalité que le tampon de GA4 — les
-    // événements partent par lots, avec jusqu'à ~5 s de délai, et une
-    // vérification trop hâtive conclut à une perte. À garder en tête avant de
-    // diagnostiquer un événement « manquant ».
+    // `send_to` limite l'envoi à GA4 : sans lui, gtag diffuserait l'événement
+    // à la balise Ads aussi. GA4 envoie par lots (jusqu'à ~5 s de délai) :
+    // ne pas conclure trop vite qu'un événement est « manquant ».
     gtag("event", "generate_lead", {
+      send_to: GA_MEASUREMENT_ID,
       form_id: "booking",
       project_type: projectType,
       budget_range: budget,
       timeline,
+    });
+  }
+
+  if (consent.marketing && GOOGLE_ADS_ID && GOOGLE_ADS_LEAD_LABEL) {
+    // Conversion Google Ads directe : c'est elle qui nourrit l'enchère. Le
+    // `gclid` conservé par la balise Ads (voir GoogleTags) la rattache au clic,
+    // au mot-clé et au groupe d'annonces d'origine. `transaction_id` empêche
+    // un double envoi (double clic, retour arrière) de compter deux demandes.
+    gtag("event", "conversion", {
+      send_to: `${GOOGLE_ADS_ID}/${GOOGLE_ADS_LEAD_LABEL}`,
+      transaction_id: newTransactionId(),
     });
   }
 }
@@ -83,7 +104,7 @@ export function trackContactClick(channel: "phone" | "email") {
     // `channel` doit être déclaré comme dimension personnalisée de portée
     // « Événement » dans GA4, sinon le paramètre est bien reçu mais n'apparaît
     // dans aucun rapport et les appels ne peuvent pas être séparés des
-    // courriels. Pas de `send_to` — voir la note dans trackLeadSubmitted.
-    gtag("event", "contact_click", { channel });
+    // courriels. `send_to` : voir la note dans trackLeadSubmitted.
+    gtag("event", "contact_click", { send_to: GA_MEASUREMENT_ID, channel });
   }
 }
